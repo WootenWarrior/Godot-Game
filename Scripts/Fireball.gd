@@ -9,3 +9,6 @@ func _process(delta):
 
 func Fire():
 	play("Fire")
+
+func _body_entered(body):
+	
