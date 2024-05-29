@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://dg26xi6r0s5td"]
+
+[ext_resource type="PackedScene" uid="uid://bdvdr5madyn58" path="res://Scenes/player.tscn" id="1_s0x65"]
+[ext_resource type="Texture2D" uid="uid://tlq1q6ogk44u" path="res://Assets/TestTiles/PlaceholderGround.png" id="2_cqya5"]
+[ext_resource type="Script" path="res://Scripts/GridGenerator.gd" id="3_pfjnd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jiqbj"]
+texture = ExtResource("2_cqya5")
+0:0/size_in_atlas = Vector2i(2, 2)
+0:0/0 = 0
+2:0/size_in_atlas = Vector2i(2, 2)
+2:0/0 = 0
+0:2/size_in_atlas = Vector2i(2, 2)
+0:2/0 = 0
+2:2/size_in_atlas = Vector2i(2, 2)
+2:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_4g3dw"]
+tile_size = Vector2i(32, 32)
+sources/2 = SubResource("TileSetAtlasSource_jiqbj")
+
+[node name="Test" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_s0x65")]
+speed = 75.0
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(3, 3)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_4g3dw")
+format = 2
+layer_0/name = "Floor"
+layer_0/z_index = -10
+script = ExtResource("3_pfjnd")
+baseHeight = 10
+baseWidth = 10

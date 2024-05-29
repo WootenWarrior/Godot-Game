@@ -1,0 +1,7 @@
+res://Scenes/test.tscn
+res://Scripts/GridGenerator.gd
+res://Scenes/player.tscn
+res://Scenes/dev_spellbook.tscn
+res://Scenes/Fireball.tscn
+res://Scripts/Spellbook.gd
+res://Scripts/Fireball.gd
