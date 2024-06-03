@@ -2,77 +2,96 @@ extends AnimatedSprite2D
 
 @export var radius = 100
 @export var spellOffset = 20
-@export	var projectileSpeed = 100
 @onready var player = get_parent()
-var spellIsCast = false
-var equipedSpell = preload("res://Scenes/Fireball.tscn")
-var castSpell
-var canFire = false
+var testSpell = preload("res://Scenes/Fireball.tscn")
+var equipedSpell
+var projectileSpeed = 0
+var charged = false
+var spellIdle = false
+var holdTime = 0.5
+var currentHeldTime = 0
 
 func _ready():
 	visible = false
 
 func _process(delta):
-	var mouse_pos = get_global_mouse_position()
-	if Input.is_action_pressed("get_weapon_out"):
+	if Input.is_action_just_pressed("get_weapon_out"):
 		visible = true
-	if Input.is_action_pressed("put_weapon_away"):
+		play("Page_Flip")
+	elif Input.is_action_just_pressed("put_weapon_away"):
 		visible = false
-		
-	if player.position.y > mouse_pos.y:
-		z_index = -2
-		if castSpell and spellIsCast:
-			castSpell.z_index = -1
-	else:
-		z_index = 0
-		if castSpell and spellIsCast:
-			castSpell.z_index = 0
+		equipedSpell.queue_free()
+		equipedSpell = null
 	
-	if player and visible:
+	if visible:
+		if spellIdle:
+			currentHeldTime += delta
+			
+		if currentHeldTime > holdTime:
+			if !charged:
+				print("fully charged")
+			equipedSpell.Idle()
+			charged = true
+			
+		if Input.is_action_just_pressed("fire"):
+			InstantiateSpellObject()
+			spellIdle = true
+			equipedSpell.Spawn()
+			print("spawning")
+		if Input.is_action_just_released("fire"):
+			spellIdle = false
+			if charged:
+				var direction = get_global_mouse_position()-player.position
+				equipedSpell.Fire(direction.normalized())
+				print(direction.normalized())
+				print("fired")
+			else:
+				print("despawning")
+				equipedSpell.Despawn()
+			equipedSpell = null
+			charged = false
+			currentHeldTime = 0
+		
+		if equipedSpell:
+			SetSpellPos()
+		SetWeaponPos()
+
+func SetSpellPos():
+	if visible and equipedSpell:
+		var playerPos = player.global_position
+		var mousePos = get_global_mouse_position()
+		var direction = mousePos - playerPos
+		var angle = direction.angle()
+		var x_spell = playerPos.x + (radius + spellOffset) * cos(angle)
+		var y_spell = playerPos.y + (radius + spellOffset) * sin(angle)
+		equipedSpell.global_position = Vector2(x_spell, y_spell)
+		equipedSpell.rotation = angle + PI / 2
+		equipedSpell.look_at(get_global_mouse_position())
+
+func SetWeaponPos():
+	if visible:
+		var mouse_pos = get_global_mouse_position()
 		var player_pos = player.global_position
 		var direction = mouse_pos - player_pos
 		var angle = direction.angle()
-		
+
 		var x = player_pos.x + radius * cos(angle)
 		var y = player_pos.y + radius * sin(angle)
-		
+
 		global_position = Vector2(x, y)
 		rotation = angle + PI / 2
-		
-		if Input.is_action_just_pressed("fire") and visible and !spellIsCast and !castSpell:
-			Cast_Spell()
-			if castSpell.animation_finished:
-				canFire = true
-			play("Page_Flip")
-			
-		if Input.is_action_just_released("fire") and visible and spellIsCast and castSpell:
-			if canFire:
-				print("fired")
-				Fire_Spell()
-			else:
-				print("reset")
-				Reset_Spell()
-			
-		if castSpell and spellIsCast:
-			var x_spell = player_pos.x + (radius + spellOffset) * cos(angle)
-			var y_spell = player_pos.y + (radius + spellOffset) * sin(angle)
-			castSpell.global_position = Vector2(x_spell, y_spell)
-			castSpell.rotation = angle + PI / 2
-			castSpell.look_at(get_global_mouse_position())
-
-func Cast_Spell():
-	castSpell = equipedSpell.instantiate()
-	player.add_child(castSpell)
-	castSpell.play("Spawn")
-	spellIsCast = true
-	await castSpell.animation_finished
-
-func Reset_Spell():
-	castSpell.play("Despawn")
-	spellIsCast = false
-	await castSpell.animation_finished
-	castSpell.queue_free()
-
-func Fire_Spell():
-	castSpell.Fire()
 	
+		if player.position.y > mouse_pos.y:
+			z_index = -2
+			if equipedSpell:
+				equipedSpell.z_index = -1
+		else:
+			z_index = 0
+			if equipedSpell:
+				equipedSpell.z_index = 0
+
+func InstantiateSpellObject():
+	if !equipedSpell:
+		equipedSpell = testSpell.instantiate()
+		player.add_child(equipedSpell)
+		equipedSpell.name = "Fireball"
