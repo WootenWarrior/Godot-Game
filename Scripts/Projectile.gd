@@ -7,6 +7,7 @@ var speed = 0
 var damage = 10
 var chargeTime = 1
 var max_speed = 100
+var hasSpellArea = false
 
 func _process(delta):
 	if speed > 0:

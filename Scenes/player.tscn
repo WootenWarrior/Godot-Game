@@ -1,8 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bdvdr5madyn58"]
+[gd_scene load_steps=38 format=3 uid="uid://bdvdr5madyn58"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_6g0s8"]
 [ext_resource type="Texture2D" uid="uid://b7v4j0xincy63" path="res://Assets/Player/WizardDefault.png" id="2_3la3r"]
 [ext_resource type="PackedScene" uid="uid://bkqwaphy7gjei" path="res://Scenes/dev_spellbook.tscn" id="3_rvyln"]
+[ext_resource type="Texture2D" uid="uid://bdltrpbos6jqw" path="res://Assets/Spells/SpellArea32x32.png" id="4_qhpyr"]
+[ext_resource type="Texture2D" uid="uid://utq4fqav42jg" path="res://Assets/Spells/SpellArea64x32.png" id="5_0fp87"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qh41i"]
 atlas = ExtResource("2_3la3r")
@@ -157,20 +159,116 @@ animations = [{
 radius = 5.0
 height = 22.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nldrb"]
+atlas = ExtResource("4_qhpyr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwexn"]
+atlas = ExtResource("4_qhpyr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0u4l"]
+atlas = ExtResource("4_qhpyr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg5hj"]
+atlas = ExtResource("4_qhpyr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ao482"]
+atlas = ExtResource("4_qhpyr")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_640sc"]
+atlas = ExtResource("5_0fp87")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ttki"]
+atlas = ExtResource("5_0fp87")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cph6x"]
+atlas = ExtResource("5_0fp87")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_401ro"]
+atlas = ExtResource("5_0fp87")
+region = Rect2(192, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p260p"]
+atlas = ExtResource("5_0fp87")
+region = Rect2(256, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjh87"]
+atlas = ExtResource("5_0fp87")
+region = Rect2(320, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ccsd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nldrb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwexn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0u4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg5hj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ao482")
+}],
+"loop": true,
+"name": &"32x32",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_640sc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ttki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cph6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_401ro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p260p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjh87")
+}],
+"loop": true,
+"name": &"64x32",
+"speed": 20.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_6g0s8")
 speed = 50.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="PlayerCharacter" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_c0wcu")
 animation = &"Down_Idle"
 autoplay = "Down_Idle"
 frame_progress = 0.317409
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_0pg3e")
 
 [node name="Spellbook" parent="." instance=ExtResource("3_rvyln")]
 position = Vector2(17, 0)
 radius = 10
 spellOffset = 5
+
+[node name="SpellArea" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3ccsd")
+animation = &"64x32"
+
+[connection signal="showSpellArea" from="Spellbook" to="." method="_on_spellbook_show_spell_area"]

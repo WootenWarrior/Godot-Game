@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://bkqwaphy7gjei"]
 
 [ext_resource type="Texture2D" uid="uid://bp6h2qmoconbj" path="res://Assets/Player/Spellbook.png" id="1_uemhg"]
-[ext_resource type="Script" path="res://Scripts/Spellbook.gd" id="2_sougx"]
+[ext_resource type="Script" path="res://Scripts/Weapon.gd" id="2_f6yyr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8m876"]
 atlas = ExtResource("1_uemhg")
@@ -184,5 +184,5 @@ animation = &"Page_Flip"
 autoplay = "Idle"
 frame = 11
 frame_progress = 1.0
-script = ExtResource("2_sougx")
+script = ExtResource("2_f6yyr")
 radius = 50
