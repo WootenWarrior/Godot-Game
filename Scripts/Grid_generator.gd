@@ -1,14 +1,14 @@
 extends TileMap
 
-@export var baseHeight = 0
-@export var baseWidth = 0
-@export var baseYOffset = 0
-@export var baseXOffset = 0
+@export var base_height = 0
+@export var base_width = 0
+@export var base_y_offset = 0
+@export var base_x_offset = 0
 
 func _ready():
-	Generate_Grid(baseHeight,baseWidth,baseXOffset,baseYOffset)
+	generate_grid(base_height,base_width,base_y_offset,base_x_offset)
 
-func Generate_Grid(height,width,offsetX,offsetY):
+func generate_grid(height,width,x_offset,y_offset):
 	var grid = []
 	var prevCellId = 0
 	for i in range(height):

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bppd1ktffdhp"
+path="res://.godot/imported/TestTiles.aseprite-6e1335b814c9b5682a98d68096247e85.res"
+
+[deps]
+
+source_file="res://Assets/TestTiles/TestTiles.aseprite"
+dest_files=["res://.godot/imported/TestTiles.aseprite-6e1335b814c9b5682a98d68096247e85.res"]
+
+[params]
+

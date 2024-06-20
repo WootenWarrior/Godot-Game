@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://cmnis83toj64n"]
+
+[ext_resource type="Texture2D" uid="uid://bdltrpbos6jqw" path="res://Assets/Spells/SpellArea32x32.png" id="1_vxym5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rvj7"]
+atlas = ExtResource("1_vxym5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbuf5"]
+atlas = ExtResource("1_vxym5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10ep5"]
+atlas = ExtResource("1_vxym5")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_en0rs"]
+atlas = ExtResource("1_vxym5")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80cry"]
+atlas = ExtResource("1_vxym5")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7ugcv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rvj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbuf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10ep5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en0rs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80cry")
+}],
+"loop": true,
+"name": &"32x32",
+"speed": 20.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_7ugcv")
+animation = &"32x32"

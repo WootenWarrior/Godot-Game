@@ -1,4 +1,3 @@
-extends Projectile
+extends Projectile_Spell
 
-var spellName = "Fireball"
-var spellAreaType: StringName = "64x32"
+var spell_name = "Fireball"
