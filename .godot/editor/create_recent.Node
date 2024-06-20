@@ -1,3 +1,7 @@
+ColorRect
+VBoxContainer
+MarginContainer
+CenterContainer
 CollisionShape2D
 Area2D
 TextureButton
@@ -9,6 +13,3 @@ HBoxContainer
 AnimatedSprite2D
 CharacterBody2D
 Node2D
-AnimationPlayer
-CanvasLayer
-Camera2D

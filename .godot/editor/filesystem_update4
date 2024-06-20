@@ -12,3 +12,4 @@ res://Scenes/Inventory_menu.tscn
 res://Scenes/Spell_selection.tscn
 res://Scripts/Spellbook.gd
 res://Scripts/Magic_weapon.gd
+res://Scenes/Inventory_menu.gd

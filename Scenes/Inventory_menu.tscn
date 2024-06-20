@@ -38,7 +38,7 @@ region = Rect2(304, 32, 64, 32)
 atlas = ExtResource("1_08it7")
 region = Rect2(208, 32, 64, 32)
 
-[node name="Control" type="Control"]
+[node name="Inventory_menu" type="Control"]
 z_index = 10
 layout_mode = 3
 anchors_preset = 15
@@ -47,19 +47,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(200, 0)
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -116.0
-offset_top = 10.0
-offset_right = 116.0
-offset_bottom = 42.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -550.0
+offset_bottom = -300.0
 grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 0
 
-[node name="TextureButton" type="TextureButton" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 toggle_mode = true
@@ -67,7 +79,7 @@ texture_normal = SubResource("AtlasTexture_5q7w4")
 texture_pressed = SubResource("AtlasTexture_8cpvi")
 texture_hover = SubResource("AtlasTexture_7ty5u")
 
-[node name="TextureButton2" type="TextureButton" parent="HBoxContainer"]
+[node name="TextureButton2" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 toggle_mode = true
@@ -75,9 +87,19 @@ texture_normal = SubResource("AtlasTexture_bv2jq")
 texture_pressed = SubResource("AtlasTexture_mhbc8")
 texture_hover = SubResource("AtlasTexture_3qq2h")
 
-[node name="TextureButton3" type="TextureButton" parent="HBoxContainer"]
+[node name="TextureButton3" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 toggle_mode = true
 texture_normal = SubResource("AtlasTexture_3i423")
 texture_pressed = SubResource("AtlasTexture_m56gu")
 texture_hover = SubResource("AtlasTexture_13ynr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.364706, 0.435294, 1)
