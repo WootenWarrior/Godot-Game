@@ -79,6 +79,7 @@ func _physics_process(delta):
 	
 	velocity = direction*speed*sprint_multiplier_temp
 	move_and_slide()
+	
 
 func _on_spellbook_toggle_spell_area(_visible):
 	var spell_area_animation = "32x32"

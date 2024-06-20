@@ -33,8 +33,13 @@ func _process(delta):
 
 func _on_area_body_entered(body):
 	if body is TileMap:
-		body.set_layer_z_index(1,2)
+		player.get_child(0).z_index = body.get_layer_z_index(1) - 1
+		#print("enter weapon: ",z_index)
+		#print("player: ",player.z_index)
 
 func _on_area_body_exited(body):
 	if body is TileMap:
-		body.set_layer_z_index(1,-5)
+		player.get_child(0).z_index = 0
+		#print("exit weapon: ",z_index)
+		#print("player: ",player.z_index)
+

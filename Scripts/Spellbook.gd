@@ -39,11 +39,8 @@ func set_weapon_pos():
 
 		global_position = Vector2(x, y)
 		rotation = angle + PI / 2
-	
-		if player.position.y > mouse_pos.y:
-			z_index = base_z_index - 3
-		else:
-			z_index = base_z_index
+		
+		update_z_index(mouse_pos)
 
 func _on_attack():
 	super._on_attack()
@@ -72,3 +69,9 @@ func _on_weapon_out():
 	instantiate_spell()
 	play("Page_Flip")
 	print("weapon drawn")
+
+func update_z_index(mouse_pos):
+	if player.position.y > mouse_pos.y:
+		z_index = player.get_child(0).z_index - 1
+	else:
+		z_index = player.get_child(0).z_index + 1
