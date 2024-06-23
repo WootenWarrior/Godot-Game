@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://ctwcjcvs0316s"
+path="res://.godot/imported/Slime1.aseprite-d421d3d79b1e7e8eae307c5c4a445e16.res"
+
+[deps]
+
+source_file="res://Assets/Enemies/Slime1.aseprite"
+dest_files=["res://.godot/imported/Slime1.aseprite-d421d3d79b1e7e8eae307c5c4a445e16.res"]
+
+[params]
+

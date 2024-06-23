@@ -184,4 +184,5 @@ zoom = Vector2(2, 2)
 
 [node name="Control" parent="Hotbar" instance=ExtResource("6_svoae")]
 
+[connection signal="hit" from="." to="." method="_on_hit"]
 [connection signal="toggle_spell_area" from="Spellbook" to="." method="_on_spellbook_toggle_spell_area"]

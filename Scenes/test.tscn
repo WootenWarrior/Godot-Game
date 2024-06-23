@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dg26xi6r0s5td"]
+[gd_scene load_steps=10 format=3 uid="uid://dg26xi6r0s5td"]
 
 [ext_resource type="PackedScene" uid="uid://bdvdr5madyn58" path="res://Scenes/player.tscn" id="1_s0x65"]
 [ext_resource type="Texture2D" uid="uid://tlq1q6ogk44u" path="res://Assets/TestTiles/PlaceholderGround.png" id="2_cqya5"]
 [ext_resource type="PackedScene" uid="uid://fg7uwomywfk6" path="res://Scenes/Hotbar.tscn" id="2_rcw3l"]
 [ext_resource type="Texture2D" uid="uid://u80ylbxodscw" path="res://Assets/TestTiles/TestTiles.png" id="2_ys0a2"]
 [ext_resource type="Script" path="res://Scripts/Grid_generator.gd" id="3_pfjnd"]
+[ext_resource type="PackedScene" uid="uid://c5g4oah33llvk" path="res://Scenes/Slime.tscn" id="6_7kkvn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bwn0x"]
 texture = ExtResource("2_ys0a2")
@@ -177,3 +178,6 @@ layer_2/tile_data = PackedInt32Array(-262149, 327680, 1, -262145, 327680, 1, -26
 script = ExtResource("3_pfjnd")
 
 [node name="CanvasLayer" parent="." instance=ExtResource("2_rcw3l")]
+
+[node name="Slime" parent="." instance=ExtResource("6_7kkvn")]
+position = Vector2(64, 1)

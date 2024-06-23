@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 @export var speed: float = 75.0
 @export var sprint_multiplier: float = 2
+@export var health = 100
 @onready var player_sprite = $PlayerCharacter
 @onready var spell_area_scene = preload("res://Scenes/spell_area.tscn")
 @onready var weapon = $Spellbook
@@ -12,6 +13,7 @@ var lightning = preload("res://Scenes/Lightning_strike.tscn")
 var is_facing_up = false
 
 signal roll
+signal hit(damage:int)
 
 func _ready():
 	InventoryManager.set_player_reference(self)
@@ -19,6 +21,7 @@ func _ready():
 	spell_area = spell_area_scene.instantiate()
 	add_child(spell_area)
 	spell_area.visible = false
+	add_to_group("Player")
 
 func _physics_process(delta):
 	var mouse_pos = get_global_mouse_position()
@@ -81,10 +84,15 @@ func _physics_process(delta):
 	move_and_slide()
 	
 
-func _on_spellbook_toggle_spell_area(_visible):
+func _on_spellbook_toggle_spell_area(_visible:bool):
 	var spell_area_animation = "32x32"
 	spell_area.visible = _visible
 	
 	if spell_area.visible:
 		spell_area.play(spell_area_animation)
 
+func _on_hit(damage:int):
+	print("player hit")
+	health -= damage
+	if health < 0:
+		print("player died")
