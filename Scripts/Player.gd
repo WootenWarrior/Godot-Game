@@ -7,10 +7,13 @@ extends CharacterBody2D
 @onready var player_sprite = $PlayerCharacter
 @onready var spell_area_scene = preload("res://Scenes/spell_area.tscn")
 @onready var weapon = $Spellbook
+@onready var hit_timer = $InvulnerabilityTimer
+var can_be_hit = true
 var spell_area = null
 var fireball = preload("res://Scenes/Fireball.tscn")
 var lightning = preload("res://Scenes/Lightning_strike.tscn")
 var is_facing_up = false
+var external_forces = Vector2.ZERO
 
 signal roll
 signal hit(damage:int)
@@ -23,7 +26,7 @@ func _ready():
 	spell_area.visible = false
 	add_to_group("Player")
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var mouse_pos = get_global_mouse_position()
 	
 	spell_area.global_position = mouse_pos
@@ -81,8 +84,13 @@ func _physics_process(delta):
 		roll.emit()
 	
 	velocity = direction*speed*sprint_multiplier_temp
+	velocity += external_forces
 	move_and_slide()
-	
+	external_forces = Vector2.ZERO
+
+func apply_force(force_direction: Vector2, force_strength: float):
+	external_forces = force_direction.normalized() * force_strength
+	print("force applied: ", external_forces)
 
 func _on_spellbook_toggle_spell_area(_visible:bool):
 	var spell_area_animation = "32x32"
@@ -92,7 +100,15 @@ func _on_spellbook_toggle_spell_area(_visible:bool):
 		spell_area.play(spell_area_animation)
 
 func _on_hit(damage:int):
-	print("player hit")
-	health -= damage
+	if can_be_hit:
+		health -= damage
+		can_be_hit = false
+		hit_timer.start()
+		print(health)
+		#player_sprite.play("hit")
+	
 	if health < 0:
 		print("player died")
+
+func _on_timer_timeout():
+	can_be_hit = true

@@ -13,7 +13,10 @@ func _ready():
 
 func _process(delta):
 	super._process(delta)
+	
 	set_weapon_pos()
+	
+	check_z_index()
 
 func set_spell_pos():
 	if visible and equipped_spell:
@@ -39,8 +42,12 @@ func set_weapon_pos():
 
 		global_position = Vector2(x, y)
 		rotation = angle + PI / 2
-		
-		update_z_index(mouse_pos)
+
+func check_z_index():
+	if player.global_position.y > global_position.y:
+		z_index = player.z_index - 1
+	else:
+		z_index = player.z_index
 
 func _on_attack():
 	super._on_attack()
@@ -69,9 +76,3 @@ func _on_weapon_out():
 	instantiate_spell()
 	play("Page_Flip")
 	print("weapon drawn")
-
-func update_z_index(mouse_pos):
-	if player.position.y > mouse_pos.y:
-		z_index = player.get_child(0).z_index - 1
-	else:
-		z_index = player.get_child(0).z_index + 1

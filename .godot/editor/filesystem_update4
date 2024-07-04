@@ -1,11 +1,10 @@
-res://Scenes/Slime.tscn
-res://Scripts/Player.gd
-res://Scripts/Enemy.gd
-res://Scripts/Physical_enemy.gd
-res://Scripts/Slime.gd
-res://Scenes/player.tscn
 res://Scenes/test.tscn
+res://Scripts/Player.gd
+res://Scenes/player.tscn
 res://Scenes/Dev_spellbook.tscn
 res://Scenes/Fireball.tscn
 res://Scenes/Lightning_strike.tscn
 res://Scenes/Enemy_spawner.tscn
+res://Scenes/Slime.tscn
+res://Scenes/spell_area.tscn
+res://Scripts/Slime.gd

@@ -106,7 +106,7 @@ animations = [{
 radius = 14.0
 
 [node name="LightningStrike" type="AnimatedSprite2D"]
-z_index = -7
+z_index = 10
 sprite_frames = SubResource("SpriteFrames_q0dpt")
 animation = &"Strike"
 offset = Vector2(0, -17)

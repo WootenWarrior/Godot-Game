@@ -6,7 +6,7 @@ class_name Area_Spell
 var has_spell_area = true
 var spell_area_type = "32x32"
 
-func _process(delta):
+func _process(_delta):
 	var player = get_parent().get_child(0)
 	var mouse_pos = get_global_mouse_position()
 	if player.position.y > mouse_pos.y:

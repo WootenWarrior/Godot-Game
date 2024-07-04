@@ -46,5 +46,6 @@ animations = [{
 }]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+z_index = -4
 sprite_frames = SubResource("SpriteFrames_7ugcv")
 animation = &"32x32"

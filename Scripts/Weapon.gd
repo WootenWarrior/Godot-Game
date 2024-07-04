@@ -17,7 +17,7 @@ func _ready():
 		area.connect("body_entered", Callable(self, "_on_area_body_entered"))
 		area.connect("body_exited", Callable(self, "_on_area_body_exited"))
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("get_weapon_out") and not visible:
 		visible = true
 		weapon_out.emit()

@@ -159,7 +159,8 @@ radius = 7.0
 height = 22.0
 
 [node name="Player" type="CharacterBody2D"]
-safe_margin = 0.5
+collision_layer = 7
+collision_mask = 7
 script = ExtResource("1_6g0s8")
 speed = 50.0
 
@@ -184,5 +185,9 @@ zoom = Vector2(2, 2)
 
 [node name="Control" parent="Hotbar" instance=ExtResource("6_svoae")]
 
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+wait_time = 0.4
+
 [connection signal="hit" from="." to="." method="_on_hit"]
 [connection signal="toggle_spell_area" from="Spellbook" to="." method="_on_spellbook_toggle_spell_area"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_timer_timeout"]
