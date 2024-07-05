@@ -1,6 +1,6 @@
+CollisionShape2D
 RigidBody2D
 Timer
-CollisionShape2D
 Area2D
 NavigationRegion2D
 NavigationLink2D

@@ -1,6 +1,6 @@
 extends Magic_weapon
 
-@export var radius: int = 100
+@export var radius: int = 10
 @export var spell_offset: int = 20
 var test_spell = preload("res://Scenes/Lightning_strike.tscn")
 var equipped_spell = null

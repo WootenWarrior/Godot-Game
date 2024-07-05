@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c5g4oah33llvk"]
+[gd_scene load_steps=30 format=3 uid="uid://c5g4oah33llvk"]
 
 [ext_resource type="Script" path="res://Scripts/Slime.gd" id="1_bfi8f"]
 [ext_resource type="Texture2D" uid="uid://chw0uxvxpegfi" path="res://Assets/Enemies/Slime1.png" id="1_e742b"]
@@ -193,7 +193,13 @@ radius = 154.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_gfqsj"]
 radius = 8.06226
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_xxhlu"]
+radius = 4.47214
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_layer = 9
+collision_mask = 9
 script = ExtResource("1_bfi8f")
 aggro_radius = 10
 
@@ -217,9 +223,15 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_kyew3")
 
 [node name="PlayerCollisionArea" type="Area2D" parent="."]
+collision_layer = 9
+collision_mask = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollisionArea"]
+y_sort_enabled = true
 shape = SubResource("CircleShape2D_gfqsj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xxhlu")
 
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_detection_range_body_entered"]

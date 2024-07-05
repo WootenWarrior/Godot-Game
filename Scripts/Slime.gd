@@ -1,7 +1,7 @@
 extends Physical_enemy
 
 @onready var navigation_agent = $NavigationAgent2D as NavigationAgent2D
-var knockback_force = 100
+var knockback_force = 500
 var is_colliding_with_player = false
 
 func _ready():

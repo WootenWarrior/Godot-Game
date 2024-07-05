@@ -24,6 +24,11 @@ region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7ugcv"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"Hit_small",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8rvj7")
@@ -41,11 +46,11 @@ animations = [{
 "texture": SubResource("AtlasTexture_80cry")
 }],
 "loop": true,
-"name": &"32x32",
+"name": &"Idle_Small",
 "speed": 20.0
 }]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 z_index = -4
 sprite_frames = SubResource("SpriteFrames_7ugcv")
-animation = &"32x32"
+animation = &"Idle_Small"

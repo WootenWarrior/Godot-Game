@@ -4,7 +4,7 @@ class_name Area_Spell
 
 @onready var collider = $Area2D/Collider
 var has_spell_area = true
-var spell_area_type = "32x32"
+var spell_area_type = "Idle_Small"
 
 func _process(_delta):
 	var player = get_parent().get_child(0)

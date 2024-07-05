@@ -18,10 +18,10 @@ func _ready():
 func _process(_delta):
 	var player_pos = player.global_position
 	
-	if player_pos.y > global_position.y:
-		AnimatedSprite.z_index = player.z_index-2
-	else:
-		AnimatedSprite.z_index = player.z_index+2
+	#if player_pos.y > global_position.y:
+		#AnimatedSprite.z_index = player.z_index-2
+	#else:
+		#AnimatedSprite.z_index = player.z_index+2
 
 func set_collision_shape(collision_shape: CollisionShape2D):
 	Collision_shape = collision_shape
