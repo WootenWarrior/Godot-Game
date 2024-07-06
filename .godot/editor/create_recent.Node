@@ -1,3 +1,6 @@
+TextureProgressBar
+HBoxContainer
+VBoxContainer
 CollisionShape2D
 RigidBody2D
 Timer
@@ -10,5 +13,3 @@ CharacterBody2D
 Node2D
 Node
 ColorRect
-VBoxContainer
-MarginContainer

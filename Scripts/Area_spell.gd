@@ -2,7 +2,6 @@ extends Spell
 
 class_name Area_Spell
 
-@onready var collider = $Area2D/Collider
 var has_spell_area = true
 var spell_area_type = "Idle_Small"
 
@@ -22,3 +21,11 @@ func _on_fire():
 func _on_animation_finished():
 	visible = false
 	collider.disabled = true
+
+func connect_to_area_signal():
+	area.connect("body_entered", Callable(self, "_on_area_2d_body_entered"))
+
+func _on_area_2d_body_entered(body):
+	print("collision: ",body)
+	body.damage(damage)
+	print(body.health)

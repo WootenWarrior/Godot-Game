@@ -7,25 +7,29 @@ var is_colliding_with_player = false
 func _ready():
 	super._ready()
 	health = 20
-	damage = 5
+	attack_damage = 5
 	speed = 50
-	aggro_radius = 150
+	aggro_radius = 200
 	set_collision_shape($PlayerCollisionArea/CollisionShape2D)
 	set_animated_sprite_2d($AnimatedSprite2D)
 	set_aggro_radius(aggro_radius,$DetectionRange/CollisionShape2D)
 
 func _process(delta):
-	super._process(delta)
-	if target:
-		move_towards_target()
-	
-	if is_colliding_with_player:
-		player.hit.emit(damage)
-	
-	if velocity > Vector2.ZERO:
-		AnimatedSprite.play("Walk")
-	else:
-		AnimatedSprite.play("Idle")
+	if not dead:
+		super._process(delta)
+		if target:
+			move_towards_target()
+		
+		if is_colliding_with_player:
+			player.hit.emit(attack_damage)
+		
+		if velocity > Vector2.ZERO:
+			AnimatedSprite.play("Walk")
+		else:
+			AnimatedSprite.play("Idle")
+		
+		if health <= 0:
+			die()
 
 func make_path() -> void:
 	navigation_agent.target_position = player.global_position
@@ -37,7 +41,7 @@ func make_path() -> void:
 func move_towards_target() -> void:
 	var next_position = to_local(navigation_agent.get_next_path_position())
 	var direction = next_position.normalized()
-	velocity = direction * speed
+	velocity = (direction * speed) + external_forces
 	
 	#print(navigation_agent.is_target_reachable())
 	#print(navigation_agent.target_position)
@@ -46,6 +50,7 @@ func move_towards_target() -> void:
 	#print("Velocity: ", velocity)
 	
 	move_and_slide()
+	external_forces *= damping_factor
 
 func _on_detection_range_body_entered(body) -> void:
 	target = body

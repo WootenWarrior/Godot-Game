@@ -94,6 +94,9 @@ func _physics_process(_delta):
 		move_and_slide()
 		external_forces = external_forces*external_force_decay
 
+func damage(damage_value) -> void:
+	health-=damage_value
+
 func apply_force(force_direction: Vector2, force_strength: float):
 	external_forces = force_direction.normalized() * force_strength
 	#print("force applied: ", external_forces)
@@ -113,7 +116,7 @@ func _on_toggle_spell_area(_visible:bool):
 func _on_hit(damage:int):
 	if not is_dead:
 		if can_be_hit:
-			health -= damage
+			damage(damage)
 			can_be_hit = false
 			hit_timer.start()
 			print(health)

@@ -3,6 +3,9 @@
 [ext_resource type="Script" path="res://Scripts/Slime.gd" id="1_bfi8f"]
 [ext_resource type="Texture2D" uid="uid://chw0uxvxpegfi" path="res://Assets/Enemies/Slime1.png" id="1_e742b"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_xxhlu"]
+radius = 4.47214
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_npdal"]
 atlas = ExtResource("1_e742b")
 region = Rect2(672, 0, 32, 32)
@@ -193,9 +196,6 @@ radius = 154.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_gfqsj"]
 radius = 8.06226
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xxhlu"]
-radius = 4.47214
-
 [node name="CharacterBody2D" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 9
@@ -203,11 +203,15 @@ collision_mask = 9
 script = ExtResource("1_bfi8f")
 aggro_radius = 10
 
+[node name="MainPhysicalCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xxhlu")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7c71d")
-animation = &"Walk"
+animation = &"Die"
 autoplay = "Idle"
-frame_progress = 0.277383
+frame = 4
+frame_progress = 1.0
 
 [node name="NavigationTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -229,9 +233,6 @@ collision_mask = 9
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollisionArea"]
 y_sort_enabled = true
 shape = SubResource("CircleShape2D_gfqsj")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_xxhlu")
 
 [connection signal="timeout" from="NavigationTimer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_detection_range_body_entered"]

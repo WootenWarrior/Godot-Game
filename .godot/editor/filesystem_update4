@@ -7,5 +7,11 @@ res://Scenes/Lightning_strike.tscn
 res://Scenes/Enemy_spawner.tscn
 res://Scenes/Slime.tscn
 res://Scenes/spell_area.tscn
+res://Scenes/UI/PlayerUI.tscn
 res://Scripts/Area_spell.gd
+res://Scripts/Spell.gd
+res://Scripts/Lightning_strike.gd
+res://Scripts/Slime.gd
+res://Scripts/Enemy.gd
+res://Scripts/Magic_weapon.gd
 res://Scripts/Spellbook.gd

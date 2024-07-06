@@ -10,6 +10,7 @@ var spell_idle = false
 func _ready():
 	super._ready()
 	visible = false
+	radius = 10
 
 func _process(delta):
 	super._process(delta)
@@ -70,9 +71,9 @@ func _on_weapon_hide():
 	if equipped_spell:
 		equipped_spell.queue_free()
 	equipped_spell = null
-	print("weapon hidden")
+	#print("weapon hidden")
 
 func _on_weapon_out():
 	instantiate_spell()
 	play("Page_Flip")
-	print("weapon drawn")
+	#print("weapon drawn")
