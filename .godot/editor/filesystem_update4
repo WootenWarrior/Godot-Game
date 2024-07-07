@@ -27,3 +27,5 @@ res://Scripts/Spellbook.gd
 res://Scripts/Weapon.gd
 res://Scripts/Magic_weapon.gd
 res://Scripts/Enemy.gd
+res://Scenes/UI/SprintBar.tscn
+res://Scripts/SprintBar.gd

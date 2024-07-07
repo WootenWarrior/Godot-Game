@@ -32,8 +32,8 @@ func _on_animation_finished():
 	can_knockback = true
 
 func _on_area_2d_body_entered(body):
-	print("collision: ",body.name)
+	#print("collision: ",body.name)
 	if body.name != "TileMap":
 		knockback(body)
 		body.damage(damage)
-		print(body.health)
+		#print(body.health)

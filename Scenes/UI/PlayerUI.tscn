@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://k3tki8ixem5h"]
+[gd_scene load_steps=4 format=3 uid="uid://k3tki8ixem5h"]
 
 [ext_resource type="PackedScene" uid="uid://cqtqiolcultdc" path="res://Scenes/UI/HealthBar.tscn" id="1_xusi6"]
 [ext_resource type="PackedScene" uid="uid://fg7uwomywfk6" path="res://Scenes/UI/Hotbar.tscn" id="2_5crt7"]
+[ext_resource type="PackedScene" uid="uid://cjug1r5cmxry4" path="res://Scenes/UI/SprintBar.tscn" id="3_a8y67"]
 
 [node name="PlayerUI" type="Control"]
 layout_mode = 3
@@ -13,10 +14,13 @@ grow_vertical = 2
 
 [node name="HealthBar" parent="." instance=ExtResource("1_xusi6")]
 layout_mode = 0
-offset_left = 5.0
 offset_top = 590.0
-offset_right = 305.0
 offset_bottom = 600.0
 
 [node name="Hotbar" parent="." instance=ExtResource("2_5crt7")]
 layout_mode = 1
+
+[node name="SprintBar" parent="." instance=ExtResource("3_a8y67")]
+layout_mode = 0
+offset_top = 579.0
+offset_bottom = 589.0
