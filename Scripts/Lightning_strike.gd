@@ -6,6 +6,7 @@ func _ready():
 	connect_to_area_signal()
 	collider.disabled = true
 	damage = 10
+	knockback_strength = 200
 
 func _on_fire():
 	super._on_fire()

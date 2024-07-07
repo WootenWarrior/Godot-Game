@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://v2lejukr4phw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3nn4m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bi1q2"]
+bg_color = Color(1, 1, 1, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1, 1)
+
+[node name="SpellChargeBar" type="ProgressBar"]
+offset_right = 100.0
+offset_bottom = 10.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_3nn4m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bi1q2")
+value = 60.0
+show_percentage = false

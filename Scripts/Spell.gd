@@ -6,6 +6,7 @@ var damage = 1
 var charge_time = 1
 var collider = null
 var area = null
+var knockback_strength = 0
 
 signal idle
 signal fire

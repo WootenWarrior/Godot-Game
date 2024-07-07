@@ -6,16 +6,19 @@ extends CharacterBody2D
 @export var health = 100
 @export var external_force_decay = 0.9   #Bounce damping factor on player
 @onready var player_sprite = $PlayerCharacter
-@onready var spell_area_scene = preload("res://Scenes/spell_area.tscn")
+@onready var spell_area_scene = preload("res://Scenes/SpellArea.tscn")
 @onready var weapon = null
 @onready var hit_timer = $InvulnerabilityTimer
+@onready var health_bar = $CanvasLayer/PlayerUI/HealthBar
 var can_be_hit = true
 var spell_area = null
 var fireball = preload("res://Scenes/Fireball.tscn")
-var lightning = preload("res://Scenes/Lightning_strike.tscn")
+var lightning = preload("res://Scenes/LightningStrike.tscn")
 var is_facing_up = false
 var external_forces = Vector2.ZERO
 var is_dead = false
+var speed_temp = 0
+var speed_reduction_multiplier = 0.5
 
 signal roll
 signal hit(damage:int)
@@ -28,9 +31,11 @@ func _ready():
 	add_child(spell_area)
 	spell_area.visible = false
 	add_to_group("Player")
+	health_bar.init_health(health)
+	speed_temp = speed
 	
 	#Debug
-	set_weapon(load("res://Scenes/Dev_spellbook.tscn"))
+	set_weapon(load("res://Scenes/DevSpellbook.tscn"))
 
 func _physics_process(_delta):
 	if not is_dead:
@@ -90,12 +95,16 @@ func _physics_process(_delta):
 		if Input.is_action_just_pressed("roll"):
 			roll.emit()
 		
-		velocity = (direction*speed*sprint_multiplier_temp) + external_forces
+		if Input.is_action_pressed("charge"):
+			speed = speed_temp*speed_reduction_multiplier
+		
+		velocity = (direction*speed*sprint_multiplier_temp) + (external_forces*sprint_multiplier_temp)
 		move_and_slide()
 		external_forces = external_forces*external_force_decay
 
 func damage(damage_value) -> void:
 	health-=damage_value
+	health_bar.health = health
 
 func apply_force(force_direction: Vector2, force_strength: float):
 	external_forces = force_direction.normalized() * force_strength

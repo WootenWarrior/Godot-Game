@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://k3tki8ixem5h"]
+[gd_scene load_steps=3 format=3 uid="uid://k3tki8ixem5h"]
+
+[ext_resource type="PackedScene" uid="uid://cqtqiolcultdc" path="res://Scenes/UI/HealthBar.tscn" id="1_xusi6"]
+[ext_resource type="PackedScene" uid="uid://fg7uwomywfk6" path="res://Scenes/UI/Hotbar.tscn" id="2_5crt7"]
 
 [node name="PlayerUI" type="Control"]
 layout_mode = 3
@@ -8,17 +11,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HealthBar" parent="." instance=ExtResource("1_xusi6")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 590.0
+offset_right = 305.0
+offset_bottom = 600.0
+
+[node name="Hotbar" parent="." instance=ExtResource("2_5crt7")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2

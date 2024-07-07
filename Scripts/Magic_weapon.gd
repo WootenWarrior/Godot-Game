@@ -17,10 +17,13 @@ func _process(delta):
 	if visible:
 		if Input.is_action_pressed("charge") and not is_charged:
 			charging_held_time += delta
+			charge_bar.value = charging_held_time*100
+			print(charge_bar.value)
 			#print("charging value = ",charging_held_time)
 			#print("charge time = ", charge_time)
 		if Input.is_action_just_released("charge") and not is_charged:
 			charging_held_time = 0
+			charge_bar.value = 0
 		
 		if charge_time < charging_held_time:
 			reset_charge()

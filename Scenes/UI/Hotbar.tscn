@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Hotbar.gd" id="1_jueji"]
 
-[node name="Control" type="Control"]
+[node name="Hotbar" type="Control"]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0

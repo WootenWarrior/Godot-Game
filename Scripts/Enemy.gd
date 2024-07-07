@@ -5,6 +5,7 @@ class_name Enemy
 @export var aggro_radius = 0
 @onready var Collision_shape = null
 @onready var AnimatedSprite = null
+var health_bar = null
 var player = null
 var players = null
 var attack_damage = 1
@@ -21,6 +22,12 @@ func _ready():
 func _process(_delta):
 	pass
 
+func apply_force(force_direction: Vector2, force_strength: float):
+	external_forces = force_direction.normalized() * force_strength
+
+func set_health_bar(_health_bar):
+	health_bar = _health_bar
+
 func set_collision_shape(collision_shape: CollisionShape2D):
 	Collision_shape = collision_shape
 
@@ -36,6 +43,7 @@ func set_aggro_radius(radius: float, collision_shape: CollisionShape2D):
 
 func damage(damage_value) -> void:
 	health-=damage_value
+	health_bar.health = health
 
 func die() -> void:
 	AnimatedSprite.play("Die")

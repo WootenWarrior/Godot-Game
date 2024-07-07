@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_6g0s8"]
 [ext_resource type="Texture2D" uid="uid://b7v4j0xincy63" path="res://Assets/Player/WizardDefault.png" id="2_3la3r"]
-[ext_resource type="PackedScene" uid="uid://fg7uwomywfk6" path="res://Scenes/Hotbar.tscn" id="6_svoae"]
+[ext_resource type="PackedScene" uid="uid://k3tki8ixem5h" path="res://Scenes/UI/PlayerUI.tscn" id="4_70g84"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8k3j1"]
 atlas = ExtResource("2_3la3r")
@@ -214,12 +214,12 @@ shape = SubResource("CapsuleShape2D_0pg3e")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 
-[node name="Hotbar" type="CanvasLayer" parent="."]
-
-[node name="Control" parent="Hotbar" instance=ExtResource("6_svoae")]
-
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
 wait_time = 0.2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerUI" parent="CanvasLayer" instance=ExtResource("4_70g84")]
 
 [connection signal="dead" from="." to="." method="_on_dead"]
 [connection signal="hit" from="." to="." method="_on_hit"]

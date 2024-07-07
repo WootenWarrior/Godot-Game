@@ -1,98 +1,98 @@
 [gd_scene load_steps=28 format=3 uid="uid://bkqwaphy7gjei"]
 
-[ext_resource type="Texture2D" uid="uid://bp6h2qmoconbj" path="res://Assets/Player/Spellbook.png" id="1_uemhg"]
-[ext_resource type="Script" path="res://Scripts/Spellbook.gd" id="2_5807o"]
+[ext_resource type="Texture2D" uid="uid://bp6h2qmoconbj" path="res://Assets/Player/Spellbook.png" id="1_sv2id"]
+[ext_resource type="Script" path="res://Scripts/Spellbook.gd" id="2_hbung"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8m876"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2dnfp"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sua1p"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_48sf7"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(128, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p3xjn"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(160, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g5f30"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(192, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lm6hb"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(224, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_blni3"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(256, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b32tb"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(288, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lu8cs"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(320, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5awge"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(352, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pfh53"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rydqu"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dsweg"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vxahx"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_73oww"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7p85s"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mr4by"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(224, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_if7ss"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(256, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8cbf"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(288, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7fuos"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(320, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pjuhe"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(352, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vjnll"]
-atlas = ExtResource("1_uemhg")
+atlas = ExtResource("1_sv2id")
 region = Rect2(384, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k1llk"]
@@ -188,7 +188,7 @@ animation = &"Page_Flip"
 autoplay = "Idle"
 frame = 11
 frame_progress = 1.0
-script = ExtResource("2_5807o")
+script = ExtResource("2_hbung")
 radius = 20
 
 [node name="Area2D" type="Area2D" parent="."]
