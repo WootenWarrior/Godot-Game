@@ -2,7 +2,7 @@ extends Magic_weapon
 
 @export var radius: int = 10
 @export var spell_offset: int = 20
-var test_spell = preload("res://Scenes/LightningStrike.tscn")
+var test_spell = preload("res://Scenes/Spells/LightningStrike.tscn")
 var equipped_spell = null
 var projectile_speed = 0
 var spell_idle = false

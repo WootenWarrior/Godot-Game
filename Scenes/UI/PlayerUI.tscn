@@ -13,14 +13,22 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HealthBar" parent="." instance=ExtResource("1_xusi6")]
-layout_mode = 0
-offset_top = 590.0
-offset_bottom = 600.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_bottom = 0.0
+grow_vertical = 0
 
 [node name="Hotbar" parent="." instance=ExtResource("2_5crt7")]
 layout_mode = 1
 
 [node name="SprintBar" parent="." instance=ExtResource("3_a8y67")]
-layout_mode = 0
-offset_top = 579.0
-offset_bottom = 589.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_bottom = -13.0
+grow_vertical = 0

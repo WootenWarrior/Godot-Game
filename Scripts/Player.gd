@@ -9,15 +9,15 @@ extends CharacterBody2D
 @export var sprint = 100
 @export var external_force_decay = 0.9   #Bounce damping factor on player
 @onready var player_sprite = $PlayerCharacter
-@onready var spell_area_scene = preload("res://Scenes/SpellArea.tscn")
+@onready var spell_area_scene = preload("res://Scenes/Spells/SpellArea.tscn")
 @onready var weapon = null
 @onready var hit_timer = $InvulnerabilityTimer
 @onready var health_bar = $CanvasLayer/PlayerUI/HealthBar
 @onready var sprint_bar = $CanvasLayer/PlayerUI/SprintBar
 var can_be_hit = true
 var spell_area = null
-var fireball = preload("res://Scenes/Fireball.tscn")
-var lightning = preload("res://Scenes/LightningStrike.tscn")
+var fireball = preload("res://Scenes/Spells/Fireball.tscn")
+var lightning = preload("res://Scenes/Spells/LightningStrike.tscn")
 var is_facing_up = false
 var external_forces = Vector2.ZERO
 var is_dead = false
@@ -40,7 +40,7 @@ func _ready():
 	speed_temp = speed
 	
 	#Debug
-	set_weapon(load("res://Scenes/DevSpellbook.tscn"))
+	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
 
 func _physics_process(_delta):
 	if not is_dead:

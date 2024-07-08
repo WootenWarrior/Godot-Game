@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://fg7uwomywfk6"]
 
-[ext_resource type="Script" path="res://Scripts/Hotbar.gd" id="1_jueji"]
+[ext_resource type="Script" path="res://Scripts/UI/Hotbar.gd" id="1_1ghj1"]
 
 [node name="Hotbar" type="Control"]
 layout_mode = 3
@@ -10,19 +10,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
-script = ExtResource("1_jueji")
+script = ExtResource("1_1ghj1")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -55.0
-offset_right = 20.0
-offset_bottom = -15.0
+offset_top = -50.0
 grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 10
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="CenterContainer"]
+layout_mode = 2
+alignment = 1

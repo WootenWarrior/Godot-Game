@@ -1,25 +1,25 @@
 [gd_scene load_steps=8 format=3 uid="uid://cmnis83toj64n"]
 
-[ext_resource type="Texture2D" uid="uid://bdltrpbos6jqw" path="res://Assets/Spells/SpellArea32x32.png" id="1_2cx22"]
+[ext_resource type="Texture2D" uid="uid://bdltrpbos6jqw" path="res://Assets/Spells/SpellArea32x32.png" id="1_hs32s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rvj7"]
-atlas = ExtResource("1_2cx22")
+atlas = ExtResource("1_hs32s")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sbuf5"]
-atlas = ExtResource("1_2cx22")
+atlas = ExtResource("1_hs32s")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_10ep5"]
-atlas = ExtResource("1_2cx22")
+atlas = ExtResource("1_hs32s")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_en0rs"]
-atlas = ExtResource("1_2cx22")
+atlas = ExtResource("1_hs32s")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_80cry"]
-atlas = ExtResource("1_2cx22")
+atlas = ExtResource("1_hs32s")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7ugcv"]

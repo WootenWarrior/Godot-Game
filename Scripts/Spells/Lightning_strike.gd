@@ -1,5 +1,7 @@
 extends Area_Spell
 
+@onready var timer = $ColliderEnabledTime
+
 func _ready():
 	set_area($Area2D)
 	set_collider($Area2D/Collider)
@@ -10,6 +12,8 @@ func _ready():
 
 func _on_fire():
 	super._on_fire()
+	timer.start()
 	play("Strike")
 
-
+func _on_collider_enabled_time_timeout():
+	collider.disabled = true

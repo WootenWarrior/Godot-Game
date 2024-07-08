@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cjug1r5cmxry4"]
 
-[ext_resource type="Script" path="res://Scripts/SprintBar.gd" id="1_aqv02"]
+[ext_resource type="Script" path="res://Scripts/UI/SprintBar.gd" id="1_aqv02"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1rhma"]
 

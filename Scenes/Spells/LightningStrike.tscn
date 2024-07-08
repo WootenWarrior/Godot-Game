@@ -1,58 +1,58 @@
 [gd_scene load_steps=18 format=3 uid="uid://bnegudfxgsw7c"]
 
-[ext_resource type="Texture2D" uid="uid://cy1rsnp4uj4ks" path="res://Assets/Spells/SmallLightiningStrike.png" id="1_u01nb"]
-[ext_resource type="Script" path="res://Scripts/Lightning_strike.gd" id="2_evmaq"]
+[ext_resource type="Texture2D" uid="uid://cy1rsnp4uj4ks" path="res://Assets/Spells/SmallLightiningStrike.png" id="1_kcolf"]
+[ext_resource type="Script" path="res://Scripts/Spells/Lightning_strike.gd" id="2_04k3x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jtd5d"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(0, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gkbpg"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(32, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xv1el"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(64, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v1e7o"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(96, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_prerj"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(128, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d4a0u"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(160, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2uajj"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(192, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_42p13"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(224, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5g7gd"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(256, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7dlt"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(288, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4wo57"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(320, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wok22"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(352, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_urqc5"]
-atlas = ExtResource("1_u01nb")
+atlas = ExtResource("1_kcolf")
 region = Rect2(384, 0, 32, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q0dpt"]
@@ -110,7 +110,7 @@ y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_q0dpt")
 animation = &"Strike"
 offset = Vector2(0, -17)
-script = ExtResource("2_evmaq")
+script = ExtResource("2_04k3x")
 
 [node name="Area2D" type="Area2D" parent="."]
 z_index = -8
@@ -121,8 +121,10 @@ y_sort_enabled = true
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_8de3j")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="ColliderEnabledTime" type="Timer" parent="."]
+wait_time = 0.1
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
 [connection signal="fire" from="." to="." method="_on_fire"]
 [connection signal="frame_changed" from="." to="." method="_on_frame_changed"]
+[connection signal="timeout" from="ColliderEnabledTime" to="." method="_on_collider_enabled_time_timeout"]
