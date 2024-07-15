@@ -2,7 +2,7 @@ extends Control
 
 @onready var box_container = $CenterContainer/BoxContainer
 
-func _ready():
+func _ready() -> void:
 	# Adding nodes programmatically if needed
 	var label = Label.new()
 	label.text = "1"
@@ -16,7 +16,7 @@ func _ready():
 	label3.text = "3"
 	box_container.add_child(label3)
 
-func clear_hotbar():
+func clear_hotbar() -> void:
 	for child in box_container.get_children():
 		box_container.remove_child(child)
 		child.queue_free()

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 InventoryManager="*res://Scripts/Inventory_manager.gd"
 SpellInventoryManager="*res://Scripts/Spell_inventory_manager.gd"
+WorldManager="*res://Scripts/WorldManager.gd"
 
 [display]
 

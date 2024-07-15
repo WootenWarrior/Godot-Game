@@ -4,7 +4,7 @@ extends Physical_enemy
 var knockback_force = 250
 var is_colliding_with_player = false
 
-func _ready():
+func _ready() -> void:
 	super._ready()
 	health = 20
 	attack_damage = 15
@@ -16,7 +16,7 @@ func _ready():
 	set_health_bar($HealthBar)
 	health_bar.init_health(health)
 
-func _process(delta):
+func _process(delta) -> void:
 	if not dead:
 		super._process(delta)
 		if target:
@@ -62,12 +62,12 @@ func _on_timer_timeout() -> void:
 	if target:
 		make_path()
 
-func _on_player_collision_area_body_entered(body):
+func _on_player_collision_area_body_entered(body) -> void:
 	if body.is_in_group("Player"):
 		is_colliding_with_player = true
 		var direction = body.global_position - global_position
 		body.apply_force(direction,knockback_force)
 
-func _on_player_collision_area_body_exited(body):
+func _on_player_collision_area_body_exited(body) -> void:
 	if body.is_in_group("Player"):
 		is_colliding_with_player = false

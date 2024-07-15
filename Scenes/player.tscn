@@ -208,7 +208,7 @@ speed = 50.0
 
 [node name="PlayerCharacter" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_c0wcu")
-animation = &"Die"
+animation = &"Down_Walk"
 autoplay = "Down_Idle"
 
 [node name="PlayerCollider" type="CollisionShape2D" parent="."]
@@ -231,4 +231,5 @@ shape = SubResource("CircleShape2D_2bvfs")
 
 [connection signal="dead" from="." to="." method="_on_dead"]
 [connection signal="hit" from="." to="." method="_on_hit"]
+[connection signal="roll" from="." to="." method="_on_roll"]
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_timer_timeout"]

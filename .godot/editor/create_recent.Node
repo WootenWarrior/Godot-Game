@@ -1,8 +1,9 @@
+CollisionShape2D
+Area2D
+AudioStreamPlayer2D
 Timer
 GPUParticles2D
 AnimationPlayer
-CollisionShape2D
-Area2D
 AnimatedSprite2D
 BoxContainer
 CenterContainer
@@ -11,4 +12,3 @@ CanvasLayer
 TextureProgressBar
 HBoxContainer
 VBoxContainer
-RigidBody2D
