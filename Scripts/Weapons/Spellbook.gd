@@ -14,10 +14,9 @@ func _process(delta) -> void:
 	super._process(delta)
 	
 	if equipped_spell:
-		print(equipped_spell.types.PROJECTILE)
-		print(equipped_spell.type)
 		if equipped_spell.type == equipped_spell.types.PROJECTILE:
-			set_spell_pos()
+			if equipped_spell.moving == false:
+				set_spell_pos()
 	
 	set_weapon_pos()
 	
@@ -64,12 +63,6 @@ func _on_attack() -> void:
 			equipped_spell.despawn.emit()
 	is_charged = false
 
-func instantiate_spell() -> void:
-	equipped_spell = equipped_spell_scene.instantiate()
-	player.get_parent().add_child.call_deferred(equipped_spell)
-	equipped_spell.visible = false
-	charge_time = equipped_spell.charge_time
-
 func _on_weapon_hide() -> void:
 	super._on_weapon_hide()
 	if equipped_spell:
@@ -78,7 +71,5 @@ func _on_weapon_hide() -> void:
 	#print("weapon hidden")
 
 func _on_weapon_out() -> void:
-	if equipped_spell_scene:
-		instantiate_spell()
 	play("Page_Flip")
 	#print("weapon drawn")

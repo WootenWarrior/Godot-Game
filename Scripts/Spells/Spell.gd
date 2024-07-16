@@ -18,6 +18,7 @@ signal despawn
 
 func _ready() -> void:
 	player = WorldManager.get_player()
+	connect("tree_exited",Callable(self, "_on_tree_exited"))
 
 func set_collider(_collider) -> void:
 	collider = _collider
@@ -25,5 +26,11 @@ func set_collider(_collider) -> void:
 func set_area(_area) -> void:
 	area = _area
 
+func knockback(body, direction) -> void:
+	body.apply_force(direction,knockback_strength)
+
 func connect_to_area_signal() -> void:
 	area.connect("body_entered", Callable(self, "_on_area_2d_body_entered"))
+
+func _on_tree_exited():
+	player.weapon.equipped_spell = null

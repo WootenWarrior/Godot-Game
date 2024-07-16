@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bj6cuypwobx5w"]
+[gd_scene load_steps=28 format=3 uid="uid://bj6cuypwobx5w"]
 
 [ext_resource type="Texture2D" uid="uid://b1ib4c1cw82hw" path="res://Assets/Spells/Fireball.png" id="1_n4l6o"]
 [ext_resource type="Script" path="res://Scripts/Spells/Fireball.gd" id="2_hgju5"]
@@ -38,26 +38,6 @@ region = Rect2(832, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_jbefk"]
 atlas = ExtResource("1_n4l6o")
 region = Rect2(864, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wmlcc"]
-atlas = ExtResource("1_n4l6o")
-region = Rect2(896, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t7d0h"]
-atlas = ExtResource("1_n4l6o")
-region = Rect2(928, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_whlfc"]
-atlas = ExtResource("1_n4l6o")
-region = Rect2(960, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tj4c6"]
-atlas = ExtResource("1_n4l6o")
-region = Rect2(992, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1k11f"]
-atlas = ExtResource("1_n4l6o")
-region = Rect2(1024, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_etg2i"]
 atlas = ExtResource("1_n4l6o")
@@ -149,25 +129,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jbefk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wmlcc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t7d0h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_whlfc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tj4c6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1k11f")
 }],
 "loop": false,
 "name": &"Hit",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -230,15 +195,16 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ijl6h"]
 
 [node name="Fireball" type="AnimatedSprite2D"]
-scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_1axv1")
-animation = &"Spawn"
+animation = &"Hit"
 autoplay = "Spawn"
-frame = 5
+frame = 3
 frame_progress = 1.0
 script = ExtResource("2_hgju5")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(8, 0)

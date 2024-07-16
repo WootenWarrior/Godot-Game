@@ -17,10 +17,6 @@ func _process(_delta) -> void:
 	else:
 		z_index = 0
 
-func knockback(body) -> void:
-	var direction = body.global_position - global_position
-	body.apply_force(direction,knockback_strength)
-
 func _on_fire() -> void:
 	collider.disabled = false
 	visible = true
@@ -32,8 +28,9 @@ func _on_animation_finished() -> void:
 	can_knockback = true
 
 func _on_area_2d_body_entered(body) -> void:
+	var direction = body.global_position - global_position
 	#print("collision: ",body.name)
 	if body.name != "TileMap":
-		knockback(body)
+		knockback(body,direction)
 		body.damage(damage)
 		#print(body.health)

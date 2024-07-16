@@ -8,11 +8,10 @@ res://Scenes/Enemies/Slime.tscn
 res://Scenes/UI/PlayerUI.tscn
 res://Scenes/UI/Hotbar.tscn
 res://Scenes/Enemies/EnemySpawner.tscn
-res://Scripts/WorldManager.gd
-res://Scripts/Spells/Spell.gd
-res://Scripts/Spells/Lightning_strike.gd
 res://Scenes/Spells/SpellArea.tscn
-res://Scripts/Spells/Area_spell.gd
 res://Scripts/Spells/Projectile_spell.gd
-res://Scripts/Weapons/Spellbook.gd
 res://Scripts/Spells/Fireball.gd
+res://Scripts/Weapons/Spellbook.gd
+res://Scripts/Spells/Spell.gd
+res://Scripts/Weapons/Magic_weapon.gd
+res://Scripts/Spells/Area_spell.gd
