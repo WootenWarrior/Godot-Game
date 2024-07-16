@@ -13,26 +13,9 @@ func _ready() -> void:
 func _process(delta) -> void:
 	super._process(delta)
 	
-	if equipped_spell:
-		if equipped_spell.type == equipped_spell.types.PROJECTILE:
-			if equipped_spell.moving == false:
-				set_spell_pos()
-	
 	set_weapon_pos()
 	
 	check_z_index()
-
-func set_spell_pos() -> void:
-	if visible and equipped_spell:
-		var player_pos = player.global_position
-		var mouse_pos = get_global_mouse_position()
-		var direction = mouse_pos - player_pos
-		var angle = direction.angle()
-		var x_spell = player_pos.x + (radius + spell_offset) * cos(angle)
-		var y_spell = player_pos.y + (radius + spell_offset) * sin(angle)
-		equipped_spell.global_position = Vector2(x_spell, y_spell)
-		equipped_spell.rotation = angle + PI / 2
-		equipped_spell.look_at(get_global_mouse_position())
 
 func set_weapon_pos() -> void:
 	if visible:

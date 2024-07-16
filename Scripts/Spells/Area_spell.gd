@@ -5,9 +5,11 @@ class_name Area_Spell
 var has_spell_area = true
 var spell_area_type = "Idle_Small"
 var can_knockback = true
+var max_reach = 10
 
 func _ready() -> void:
 	super._ready()
+	player.set_area_spell_max_reach(max_reach)
 	type = types.AREA
 
 func _process(_delta) -> void:

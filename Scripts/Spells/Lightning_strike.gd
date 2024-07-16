@@ -10,6 +10,7 @@ func _ready() -> void:
 	collider.disabled = true
 	damage = 10
 	knockback_strength = 200
+	max_reach = 10
 
 func _on_fire() -> void:
 	super._on_fire()

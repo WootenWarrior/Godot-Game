@@ -14,6 +14,7 @@ extends CharacterBody2D
 @onready var hit_timer = $InvulnerabilityTimer
 @onready var health_bar = $CanvasLayer/PlayerUI/HealthBar
 @onready var sprint_bar = $CanvasLayer/PlayerUI/SprintBar
+@onready var spell_reach_radius = $SpellReachRadius/CollisionShape2D
 var can_be_hit = true
 var spell_area = null
 var is_facing_up = false
@@ -21,6 +22,7 @@ var external_forces = Vector2.ZERO
 var is_dead = false
 var speed_temp = 0
 var speed_reduction_multiplier = 0.5
+var area_spell_max_reach = 10
 
 signal roll(direction)
 signal hit(damage:int)
@@ -40,7 +42,7 @@ func _ready() -> void:
 	
 	#Debug
 	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
-	weapon.set_spell(load("res://Scenes/Spells/Fireball.tscn"))
+	weapon.set_spell(load("res://Scenes/Spells/LightningStrike.tscn"))
 
 func _physics_process(_delta) -> void:
 	if not is_dead:
@@ -73,6 +75,9 @@ func set_weapon(new_weapon:Resource) -> void:
 	weapon = new_weapon.instantiate()
 	add_child(weapon)
 	weapon.connect("toggle_spell_area", Callable(self, "_on_toggle_spell_area"))
+
+func set_area_spell_max_reach(radius:float) -> void:
+	spell_reach_radius.shape.radius = radius
 
 func handle_sprint_input() -> float:
 	var sprint_multiplier_temp = 1
@@ -145,6 +150,9 @@ func handle_player_sprite_direction(_mouse_pos) -> void:
 			player_sprite.flip_h = true
 		else: 
 			player_sprite.flip_h = false
+
+func get_weapon_radius() -> float:
+	return weapon.radius
 
 func _on_toggle_spell_area(_visible:bool) -> void:
 	var spell_area_animation = "Idle_Small"
