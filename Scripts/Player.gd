@@ -42,7 +42,7 @@ func _ready() -> void:
 	
 	#Debug
 	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
-	weapon.set_spell(load("res://Scenes/Spells/LightningStrike.tscn"))
+	weapon.set_spell(load("res://Scenes/Spells/Fireball.tscn"))
 
 func _physics_process(_delta) -> void:
 	if not is_dead:

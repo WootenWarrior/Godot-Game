@@ -21,6 +21,8 @@ func _on_animation_finished() -> void:
 		play("Idle")
 	elif animation_name == "Hit":
 		queue_free()
+	elif animation_name == "Fire":
+		play("Move")
 
 func _on_idle():
 	visible = true
@@ -31,6 +33,5 @@ func _on_area_2d_body_entered(body):
 	if body.name != "TileMap":
 		knockback(body,direction)
 		body.damage(damage)
-	print(body)
 	play("Hit")
 	set_speed(0)
