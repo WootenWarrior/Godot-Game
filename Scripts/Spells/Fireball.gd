@@ -2,6 +2,7 @@ extends Projectile_Spell
 
 func _ready() -> void:
 	super._ready()
+	set_animated_sprite($".")
 	set_area($Area2D)
 	set_collider($Area2D/CollisionShape2D)
 	connect_to_area_signal()
@@ -24,14 +25,6 @@ func _on_animation_finished() -> void:
 	elif animation_name == "Fire":
 		play("Move")
 
-func _on_idle():
+func _on_idle() -> void:
 	visible = true
 	play("Spawn")
-	pass
-
-func _on_area_2d_body_entered(body):
-	if body.name != "TileMap":
-		knockback(body,direction)
-		body.damage(damage)
-	play("Hit")
-	set_speed(0)

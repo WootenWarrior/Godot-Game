@@ -34,7 +34,8 @@ func set_spell(new_spell_scene : Resource) -> void:
 	equipped_spell_scene = new_spell_scene
 	var spell_temp = equipped_spell_scene.instantiate()
 	charge_time = spell_temp.charge_time
-	print(charge_time)
+	#print(charge_time)
+	player.set_area_spell_max_reach(spell_temp.max_reach)
 	spell_temp.queue_free()
 
 func instantiate_spell() -> void:

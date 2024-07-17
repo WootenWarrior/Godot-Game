@@ -39,6 +39,7 @@ func check_z_index() -> void:
 func _on_attack() -> void:
 	super._on_attack()
 	spell_idle = false
+	print(equipped_spell)
 	if equipped_spell and visible:
 		if is_charged:
 			equipped_spell.fire.emit()

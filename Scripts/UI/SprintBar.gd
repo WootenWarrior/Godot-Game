@@ -4,7 +4,7 @@ extends ProgressBar
 var sprint = 0 : set = set_sprint
 var sprint_decrease_val = 0.3
 
-func _process(delta):
+func _process(_delta):
 	if sprint < sprint_loss_bar.value:
 		sprint_loss_bar.value -= sprint_decrease_val
 	else:

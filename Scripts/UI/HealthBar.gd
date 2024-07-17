@@ -4,7 +4,7 @@ extends ProgressBar
 var health = 0 : set = set_health
 var health_decrease_val = 0.3
 
-func _process(delta):
+func _process(_delta):
 	if health < damage_bar.value:
 		damage_bar.value -= health_decrease_val
 	else:

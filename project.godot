@@ -28,7 +28,7 @@ window/size/viewport_height=600
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gaea/plugin.cfg")
 
 [input]
 

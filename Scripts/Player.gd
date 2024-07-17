@@ -42,14 +42,14 @@ func _ready() -> void:
 	
 	#Debug
 	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
-	weapon.set_spell(load("res://Scenes/Spells/Fireball.tscn"))
+	weapon.set_spell(load("res://Scenes/Spells/LightningStrike.tscn"))
 
 func _physics_process(_delta) -> void:
 	if not is_dead:
 		var mouse_pos = get_global_mouse_position()
 		var raw_direction = handle_movement_input()
 		var direction = raw_direction.normalized()
-		var sprint_multiplier = handle_sprint_input()
+		var _sprint_multiplier = handle_sprint_input()
 		
 		spell_area.global_position = mouse_pos
 		velocity = Vector2.ZERO
@@ -59,7 +59,7 @@ func _physics_process(_delta) -> void:
 		handle_charge_input()
 		handle_roll_input(direction)
 		
-		velocity = ((direction*speed) + external_forces) * sprint_multiplier
+		velocity = ((direction*speed) + external_forces) * _sprint_multiplier
 		move_and_slide()
 		external_forces = external_forces*external_force_decay
 
