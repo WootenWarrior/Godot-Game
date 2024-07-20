@@ -9,7 +9,6 @@ var has_spell_area = false
 var moving = false
 var charging_radius = 20
 var focus_point = Vector2.ZERO
-var sprite = null
 
 func _ready() -> void:
 	super._ready()

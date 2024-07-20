@@ -1,6 +1,10 @@
+TextureRect
+Sprite2D
+Label
+ColorRect
+TileMap
 TilemapGaeaRenderer
 WalkerGenerator
-TileMap
 CollisionShape2D
 Area2D
 AudioStreamPlayer2D
@@ -9,7 +13,3 @@ GPUParticles2D
 AnimationPlayer
 AnimatedSprite2D
 BoxContainer
-CenterContainer
-ProgressBar
-CanvasLayer
-TextureProgressBar

@@ -23,4 +23,5 @@ grow_vertical = 2
 
 [node name="BoxContainer" type="BoxContainer" parent="CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1

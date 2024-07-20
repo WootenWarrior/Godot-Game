@@ -13,6 +13,7 @@ var player = null
 var type = null
 var max_reach = 0
 var sprite = null
+@export var hotbar_image:AtlasTexture = null
 
 signal idle
 signal fire
