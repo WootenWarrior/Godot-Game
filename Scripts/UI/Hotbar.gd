@@ -27,7 +27,7 @@ func _process(delta):
 func clear_hotbar() -> void:
 	for slot in hotbar_slots:
 		slot.spell = null
-	SpellInventoryManager.clear_hotbar_spells()
+	clear_hotbar_spells()
 	set_hotbar_slots()
 
 func set_hotbar_slots() -> void:
@@ -36,19 +36,23 @@ func set_hotbar_slots() -> void:
 	for slot in box_container.get_children():
 		var image = slot.get_child(0)
 		if hotbar_spells.size() > i:
-			var hotbar_image = hotbar_spells[i].instantiate().hotbar_image
+			var spell = hotbar_spells[i].instantiate()
+			var hotbar_image = spell.hotbar_image
 			image.texture = hotbar_image
 			slot.spell = hotbar_spells[i]
+			spell.queue_free()
 		i = i+1
 
 func select_hotbar_slot(slot_num:int):
 	var slot_selected = hotbar_slots[slot_num-1]
 	var spell = slot_selected.spell
-	if slot_selected == current_selected:
-		SpellInventoryManager.player_node.weapon.set_spell(null)
-	else:
-		slot_selected.color = Color(255,255,255,170)
-		SpellInventoryManager.player_node.weapon.set_spell(spell)
+	for slot in hotbar_slots:
+		if slot == current_selected:
+			slot.color = Color(45,45,45,0.6)
+	current_selected = slot_selected
+	slot_selected.color = Color(255,255,255,0.6)
+	SpellInventoryManager.player_node.set_weapon_spell(spell)
+	print("spell")
 
 func add_hotbar_spell(spell_scene:Resource) -> void:
 	hotbar_spells.append(spell_scene)

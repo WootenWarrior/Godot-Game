@@ -1,21 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ch47m072s18x5"]
-
-[ext_resource type="Script" path="res://Scenes/UI/hotbar_slot.gd" id="1_g2u7l"]
+[gd_scene format=3 uid="uid://ch47m072s18x5"]
 
 [node name="ColorRect" type="ColorRect"]
 custom_minimum_size = Vector2(40, 40)
 offset_right = 40.0
 offset_bottom = 40.0
-color = Color(0.180392, 0.180392, 0.180392, 0.670588)
-script = ExtResource("1_g2u7l")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-z_index = -1
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-expand_mode = 1
+color = Color(0.364706, 0.364706, 0.364706, 0.670588)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1

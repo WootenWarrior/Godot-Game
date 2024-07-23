@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Hotbar.gd" id="1_1ghj1"]
 
 [node name="Hotbar" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
