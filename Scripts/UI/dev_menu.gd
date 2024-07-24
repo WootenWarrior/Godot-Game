@@ -3,6 +3,9 @@ extends Control
 @onready var dev_menu = $DevMenu
 @onready var level_choice = $DevMenu/ChangeScene/OptionButton
 @onready var spell_choice = $DevMenu/ChangeSpell/OptionButton
+@onready var zoom_scroll_bar = $DevMenu/ChangeZoom/ZoomScrollBar
+@export var max_zoom = 10
+var player = null
 
 var level_paths = {}
 var spell_paths = {}
@@ -10,6 +13,12 @@ var spell_paths = {}
 func _ready():
 	populate_paths("res://Scenes/Levels", level_paths, level_choice)
 	populate_paths("res://Scenes/Spells", spell_paths, spell_choice)
+	zoom_scroll_bar.max_value = 10
+	zoom_scroll_bar.min_value = 0.1
+	player = WorldManager.player
+	
+	if player:
+		zoom_scroll_bar.value = player.camera.zoom.x
 
 func populate_paths(directory_path: String, path_dict: Dictionary, option_button):
 	var dir = DirAccess.open(directory_path)
@@ -50,3 +59,8 @@ func _on_change_spell_button_pressed():
 			player.set_weapon_spell(load(path))
 		else:
 			print("Failed to load scene: " + path)
+
+func _on_zoom_scroll_bar_value_changed(value):
+	if player:
+		player.camera.zoom.x = value
+		player.camera.zoom.y = value

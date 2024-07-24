@@ -17,6 +17,7 @@ extends CharacterBody2D
 @onready var health_bar = $CanvasLayer/PlayerUI/HealthBar
 @onready var sprint_bar = $CanvasLayer/PlayerUI/SprintBar
 @onready var spell_reach_radius = $SpellReachRadius/CollisionShape2D
+@onready var camera = $Camera2D
 var can_be_hit = true
 var spell_area = null
 var is_facing_up = false

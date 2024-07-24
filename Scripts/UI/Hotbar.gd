@@ -20,7 +20,7 @@ func _ready() -> void:
 	
 	set_hotbar_slots()
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("box1select"):
 		select_hotbar_slot(1)
 
@@ -31,7 +31,6 @@ func clear_hotbar() -> void:
 	set_hotbar_slots()
 
 func set_hotbar_slots() -> void:
-	var hotbar_spells = get_hotbar_spells()
 	var i = 0
 	for slot in box_container.get_children():
 		var image = slot.get_child(0)

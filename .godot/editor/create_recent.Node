@@ -1,5 +1,6 @@
-OptionButton
+HScrollBar
 VBoxContainer
+OptionButton
 Button
 RichTextLabel
 LineEdit

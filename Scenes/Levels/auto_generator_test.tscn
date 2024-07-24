@@ -117,7 +117,5 @@ layer_1/name = "Walls"
 layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("1_qlu17")
-base_height = 10
-base_width = 10
 
 [node name="Player" parent="." instance=ExtResource("3_vujo3")]

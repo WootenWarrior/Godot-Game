@@ -41,8 +41,9 @@ func set_spell(new_spell_scene : Resource) -> void:
 
 func instantiate_spell() -> void:
 	equipped_spell = equipped_spell_scene.instantiate()
-	player.get_parent().add_child.call_deferred(equipped_spell)
-	equipped_spell.visible = false
+	get_tree().root.add_child(equipped_spell)
+	if equipped_spell.type == equipped_spell.types.AREA:
+		equipped_spell.visible = false
 
 func _on_attack() -> void:
 	if is_charged and visible:
