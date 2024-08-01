@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ch47m072s18x5"]
 
-[ext_resource type="Script" path="res://Scenes/UI/hotbar_slot.gd" id="1_g2u7l"]
+[ext_resource type="Script" path="res://Scripts/UI/hotbar_slot.gd" id="1_g2u7l"]
 
 [node name="ColorRect" type="ColorRect"]
 custom_minimum_size = Vector2(40, 40)

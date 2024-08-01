@@ -26,13 +26,13 @@ var is_dead = false
 var speed_temp = 0
 var speed_reduction_multiplier = 0.5
 var area_spell_max_reach = 10
+var player_number : int
 
 signal roll(direction)
 signal hit(damage:int)
 signal dead
 
 func _ready() -> void:
-	WorldManager.set_player(self)
 	InventoryManager.set_player_reference(self)
 	SpellInventoryManager.set_player_reference(self)
 	spell_area = spell_area_scene.instantiate()

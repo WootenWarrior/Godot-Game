@@ -15,7 +15,7 @@ signal weapon_out
 signal weapon_hide
 
 func _ready() -> void:
-	player = WorldManager.player
+	player = WorldManager.players[0]
 	
 	if area:
 		area.connect("body_entered", Callable(self, "_on_area_body_entered"))

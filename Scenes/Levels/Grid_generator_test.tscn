@@ -1,11 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbic86kx0nyeb"]
+[gd_scene load_steps=5 format=3 uid="uid://8fqfrsd53tis"]
 
-[ext_resource type="Texture2D" uid="uid://caxyuo81g7ov5" path="res://Assets/Environment Art/DungeonTiles1.png" id="1_4eqqw"]
-[ext_resource type="Script" path="res://Scripts/Grid_generator.gd" id="1_qlu17"]
-[ext_resource type="PackedScene" uid="uid://bdvdr5madyn58" path="res://Scenes/Player.tscn" id="3_vujo3"]
+[ext_resource type="Script" path="res://Scripts/Environment/Grid_generator.gd" id="1_ktshg"]
+[ext_resource type="Texture2D" uid="uid://caxyuo81g7ov5" path="res://Assets/Environment Art/DungeonTiles1.png" id="1_svdf8"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e86n7"]
-texture = ExtResource("1_4eqqw")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k1j5t"]
+texture = ExtResource("1_svdf8")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -103,19 +102,10 @@ texture = ExtResource("1_4eqqw")
 14:5/0 = 0
 15:5/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_hpvlp"]
-sources/0 = SubResource("TileSetAtlasSource_e86n7")
+[sub_resource type="TileSet" id="TileSet_5ncfo"]
+sources/4 = SubResource("TileSetAtlasSource_k1j5t")
 
-[node name="AutoGenerator" type="Node2D"]
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = SubResource("TileSet_hpvlp")
+[node name="GridGenerator" type="TileMap"]
+tile_set = SubResource("TileSet_5ncfo")
 format = 2
-layer_0/name = "Floor"
-layer_0/z_index = -10
-layer_1/name = "Walls"
-layer_1/z_index = 1
-layer_1/tile_data = PackedInt32Array()
-script = ExtResource("1_qlu17")
-
-[node name="Player" parent="." instance=ExtResource("3_vujo3")]
+script = ExtResource("1_ktshg")

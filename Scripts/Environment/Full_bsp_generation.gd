@@ -1,7 +1,7 @@
 extends TileMap
 
 @export var max_room_area : Vector2i = Vector2i(200,200)
-@export var room_min_size : Vector2i = Vector2i(10,10)
+@export var room_min_size : Vector2i = Vector2i(50,50)
 @export var tilemap_scale = Vector2(2,2)
 @export var num_of_rooms : int = 10
 @export var min_split_offset : int = 2
@@ -41,14 +41,14 @@ class BSP_node:
 			var new_width = randi_range(min_split_offset,width)
 			if new_width <= room_min_size.x:
 				return false
-			left = BSP_node.new(x,y,width - new_width,height,min_split_offset,room_padding,room_min_size)
-			right = BSP_node.new(x+width,y,new_width,height,min_split_offset,room_padding,room_min_size)
+			left = BSP_node.new(x+new_width,y,width - new_width,height,min_split_offset,room_padding,room_min_size)
+			right = BSP_node.new(x,y,new_width,height,min_split_offset,room_padding,room_min_size)
 		else:
 			var new_height = randi_range(min_split_offset,height)
 			if new_height <= room_min_size.y:
 				return false
-			left = BSP_node.new(x,y,width,height-new_height,min_split_offset,room_padding,room_min_size)
-			right = BSP_node.new(x,y+new_height,width,new_height,min_split_offset,room_padding,room_min_size)
+			left = BSP_node.new(x,y+new_height,width,height-new_height,min_split_offset,room_padding,room_min_size)
+			right = BSP_node.new(x,y,width,new_height,min_split_offset,room_padding,room_min_size)
 		return true
 	
 	func create_room() -> Rect2:
@@ -78,7 +78,7 @@ func _ready():
 		var room_rect = region.create_room()
 		make_room(room_rect.position, room_rect.size)
 
-func make_room(position: Vector2, size: Vector2):
+func make_room(position: Vector2i, size: Vector2i):
 	for x in range(size.x):
 		for y in range(size.y):
 			var coords = Vector2i(position.x + x, position.y + y)

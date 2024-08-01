@@ -20,7 +20,7 @@ signal fire
 signal despawn
 
 func _ready() -> void:
-	player = WorldManager.get_player()
+	player = WorldManager.get_player(0)
 	connect("tree_exited",Callable(self, "_on_tree_exited"))
 
 func set_collider(_collider) -> void:
