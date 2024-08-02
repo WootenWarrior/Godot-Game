@@ -1,5 +1,5 @@
 6dcd580d9bf2a9dbe66cc9f994d3620b
-::res://::1722552588
+::res://::1722602368
 Credits.txt::TextFile::-1::1720185582::0::1::::<><>::
 icon.svg::CompressedTexture2D::3490627451130262392::1716156053::1716156060::1::::<><>::
 ::res://addons/::1721246245
@@ -238,44 +238,44 @@ test.tres::TileSet::1563802420907589288::1722514642::0::1::::<><>::uid://u80ylbx
 ::res://Assets/UI/::1718718197
 InventoryUI.aseprite::PackedDataContainer::2402780856977933909::1718718174::1718718197::1::::<><>::
 InventoryUI.png::CompressedTexture2D::1025478242844917834::1718718189::1718718197::1::::<><>::
-::res://Scenes/::1722552142
-Player.tscn::PackedScene::2640553251160261825::1722552142::0::1::::<><>::res://Scripts/Player.gd<>uid://b7v4j0xincy63::::res://Assets/Player/WizardDefault.png<>uid://k3tki8ixem5h::::res://Scenes/UI/PlayerUI.tscn
-room_builder.tscn::PackedScene::6759822759208000755::1722552142::0::1::::<><>::uid://caxyuo81g7ov5::::res://Assets/Environment Art/DungeonTiles1.png<>res://Scripts/Environment/room_builder.gd
+::res://Scenes/::1722559091
+Player.tscn::PackedScene::2640553251160261825::1722559090::0::1::::<><>::res://Scripts/Player.gd<>uid://b7v4j0xincy63::::res://Assets/Player/WizardDefault.png<>uid://k3tki8ixem5h::::res://Scenes/UI/PlayerUI.tscn
+room_builder.tscn::PackedScene::6759822759208000755::1722559091::0::1::::<><>::uid://caxyuo81g7ov5::::res://Assets/Environment Art/DungeonTiles1.png<>res://Scripts/Environment/room_builder.gd
 ::res://Scenes/BossRooms/::1722174772
 ::res://Scenes/Enemies/::1721829967
 EnemySpawner.tscn::PackedScene::5185281457301889902::1721239842::0::1::::<><>::res://Scripts/Enemies/EnemySpawner.gd
 Slime.tscn::PackedScene::6892678749080114264::1721829967::0::1::::<><>::uid://chw0uxvxpegfi::::res://Assets/Enemies/Slime1.png<>res://Scripts/Enemies/Slime.gd<>uid://cqtqiolcultdc::::res://Scenes/UI/HealthBar.tscn
-::res://Scenes/Levels/::1722552142
+::res://Scenes/Levels/::1722559090
 Full_bsp_test.tscn::PackedScene::7246147926685068865::1722431980::0::1::::<><>::uid://caxyuo81g7ov5::::res://Assets/Environment Art/DungeonTiles1.png<>res://Scripts/Environment/Full_bsp_generation.gd
 Grid_generator_test.tscn::PackedScene::2327535050560106510::1722520074::0::1::::<><>::res://Scripts/Environment/Grid_generator.gd<>uid://caxyuo81g7ov5::::res://Assets/Environment Art/DungeonTiles1.png
 mainlevbuild.png::CompressedTexture2D::5147537889248874281::1722434326::1722434327::1::::<><>::
 Partial_bsp_test.tscn::PackedScene::6070867645452615038::1722431904::0::1::::<><>::res://Scripts/Environment/Partial_bsp_generation.gd<>uid://caxyuo81g7ov5::::res://Assets/Environment Art/DungeonTiles1.png
-test.tscn::PackedScene::7638057081184975873::1722552142::0::1::::<><>::uid://bdvdr5madyn58::::res://Scenes/Player.tscn<>uid://u80ylbxodscw::::res://Assets/TestTiles/TestTiles.png<>uid://caxyuo81g7ov5::::res://Assets/Environment Art/DungeonTiles1.png<>uid://cf413fguqv5ck::::res://Scenes/Enemies/EnemySpawner.tscn<>uid://c5g4oah33llvk::::res://Scenes/Enemies/Slime.tscn
-::res://Scenes/Rooms/::1722552142
-room_small_1.tscn::PackedScene::8940308048172925931::1722552142::0::1::::<><>::uid://c3krj771x3ox4::::res://Scenes/room_builder.tscn
-room_small_2.tscn::PackedScene::389973195315442375::1722552142::0::1::::<><>::
-::res://Scenes/Spells/::1722552142
-Fireball.tscn::PackedScene::3082274421425701078::1722552142::0::1::::<><>::uid://b1ib4c1cw82hw::::res://Assets/Spells/Fireball.png<>res://Scripts/Spells/Fireball.gd
-LightningStrike.tscn::PackedScene::3307533346186297130::1722552142::0::1::::<><>::uid://cy1rsnp4uj4ks::::res://Assets/Spells/SmallLightiningStrike.png<>res://Scripts/Spells/Lightning_strike.gd
+test.tscn::PackedScene::7638057081184975873::1722559090::0::1::::<><>::uid://bdvdr5madyn58::::res://Scenes/Player.tscn<>uid://u80ylbxodscw::::res://Assets/TestTiles/TestTiles.png<>uid://caxyuo81g7ov5::::res://Assets/Environment Art/DungeonTiles1.png<>uid://cf413fguqv5ck::::res://Scenes/Enemies/EnemySpawner.tscn<>uid://c5g4oah33llvk::::res://Scenes/Enemies/Slime.tscn
+::res://Scenes/Rooms/::1722559091
+room_small_1.tscn::PackedScene::8940308048172925931::1722559091::0::1::::<><>::uid://c3krj771x3ox4::::res://Scenes/room_builder.tscn
+room_small_2.tscn::PackedScene::389973195315442375::1722559091::0::1::::<><>::
+::res://Scenes/Spells/::1722559090
+Fireball.tscn::PackedScene::3082274421425701078::1722559090::0::1::::<><>::uid://b1ib4c1cw82hw::::res://Assets/Spells/Fireball.png<>res://Scripts/Spells/Fireball.gd
+LightningStrike.tscn::PackedScene::3307533346186297130::1722559090::0::1::::<><>::uid://cy1rsnp4uj4ks::::res://Assets/Spells/SmallLightiningStrike.png<>res://Scripts/Spells/Lightning_strike.gd
 ::res://Scenes/Tilemaps/::1721916668
-::res://Scenes/UI/::1722552142
-dev_menu.tscn::PackedScene::5867478541850301965::1722552142::0::1::::<><>::res://Scripts/UI/dev_menu.gd
+::res://Scenes/UI/::1722559091
+dev_menu.tscn::PackedScene::5867478541850301965::1722559091::0::1::::<><>::res://Scripts/UI/dev_menu.gd
 HealthBar.tscn::PackedScene::5936072553595161164::1721048570::0::1::::<><>::res://Scripts/UI/HealthBar.gd
 Hotbar.tscn::PackedScene::365310322080278327::1721829967::0::1::::<><>::res://Scripts/UI/Hotbar.gd
 hotbar_slot.tscn::PackedScene::5325995964784914176::1721916585::0::1::::<><>::res://Scripts/UI/hotbar_slot.gd
 InventoryMenu.tscn::PackedScene::4701654221829806447::1719068729::0::1::::<><>::uid://ou0qhhslaio5::::res://Assets/UI/InventoryUI.png
 Menu.tscn::PackedScene::3308433004705816773::1720372398::0::1::::<><>::res://Scripts/Inventory_manager.gd<>uid://b78rs8gc3sbkh::::res://Scenes/UI/InventoryMenu.tscn
-PlayerUI.tscn::PackedScene::760862965855347459::1722552142::0::1::::<><>::uid://cqtqiolcultdc::::res://Scenes/UI/HealthBar.tscn<>uid://fg7uwomywfk6::::res://Scenes/UI/Hotbar.tscn<>uid://cjug1r5cmxry4::::res://Scenes/UI/SprintBar.tscn
+PlayerUI.tscn::PackedScene::760862965855347459::1722559090::0::1::::<><>::uid://cqtqiolcultdc::::res://Scenes/UI/HealthBar.tscn<>uid://fg7uwomywfk6::::res://Scenes/UI/Hotbar.tscn<>uid://cjug1r5cmxry4::::res://Scenes/UI/SprintBar.tscn
 slot.tscn::PackedScene::5325995964784914176::1721490033::0::1::::<><>::
 SpellArea.tscn::PackedScene::5642464059485238379::1721238096::0::1::::<><>::uid://bdltrpbos6jqw::::res://Assets/Spells/SpellArea32x32.png
 SpellChargeBar.tscn::PackedScene::1530379449938813688::1720381060::0::1::::<><>::
 SpellMenu.tscn::PackedScene::8390700908891962273::1720208094::0::1::::<><>::res://Scripts/Spell_inventory_manager.gd
 SprintBar.tscn::PackedScene::5446240187156731465::1720382006::0::1::::<><>::res://Scripts/UI/SprintBar.gd
-::res://Scenes/Weapons/::1722552142
-DevSpellbook.tscn::PackedScene::3122675737776585892::1722552142::0::1::::<><>::uid://bp6h2qmoconbj::::res://Assets/Player/Spellbook.png<>res://Scripts/Weapons/Spellbook.gd
-::res://Scripts/::1722552142
+::res://Scenes/Weapons/::1722559090
+DevSpellbook.tscn::PackedScene::3122675737776585892::1722559090::0::1::::<><>::uid://bp6h2qmoconbj::::res://Assets/Player/Spellbook.png<>res://Scripts/Weapons/Spellbook.gd
+::res://Scripts/::1722552727
 Inventory_manager.gd::GDScript::-1::1721241739::0::1::::<>Node<>::
-Player.gd::GDScript::-1::1722552142::0::1::::<>CharacterBody2D<>::
+Player.gd::GDScript::-1::1722552727::0::1::::<>CharacterBody2D<>::
 Spell_inventory_manager.gd::GDScript::-1::1721501942::0::1::::<>Node<>::
 WorldManager.gd::GDScript::-1::1722528107::0::1::::<>Node<>::
 ::res://Scripts/Enemies/::1720649130
@@ -283,13 +283,13 @@ Enemy.gd::GDScript::-1::1720648974::0::1::::Enemy<>CharacterBody2D<>::
 EnemySpawner.gd::GDScript::-1::1720648983::0::1::::<>Node2D<>::
 Physical_enemy.gd::GDScript::-1::1720649130::0::1::::Physical_enemy<>Enemy<>::
 Slime.gd::GDScript::-1::1720649048::0::1::::<>Physical_enemy<>::
-::res://Scripts/Environment/::1722551725
+::res://Scripts/Environment/::1722559089
 Full_bsp_generation.gd::GDScript::-1::1721905538::0::1::::<>TileMap<>::
 Grid_generator.gd::GDScript::-1::1722517745::0::1::::<>TileMap<>::
 Interactable.gd::GDScript::-1::1721474160::0::1::::Interactable<>Node<>::
 Partial_bsp_generation.gd::GDScript::-1::1722346166::0::1::::<>TileMap<>::
 room.gd::GDScript::-1::1722530813::0::1::::<>TileMap<>::
-room_builder.gd::GDScript::-1::1722551725::0::1::::<>TileMap<>::
+room_builder.gd::GDScript::-1::1722559089::0::1::::<>TileMap<>::
 ::res://Scripts/Spells/::1722169626
 Area_spell.gd::GDScript::-1::1721155132::0::1::::Area_Spell<>Spell<>::
 Fireball.gd::GDScript::-1::1721492037::0::1::::<>Projectile_Spell<>::

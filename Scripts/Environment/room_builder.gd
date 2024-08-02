@@ -26,8 +26,8 @@ func _ready():
 	WorldManager.spawn_players_in_scene($".",spawn_position)
 	spawn_rooms($".")
 	correct_overlapping_rooms($".")
-	for i in range(len(rooms)):
-		print("room at: ",rooms[i]["position"], " size: ", rooms[i]["size"])
+	#for i in range(len(rooms)):
+		#print("room at: ",rooms[i]["position"], " size: ", rooms[i]["size"])
 
 func spawn_rooms(tilemap:TileMap):
 	for i in range(number_of_rooms):
@@ -47,37 +47,39 @@ func spawn_rooms(tilemap:TileMap):
 				tilemap.set_cell(floor_layer,cell,tilemap_ID,floor_tile_coords)
 
 func correct_overlapping_rooms(tilemap:TileMap):
+	#Let this comment be testiment to the worst bug so far in this code
 	var rooms_solved = false
 	var iterations = 0
-	var max_iterations = 1
-	while not rooms_solved and iterations < max_iterations:
+	var max_iterations = number_of_rooms**2
+	timer.start(1)
+	while (not rooms_solved) and iterations < max_iterations:
+		timer.start()
+		await timer.timeout
 		iterations += 1
 		rooms_solved = true
 		
-		var checked_pairs = {}
-		var room_changes = []
-		var start_num1 = 1
+		var overlapping_rooms = []
+		var new_rooms = []
 		for room1 in rooms:
-			var start_num2 = 1
 			for room2 in rooms:
-				var key = Vector2(min(start_num1, start_num2),max(start_num1, start_num2))
-				if room1 != room2 and not checked_pairs.has(key):
-					var _rooms = move_rooms_apart(room1,room2)
-					room_changes.append(_rooms)   #CANNOT EDIT ARRAY IN LOOP!!!
-					rooms_solved = false
-					checked_pairs[key] = true
-					print(checked_pairs)
-				start_num2 += 1
-			start_num1 += 1
-		for room in room_changes:
-			print(room)
-			remove_room(room["remove"][0],tilemap)
-			remove_room(room["remove"][1],tilemap)
-			place_room(room["place"][0],tilemap)
-			place_room(room["place"][1],tilemap)
-		room_changes = []
-		print("num_of_rooms = ",len(rooms))    #WHY IS THIS HUGE
-		print(iterations)
+				if room1 != room2 and not (overlapping_rooms.has(room1) or overlapping_rooms.has(room2)):
+					if is_rooms_overlapping(room1,room2):
+						#print("rooms_overlapping: ",room1,room2)
+						rooms_solved = false
+						var _new_rooms = move_rooms_apart(room1,room2)
+						overlapping_rooms.append(room1)
+						overlapping_rooms.append(room2)
+						new_rooms.append(_new_rooms[0])
+						new_rooms.append(_new_rooms[1])
+		
+		for room in overlapping_rooms:
+			remove_room(room,tilemap)
+		for room in new_rooms:
+			place_room(room,tilemap)
+		#print("num_of_rooms = ",len(rooms))
+		#print(iterations)
+		if iterations == max_iterations:
+			print("max iterations reached")
 
 func place_room(room:Dictionary,tilemap:TileMap):
 	var room_pos = room["position"]
@@ -111,7 +113,7 @@ func is_rooms_overlapping(room1:Dictionary,room2:Dictionary) -> bool:
 	
 	return overlap_x and overlap_y
 
-func move_rooms_apart(room1:Dictionary,room2:Dictionary) -> Dictionary:
+func move_rooms_apart(room1:Dictionary,room2:Dictionary) -> Array:
 	var pos1 = room1["position"]
 	var size1 = room1["size"]
 	var pos2 = room2["position"]
@@ -119,6 +121,8 @@ func move_rooms_apart(room1:Dictionary,room2:Dictionary) -> Dictionary:
 	
 	var overlap_x = min(pos1.x + size1.x + room_spacing - pos2.x, pos2.x + size2.x + room_spacing - pos1.x)
 	var overlap_y = min(pos1.y + size1.y + room_spacing - pos2.y, pos2.y + size2.y + room_spacing - pos1.y)
+	
+	print(Vector2(overlap_x,overlap_y))
 	
 	var new_pos1 = Vector2i.ZERO
 	var new_pos2 = Vector2i.ZERO
@@ -149,15 +153,6 @@ func move_rooms_apart(room1:Dictionary,room2:Dictionary) -> Dictionary:
 	var new_room1 = {"position":new_pos1,"size":size1}
 	var new_room2 = {"position":new_pos2,"size":size2}
 	
-	#remove_room(room1,tilemap)
-	#remove_room(room2,tilemap)
-	
-	# Works until this point  BUG BELOW
-	#print(new_room1)
-	#print(new_room2)
-	#place_room(new_room1,tilemap)
-	#place_room(new_room2,tilemap)
-	
-	print("old pos1 = ",pos1, " old pos 2 = ",pos2)
-	print("new pos1 = ", new_pos1, " new pos 2 = ",new_pos2)
-	return {"remove":[room1,room2],"place":[new_room1,new_room2]}
+	#print("old pos1 = ",pos1, " old pos 2 = ",pos2)
+	#print("new pos1 = ", new_pos1, " new pos 2 = ",new_pos2)
+	return [new_room1,new_room2]
