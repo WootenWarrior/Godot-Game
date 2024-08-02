@@ -30,6 +30,10 @@ window/size/viewport_height=600
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gaea/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 move_up={

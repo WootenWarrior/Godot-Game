@@ -9,7 +9,4 @@ res://Scenes/UI/dev_menu.tscn
 res://Scenes/Rooms/room_small_1.tscn
 res://Scenes/Rooms/room_small_2.tscn
 res://Scenes/room_builder.tscn
-res://Scripts/Environment/room.gd
-res://Scripts/WorldManager.gd
 res://Scripts/Environment/room_builder.gd
-res://Scripts/UI/dev_menu.gd

@@ -6,9 +6,3 @@
 
 [node name="Room_builder" parent="." instance=ExtResource("1_3bf8n")]
 scale = Vector2(2, 2)
-room_positions = Array[Vector2i]([Vector2i(0, 0)])
-room_sizes = Array[Vector2i]([Vector2i(20, 20)])
-wall_tile_above = Vector2i(1, 2)
-wall_tile_below = Vector2i(1, 0)
-wall_tile_right = Vector2i(2, 1)
-wall_tile_left = Vector2i(0, 1)

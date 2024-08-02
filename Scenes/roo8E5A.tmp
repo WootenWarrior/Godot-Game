@@ -115,12 +115,16 @@ layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("2_0vof3")
 dungeon_size = Vector2i(200, 200)
-number_of_rooms = 3
+number_of_rooms = 7
 spawn_position = Vector2i(100, 100)
 room_spacing = 10
 max_room_size = Vector2i(40, 40)
 min_room_size = Vector2i(30, 30)
+corridor_min_width = null
+corridor_max_width = null
+floor_layer = null
 walls_layer = 1
+tilemap_ID = null
 floor_tile_coords = Vector2i(3, 0)
 
 [node name="Timer" type="Timer" parent="."]
