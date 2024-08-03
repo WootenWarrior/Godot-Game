@@ -1,5 +1,6 @@
 res://Scenes/Levels/test.tscn
 res://Scripts/Player.gd
+res://Scripts/Environment/room_builder.gd
 res://Scenes/Player.tscn
 res://Scenes/Weapons/DevSpellbook.tscn
 res://Scenes/Spells/Fireball.tscn
@@ -9,4 +10,3 @@ res://Scenes/UI/dev_menu.tscn
 res://Scenes/Rooms/room_small_1.tscn
 res://Scenes/Rooms/room_small_2.tscn
 res://Scenes/room_builder.tscn
-res://Scripts/Environment/room_builder.gd
