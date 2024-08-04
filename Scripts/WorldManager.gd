@@ -17,7 +17,8 @@ func  _ready():
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
-func spawn_players_in_scene(root_node:Node, spawn_pos:Vector2):
+func spawn_players_in_scene(root_node : Node, spawn_pos : Vector2, tile_size : int):
+	spawn_pos *= tile_size
 	var num_of_players = len(players)
 	var radius = 100
 	var angle_step = 2*PI / num_of_players
@@ -33,7 +34,7 @@ func spawn_players_in_scene(root_node:Node, spawn_pos:Vector2):
 			root_node.add_child.call_deferred(player)
 	else:
 		var player = players[0]
-		player.position = spawn_pos
+		player.global_position = spawn_pos
 		root_node.add_child.call_deferred(player)
 
 func instantiate_players(num_of_players:int) -> void:

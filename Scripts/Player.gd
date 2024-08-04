@@ -162,6 +162,9 @@ func handle_player_sprite_direction(_mouse_pos) -> void:
 func get_weapon_radius() -> float:
 	return weapon.radius
 
+func get_dev_menu() -> Node2D:
+	return 
+
 func _on_toggle_spell_area(_visible:bool) -> void:
 	var spell_area_animation = "Idle_Small"
 	spell_area.visible = _visible

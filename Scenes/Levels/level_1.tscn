@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0jnsnlop1m65"]
+
+[ext_resource type="PackedScene" uid="uid://c3krj771x3ox4" path="res://Scenes/Dungeon_Generator.tscn" id="1_bvmw7"]
+
+[node name="Level_1" type="Node2D"]
+
+[node name="Dungeon_Generator" parent="." instance=ExtResource("1_bvmw7")]
+tile_size = 32

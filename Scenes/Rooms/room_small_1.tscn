@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d0m0tj4o82e40"]
 
-[ext_resource type="PackedScene" uid="uid://c3krj771x3ox4" path="res://Scenes/room_builder.tscn" id="1_3bf8n"]
+[ext_resource type="PackedScene" uid="uid://c3krj771x3ox4" path="res://Scenes/Dungeon_Generator.tscn" id="1_3bf8n"]
 
 [node name="Room_small_1" type="Node2D"]
 

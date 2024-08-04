@@ -7,6 +7,7 @@ extends TileMap
 @export var room_spacing : int
 @export var use_timer = false
 @export var debugging = false
+@export var dungeon_wall_background_offset : int
 
 @export_category("Room Settings")
 @export var max_room_size : Vector2i
@@ -19,11 +20,16 @@ extends TileMap
 @export var floor_layer : int
 @export var walls_layer : int
 @export var tilemap_ID : int
+@export var tile_size = 16
+
+@export_category("Tile coords")
 @export var floor_tile_coords : Vector2i
 @export var test_tile_coords : Vector2i
+@export var wall_tile_background : Vector2i
 
 @onready var timer = $Timer
 @onready var tilemap = $"."
+var root_node : Node2D = null
 var rooms = []
 var astar = AStarGrid2D.new()
 
@@ -89,17 +95,24 @@ func _ready() -> void:
 	if number_of_rooms > max_room_num:
 		number_of_rooms = max_room_num
 	
-	WorldManager.instantiate_players(1)
-	WorldManager.spawn_players_in_scene(tilemap,spawn_position)
-	
 	var start_time = Time.get_ticks_msec()
 	spawn_rooms()
 	correct_overlapping_rooms()
 	place_corridors()
+	draw_walls()
 	var end_time = Time.get_ticks_msec()
+	spawn_position = get_player_spawn_point()
+	
+	root_node = get_tree().current_scene
+	if root_node:
+		WorldManager.instantiate_players(1)
+		WorldManager.spawn_players_in_scene(root_node,spawn_position,tile_size)
+	else:
+		WorldManager.instantiate_players(1)
+		WorldManager.spawn_players_in_scene(tilemap,spawn_position,tile_size)
 	
 	if debugging:
-		print_debug_info(start_time,end_time)
+		print_all_debug_info(start_time,end_time)
 
 func spawn_rooms() -> void:
 	for i in range(number_of_rooms):
@@ -272,37 +285,112 @@ func place_corridors() -> void:
 
 func setup_astar() -> void:
 	var used_rect = tilemap.get_used_rect()
+	used_rect.size = used_rect.size + Vector2i(corridor_max_width*2,corridor_max_width*2)
+	used_rect.position = used_rect.position - Vector2i(corridor_max_width*2,corridor_max_width*2)
 	astar.region = used_rect
-	astar.cell_size = Vector2i(16,16)
+	astar.cell_size = Vector2i(1,1)
 	astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
-	astar.jumping_enabled = true
+	astar.jumping_enabled = false
 	astar.update()
 
 func set_rooms_as_solid() -> void:
+	print("used rect = ",tilemap.get_used_rect())
+	
+	var size = tilemap.get_used_rect().size
+	var pos = tilemap.get_used_rect().position
+	for x in range(pos.x,pos.x+size.x):
+		for y in range(pos.y,pos.y+size.y):
+			var cell = Vector2i(x,y)
+			astar.set_point_solid(cell,false)
+	
 	for room in rooms:
-		astar.fill_solid_region(Rect2i(room.pos,room.size))
-
-func place_paths() -> void:
+		var room_rect = Rect2i(room.pos,room.size)
+		astar.fill_solid_region(room_rect)
+		print(room_rect)
+	
 	for room in rooms:
 		for entrance in room.entrances:
-			var nearest_entrance = get_nearest_entrance(room,entrance)
-			if nearest_entrance == Vector2i.ZERO:  #Why always true
+			var above = Vector2i(entrance.x,entrance.y - 1)
+			var below = Vector2i(entrance.x,entrance.y + 1)
+			var left = Vector2i(entrance.x - 1,entrance.y)
+			var right = Vector2i(entrance.x + 1,entrance.y)
+			var direction = Vector2i.ZERO
+			var current_pos = Vector2i.ZERO
+			if tilemap.get_cell_source_id(floor_layer,above) != tilemap_ID:
+				direction.y += 1
+			elif tilemap.get_cell_source_id(floor_layer,below) != tilemap_ID:
+				direction.y -= 1
+			elif tilemap.get_cell_source_id(floor_layer,left) != tilemap_ID:
+				direction.x += 1
+			elif tilemap.get_cell_source_id(floor_layer,right) != tilemap_ID:
+				direction.x -= 1
+			current_pos = entrance
+			
+			var width = corridor_max_width/2 + 1
+			if direction.x != 0:
+				for i in range(current_pos.y - width,current_pos.y + width):
+					astar.set_point_solid(Vector2i(current_pos.x,i))
+			else:
+				for i in range(current_pos.x - width,current_pos.x + width):   #Here
+					astar.set_point_solid(Vector2i(i,current_pos.y))
+
+func place_paths() -> void:
+	var taken_entrances = []
+	for room in rooms:
+		for entrance in room.entrances:
+			astar.set_point_solid(entrance,false)
+			if entrance in taken_entrances:
 				continue
-			print([entrance,nearest_entrance])
+			
+			var nearest_entrance = get_nearest_entrance(room,entrance)
+			astar.set_point_solid(nearest_entrance,false)
+			if nearest_entrance == Vector2i.ZERO:
+				continue
+			
+			if astar.is_point_solid(entrance):
+				print("entrance1 is solid!")
+			if astar.is_point_solid(nearest_entrance):
+				print("entrance2 is solid!")
+			
+			print("entrance pair: ",[entrance,nearest_entrance])
 			var path = astar.get_point_path(entrance,nearest_entrance)
-			print(path)
+			#print("path : ",path)
 			for point in path:
 				tilemap.set_cell(floor_layer,point,tilemap_ID,test_tile_coords)
+				var width = randi_range(corridor_min_width,corridor_max_width)
+				for dx in range(-width/2, width/2 + 1):
+					for dy in range(-width/2, width/2 + 1):
+						var corridor_point = point + Vector2(dx, dy)
+						tilemap.set_cell(floor_layer, corridor_point, tilemap_ID, floor_tile_coords)
+			taken_entrances.append(nearest_entrance)
+			taken_entrances.append(entrance)
 
-func print_debug_info(start_time,end_time):
+func draw_walls():
+	var used_rect = tilemap.get_used_rect()
+	var cells = []
+	used_rect.position -= Vector2i(dungeon_wall_background_offset,dungeon_wall_background_offset)
+	used_rect.size += Vector2i(dungeon_wall_background_offset*2,dungeon_wall_background_offset*2)
+	for x in range(used_rect.position.x,used_rect.position.x+used_rect.size.x):
+		for y in range(used_rect.position.y,used_rect.position.y+used_rect.size.y):
+			var cell = Vector2i(x,y)
+			if tilemap.get_cell_source_id(floor_layer,cell) != tilemap_ID:
+				cells.append(cell)
+	tilemap.set_cells_terrain_connect(walls_layer,cells,0,0,true)
+
+func get_player_spawn_point() -> Vector2i:
+	var random_room = rooms[randi_range(0,len(rooms)-1)]
+	return random_room.get_room_center()
+
+func print_all_debug_info(start_time,end_time):
 	for i in range(len(rooms)):
 		print("room at: ",rooms[i].pos, 
 		" size: ", rooms[i].size, 
 		" entrance locations: ",rooms[i].entrances)
 		for corridor in rooms[i].entrances:
 			tilemap.set_cell(floor_layer,corridor,tilemap_ID,test_tile_coords)
+			print(tilemap.get_surrounding_cells(corridor))
 		if len(rooms[i].entrances) <= 0:
 			print("no entrances")
 	print("%s took %d ms" % ["Loading",end_time - start_time])
