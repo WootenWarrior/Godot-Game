@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://b5sx4oqvaqa53"
+path="res://.godot/imported/DungeonTiles1_palette.aseprite-5a17c1deab257f940593830aea6a1b3b.res"
+
+[deps]
+
+source_file="res://Assets/Environment Art/DungeonTiles1_palette.aseprite"
+dest_files=["res://.godot/imported/DungeonTiles1_palette.aseprite-5a17c1deab257f940593830aea6a1b3b.res"]
+
+[params]
+

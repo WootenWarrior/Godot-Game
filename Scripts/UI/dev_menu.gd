@@ -6,6 +6,7 @@ extends Control
 @onready var zoom_scroll_bar = $DevMenu/ChangeZoom/ZoomScrollBar
 @onready var teleport_x = $DevMenu/Teleport/HBoxContainer/X
 @onready var teleport_y = $DevMenu/Teleport/HBoxContainer2/Y
+@onready var player_speed_choice = $DevMenu/SetSpeed/PlayerSpeedChoice
 @export var max_zoom = 10
 @export var tile_size = 16
 var player = null
@@ -18,10 +19,12 @@ func _ready():
 	populate_paths("res://Scenes/Spells", spell_paths, spell_choice)
 	zoom_scroll_bar.max_value = 10
 	zoom_scroll_bar.min_value = 0.1
+	WorldManager.instantiate_players(1)
 	player = WorldManager.players[0]
 	
 	if player:
 		zoom_scroll_bar.value = player.camera.zoom.x
+		player_speed_choice.value = player.speed
 
 func populate_paths(directory_path: String, path_dict: Dictionary, option_button):
 	var dir = DirAccess.open(directory_path)
@@ -76,3 +79,9 @@ func _on_teleport_button_pressed():
 			x = 0
 		player.global_position = Vector2(x,y)
 		print("set player position to x: ",x, " y: ",y)
+
+func _on_set_player_speed_button_pressed():
+	var speed = int(player_speed_choice.get_line_edit().text)
+	if player:
+		player.speed = speed
+	pass # Replace with function body.

@@ -16,7 +16,7 @@ var damping_factor = 0.9
 var dead = false
 
 func _ready() -> void:
-	players = get_tree().get_nodes_in_group("Player")
+	players = WorldManager.players
 	player = players[0]
 
 func _process(_delta) -> void:

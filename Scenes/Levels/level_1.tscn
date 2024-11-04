@@ -5,4 +5,4 @@
 [node name="Level_1" type="Node2D"]
 
 [node name="Dungeon_Generator" parent="." instance=ExtResource("1_bvmw7")]
-tile_size = 32
+scale = Vector2(2, 2)

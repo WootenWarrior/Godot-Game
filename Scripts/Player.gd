@@ -41,7 +41,6 @@ func _ready() -> void:
 	add_to_group("Player")
 	health_bar.init_health(health)
 	sprint_bar.init_sprint(sprint)
-	speed_temp = speed
 	
 	#Debug
 	if dev_active:
@@ -98,6 +97,7 @@ func handle_sprint_input() -> float:
 	return sprint_multiplier_temp
 
 func handle_charge_input() -> void:
+	speed_temp = speed
 	if Input.is_action_pressed("charge") and weapon.visible:
 		speed = speed_temp*speed_reduction_multiplier
 	if Input.is_action_just_released("charge"):

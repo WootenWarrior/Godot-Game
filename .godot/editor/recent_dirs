@@ -1,5 +1,6 @@
-res://Scenes/Levels
+res://Assets/TileSets
 res://Scripts/Environment
+res://Scenes/Levels
 res://Assets/Environment Art
 res://Scenes
 res://Scenes/Rooms
@@ -7,7 +8,6 @@ res://Assets/TestTiles
 res://Scripts
 res://Scenes/UI
 res://Assets/Spells
-res://Assets/TileSets
 res://
 res://Scripts/Enemies
 res://Assets/Player

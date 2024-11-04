@@ -118,6 +118,29 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Teleport"
 
+[node name="SetSpeed" type="VBoxContainer" parent="DevMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DevMenu/SetSpeed"]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Change player speed: (max 1000)"
+
+[node name="PlayerSpeedChoice" type="SpinBox" parent="DevMenu/SetSpeed"]
+layout_mode = 2
+min_value = 10.0
+max_value = 1000.0
+value = 10.0
+
+[node name="SetPlayerSpeedButton" type="Button" parent="DevMenu/SetSpeed"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Change"
+
 [node name="Dev_menu_button" type="Button" parent="."]
 custom_minimum_size = Vector2(40, 20)
 layout_mode = 1
@@ -134,4 +157,5 @@ text = "Dev Menu"
 [connection signal="pressed" from="DevMenu/ChangeSpell/Change_spell_button" to="." method="_on_change_spell_button_pressed"]
 [connection signal="value_changed" from="DevMenu/ChangeZoom/ZoomScrollBar" to="." method="_on_zoom_scroll_bar_value_changed"]
 [connection signal="pressed" from="DevMenu/Teleport/Teleport_button" to="." method="_on_teleport_button_pressed"]
+[connection signal="pressed" from="DevMenu/SetSpeed/SetPlayerSpeedButton" to="." method="_on_set_player_speed_button_pressed"]
 [connection signal="toggled" from="Dev_menu_button" to="." method="_on_dev_menu_button_toggled"]

@@ -14,11 +14,15 @@ extends TileMap
 @export var min_room_size : Vector2i
 @export var corridor_min_width : int
 @export var corridor_max_width : int
+@export var corridor_max_length : int
 @export var max_entrances : int
+@export var max_pillar_number : int
+@export var decor_edge_offset : int
 
 @export_category("Tilemap settings")
 @export var floor_layer : int
 @export var walls_layer : int
+@export var decor_layer : int
 @export var tilemap_ID : int
 @export var tile_size = 16
 
@@ -26,11 +30,13 @@ extends TileMap
 @export var floor_tile_coords : Vector2i
 @export var test_tile_coords : Vector2i
 @export var wall_tile_background : Vector2i
+@export var pillar_bases : Array[Vector2i]
 
 @onready var timer = $Timer
 @onready var tilemap = $"."
 var root_node : Node2D = null
 var rooms = []
+var connected_rooms = []
 var astar = AStarGrid2D.new()
 
 class Room:
@@ -40,6 +46,7 @@ class Room:
 	var entrances : Array
 	var corridor_min_width : int
 	var corridor_max_width : int
+	var pillars = []
 	
 	func _init(_pos:Vector2i,_size:Vector2i,_max_entrances:int,
 	_corridor_min_width:int,_corridor_max_width:int):
@@ -48,7 +55,6 @@ class Room:
 		self.max_entrances = _max_entrances
 		self.corridor_min_width = _corridor_min_width
 		self.corridor_max_width = _corridor_max_width
-		generate_entrances()
 	
 	func get_room_center() -> Vector2i:
 		return Vector2i(pos.x + (size.x/2), pos.y + (size.y/2))
@@ -95,21 +101,25 @@ func _ready() -> void:
 	if number_of_rooms > max_room_num:
 		number_of_rooms = max_room_num
 	
+	tile_size = tilemap.tile_set.tile_size.x
+	
 	var start_time = Time.get_ticks_msec()
 	spawn_rooms()
 	correct_overlapping_rooms()
 	place_corridors()
+	make_secret_rooms()
 	draw_walls()
+	spawn_decor()
+	set_navigation_region()
 	var end_time = Time.get_ticks_msec()
 	spawn_position = get_player_spawn_point()
 	
 	root_node = get_tree().current_scene
-	if root_node:
-		WorldManager.instantiate_players(1)
-		WorldManager.spawn_players_in_scene(root_node,spawn_position,tile_size)
-	else:
-		WorldManager.instantiate_players(1)
-		WorldManager.spawn_players_in_scene(tilemap,spawn_position,tile_size)
+	if !root_node:
+		root_node = tilemap
+	
+	WorldManager.instantiate_players(1)
+	WorldManager.spawn_players_in_scene(root_node,spawn_position,tile_size)
 	
 	if debugging:
 		print_all_debug_info(start_time,end_time)
@@ -169,64 +179,6 @@ func correct_overlapping_rooms() -> void:
 			print("max iterations reached")
 	print(iterations)
 
-func place_room(room:Room) -> void:
-	var room_pos = room.pos
-	var room_size = room.size
-	for x in range(room_pos.x,room_pos.x+room_size.x):
-		for y in range(room_pos.y,room_pos.y+room_size.y):
-			var cell = Vector2i(x,y)
-			tilemap.set_cell(floor_layer,cell,tilemap_ID,floor_tile_coords)
-	var new_room = Room.new(room_pos,room_size,max_entrances,corridor_min_width,corridor_max_width)
-	rooms.append(new_room)
-
-func remove_room(room:Room) -> void:
-	var room_pos = room.pos
-	var room_size = room.size
-	for x in range(room_pos.x,room_pos.x+room_size.x):
-		for y in range(room_pos.y,room_pos.y+room_size.y):
-			var cell = Vector2i(x,y)
-			tilemap.set_cell(floor_layer,cell,-1,Vector2i.ZERO)
-	
-	rooms = rooms.filter(func(existing_room) : return existing_room != room)
-
-func get_nearest_room(_room:Room) -> Room:
-	var nearest_room = null
-	var room_center1 = _room.get_room_center()
-	var nearest_coords = Vector2i(INF,INF)
-	for room in rooms:
-		if room == _room:
-			continue
-		var room_center2 = room.get_room_center()
-		if room_center2 < nearest_coords - room_center1:
-			nearest_coords = room_center2
-			nearest_room = room
-	return nearest_room
-
-func get_nearest_entrance(_room:Room,_entrance:Vector2i) -> Vector2i:
-	var nearest_entrance = Vector2i.ZERO
-	var closest_distance = INF
-	for room in rooms:
-		if _room == room:
-			continue
-		for entrance in room.entrances:
-			var distance = abs(_entrance.x - entrance.x) + abs(_entrance.y - entrance.y)
-			if distance < closest_distance:
-				closest_distance = distance
-				nearest_entrance = entrance
-	return nearest_entrance
-
-func is_rooms_overlapping(room1:Room,room2:Room) -> bool:
-	var room1_pos = room1.pos
-	var room2_pos = room2.pos
-	var room1_size = room1.size + Vector2i(room_spacing,room_spacing)
-	var room2_size = room2.size + Vector2i(room_spacing,room_spacing)
-	
-	var overlap_x = (room1_pos.x < room2_pos.x + room2_size.x and room1_pos.x + room1_size.x > room2_pos.x)
-	var overlap_y = (room1_pos.y < room2_pos.y + room2_size.y and room1_pos.y + room1_size.y > room2_pos.y)
-	
-	#print(Vector2(overlap_x,overlap_y))
-	return overlap_x and overlap_y
-
 func move_rooms_apart(room1:Room,room2:Room) -> Array:
 	var pos1 = room1.pos
 	var size1 = room1.size
@@ -277,7 +229,42 @@ func move_rooms_apart(room1:Room,room2:Room) -> Array:
 	#print("new pos1 = ", new_pos1, " new pos 2 = ",new_pos2)
 	return [new_room1,new_room2]
 
+func place_room(room:Room) -> void:
+	var room_pos = room.pos
+	var room_size = room.size
+	for x in range(room_pos.x,room_pos.x+room_size.x):
+		for y in range(room_pos.y,room_pos.y+room_size.y):
+			var cell = Vector2i(x,y)
+			tilemap.set_cell(floor_layer,cell,tilemap_ID,floor_tile_coords)
+	var new_room = Room.new(room_pos,room_size,max_entrances,corridor_min_width,corridor_max_width)
+	rooms.append(new_room)
+
+func remove_room(room:Room) -> void:
+	var room_pos = room.pos
+	var room_size = room.size
+	for x in range(room_pos.x,room_pos.x+room_size.x):
+		for y in range(room_pos.y,room_pos.y+room_size.y):
+			var cell = Vector2i(x,y)
+			tilemap.set_cell(floor_layer,cell,-1,Vector2i.ZERO)
+	
+	rooms = rooms.filter(func(existing_room) : return existing_room != room)
+
+func is_rooms_overlapping(room1:Room,room2:Room) -> bool:
+	var room1_pos = room1.pos
+	var room2_pos = room2.pos
+	var room1_size = room1.size + Vector2i(room_spacing,room_spacing)
+	var room2_size = room2.size + Vector2i(room_spacing,room_spacing)
+	
+	var overlap_x = (room1_pos.x < room2_pos.x + room2_size.x and room1_pos.x + room1_size.x > room2_pos.x)
+	var overlap_y = (room1_pos.y < room2_pos.y + room2_size.y and room1_pos.y + room1_size.y > room2_pos.y)
+	
+	#print(Vector2(overlap_x,overlap_y))
+	return overlap_x and overlap_y
+
 func place_corridors() -> void:
+	for room in rooms:
+		room.generate_entrances()
+	
 	setup_astar()
 	set_rooms_as_solid()
 	place_paths()
@@ -345,27 +332,34 @@ func place_paths() -> void:
 				continue
 			
 			var nearest_entrance = get_nearest_entrance(room,entrance)
-			astar.set_point_solid(nearest_entrance,false)
 			if nearest_entrance == Vector2i.ZERO:
 				continue
+			astar.set_point_solid(nearest_entrance,false)
 			
 			if astar.is_point_solid(entrance):
 				print("entrance1 is solid!")
 			if astar.is_point_solid(nearest_entrance):
 				print("entrance2 is solid!")
 			
-			print("entrance pair: ",[entrance,nearest_entrance])
+			#print("entrance pair: ",[entrance,nearest_entrance])
 			var path = astar.get_point_path(entrance,nearest_entrance)
 			#print("path : ",path)
 			for point in path:
 				tilemap.set_cell(floor_layer,point,tilemap_ID,test_tile_coords)
 				var width = randi_range(corridor_min_width,corridor_max_width)
-				for dx in range(-width/2, width/2 + 1):
-					for dy in range(-width/2, width/2 + 1):
+				for dx in range(-width/2, width/2):
+					for dy in range(-width/2, width/2):
 						var corridor_point = point + Vector2(dx, dy)
+						astar.set_point_solid(corridor_point,true)
 						tilemap.set_cell(floor_layer, corridor_point, tilemap_ID, floor_tile_coords)
 			taken_entrances.append(nearest_entrance)
 			taken_entrances.append(entrance)
+
+func make_secret_rooms():
+	var unconnected_rooms = get_unconnected_rooms()
+	for room in unconnected_rooms:
+		print("secret room at :", room.pos)
+		var center = room.get_room_center()
 
 func draw_walls():
 	var used_rect = tilemap.get_used_rect()
@@ -379,9 +373,96 @@ func draw_walls():
 				cells.append(cell)
 	tilemap.set_cells_terrain_connect(walls_layer,cells,0,0,true)
 
+func spawn_decor():
+	for room in rooms:
+		var num_of_pillars = randi_range(0,max_pillar_number)
+		var possible_pillar_positions = []
+		for x in range(room.pos.x+decor_edge_offset,room.pos.x+room.size.x-decor_edge_offset):
+			for y in range(room.pos.y+decor_edge_offset,room.pos.y+room.size.y-decor_edge_offset):
+				var cell = Vector2i(x,y)
+				possible_pillar_positions.append(cell)
+		
+		for i in range(num_of_pillars):
+			var pillar_base_pos = possible_pillar_positions[randi_range(0,len(possible_pillar_positions)-1)]
+			var pillar_top_pos = pillar_base_pos + Vector2i(0,-1)
+			possible_pillar_positions = possible_pillar_positions.filter(func(current_pos) : 
+				return current_pos != pillar_base_pos or current_pos != pillar_top_pos)
+			var base = pillar_bases[randi_range(0,len(pillar_bases)-1)]
+			var top = pillar_bases[randi_range(0,len(pillar_bases)-1)] + Vector2i(0,-1)
+			tilemap.set_cell(decor_layer, pillar_base_pos, tilemap_ID, base)
+			tilemap.set_cell(decor_layer, pillar_top_pos, tilemap_ID, top)
+
+func set_navigation_region():
+	var nav_region = NavigationRegion2D.new()
+	var navigation_mesh = NavigationPolygon.new()
+	tilemap.add_child(nav_region)
+	var used_rect = tilemap.get_used_rect()
+	var outline = PackedVector2Array([
+		used_rect.position,
+		used_rect.position + Vector2i(0,used_rect.size.y),
+		used_rect.position + used_rect.size,
+		used_rect.position + Vector2i(0,used_rect.size.x)
+		])
+	navigation_mesh.add_outline(outline)
+	nav_region.navigation_polygon = navigation_mesh
+	nav_region.bake_navigation_polygon()
+
+func get_nearest_room(_room:Room) -> Room:
+	var nearest_room = null
+	var room_center1 = _room.get_room_center()
+	var nearest_coords = Vector2i(INF,INF)
+	for room in rooms:
+		if room == _room:
+			continue
+		var room_center2 = room.get_room_center()
+		if room_center2 < nearest_coords - room_center1:
+			nearest_coords = room_center2
+			nearest_room = room
+	return nearest_room
+
+func get_room(_entrance:Vector2i) -> Room:
+	var room = null
+	for _room in rooms:
+		for entrance in _room.entrances:
+			if _entrance == entrance:
+				room = _room
+	return room
+
+func get_nearest_entrance(_room:Room,_entrance:Vector2i) -> Vector2i:
+	var nearest_entrance = Vector2i.ZERO
+	var closest_distance = INF
+	for room in rooms:
+		if _room == room:
+			continue
+		for entrance in room.entrances:
+			var distance = abs(_entrance.x - entrance.x) + abs(_entrance.y - entrance.y)
+			if distance > corridor_max_length:
+				continue
+			if distance < closest_distance:
+				closest_distance = distance
+				nearest_entrance = entrance
+	#print("corridor length: ", closest_distance)
+	return nearest_entrance
+
+func get_unconnected_rooms() -> Array:
+	var unconnected_rooms = []
+	for room in rooms:
+		var unconnected_entrances = []
+		for entrance in room.entrances:
+			if astar.is_point_solid(entrance):
+				unconnected_entrances.append(entrance)
+		if len(unconnected_entrances) == len(room.entrances):
+			unconnected_rooms.append(room)
+	return unconnected_rooms
+
 func get_player_spawn_point() -> Vector2i:
 	var random_room = rooms[randi_range(0,len(rooms)-1)]
-	return random_room.get_room_center()
+	var cell = random_room.get_room_center()
+	var pos = cell
+	tilemap.set_cell(decor_layer, cell, tilemap_ID, test_tile_coords)
+	print("player pos: ", tilemap.local_to_map(pos))
+	print("cell at: ", cell)
+	return pos
 
 func print_all_debug_info(start_time,end_time):
 	for i in range(len(rooms)):
