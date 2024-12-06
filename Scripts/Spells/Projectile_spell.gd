@@ -12,7 +12,7 @@ var focus_point = Vector2.ZERO
 
 func _ready() -> void:
 	super._ready()
-	type = types.PROJECTILE
+	type = Enums.spell_types.PROJECTILE
 
 func _process(delta) -> void:
 	if not moving:

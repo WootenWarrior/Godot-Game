@@ -17,6 +17,7 @@ dungeon_size = Vector2i(100, 100)
 number_of_rooms = 2
 room_spacing = 5
 dungeon_wall_background_offset = 100
+spawn_paths = false
 max_room_size = Vector2i(40, 40)
 min_room_size = Vector2i(30, 30)
 corridor_min_width = 8

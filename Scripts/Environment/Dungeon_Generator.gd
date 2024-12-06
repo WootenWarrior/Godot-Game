@@ -8,6 +8,7 @@ extends TileMap
 @export var use_timer = false
 @export var debugging = false
 @export var dungeon_wall_background_offset : int
+@export var spawn_paths = true
 
 @export_category("Room Settings")
 @export var max_room_size : Vector2i
@@ -38,6 +39,7 @@ var root_node : Node2D = null
 var rooms = []
 var connected_rooms = []
 var astar = AStarGrid2D.new()
+var player = null
 
 class Room:
 	var pos : Vector2i
@@ -92,6 +94,12 @@ class Room:
 							return existing_pos != _pos)
 
 func _ready() -> void:
+	root_node = get_tree().current_scene
+	if !root_node:
+		root_node = tilemap
+	
+	WorldManager.create_player()
+	
 	var min_room_length = min(min_room_size.x,min_room_size.y)
 	var max_room_num = min(dungeon_size.x/10,dungeon_size.y/10)
 	if min_room_length/2 < corridor_max_width:
@@ -107,19 +115,13 @@ func _ready() -> void:
 	spawn_rooms()
 	correct_overlapping_rooms()
 	place_corridors()
-	make_secret_rooms()
 	draw_walls()
 	spawn_decor()
 	set_navigation_region()
 	var end_time = Time.get_ticks_msec()
 	spawn_position = get_player_spawn_point()
 	
-	root_node = get_tree().current_scene
-	if !root_node:
-		root_node = tilemap
-	
-	WorldManager.instantiate_players(1)
-	WorldManager.spawn_players_in_scene(root_node,spawn_position,tile_size)
+	WorldManager.spawn_player_in_scene(root_node,spawn_position)
 	
 	if debugging:
 		print_all_debug_info(start_time,end_time)
@@ -324,42 +326,37 @@ func set_rooms_as_solid() -> void:
 					astar.set_point_solid(Vector2i(i,current_pos.y))
 
 func place_paths() -> void:
-	var taken_entrances = []
-	for room in rooms:
-		for entrance in room.entrances:
-			astar.set_point_solid(entrance,false)
-			if entrance in taken_entrances:
-				continue
-			
-			var nearest_entrance = get_nearest_entrance(room,entrance)
-			if nearest_entrance == Vector2i.ZERO:
-				continue
-			astar.set_point_solid(nearest_entrance,false)
-			
-			if astar.is_point_solid(entrance):
-				print("entrance1 is solid!")
-			if astar.is_point_solid(nearest_entrance):
-				print("entrance2 is solid!")
-			
-			#print("entrance pair: ",[entrance,nearest_entrance])
-			var path = astar.get_point_path(entrance,nearest_entrance)
-			#print("path : ",path)
-			for point in path:
-				tilemap.set_cell(floor_layer,point,tilemap_ID,test_tile_coords)
-				var width = randi_range(corridor_min_width,corridor_max_width)
-				for dx in range(-width/2, width/2):
-					for dy in range(-width/2, width/2):
-						var corridor_point = point + Vector2(dx, dy)
-						astar.set_point_solid(corridor_point,true)
-						tilemap.set_cell(floor_layer, corridor_point, tilemap_ID, floor_tile_coords)
-			taken_entrances.append(nearest_entrance)
-			taken_entrances.append(entrance)
-
-func make_secret_rooms():
-	var unconnected_rooms = get_unconnected_rooms()
-	for room in unconnected_rooms:
-		print("secret room at :", room.pos)
-		var center = room.get_room_center()
+	if spawn_paths:
+		var taken_entrances = []
+		for room in rooms:
+			for entrance in room.entrances:
+				astar.set_point_solid(entrance,false)
+				if entrance in taken_entrances:
+					continue
+				
+				var nearest_entrance = get_nearest_entrance(room,entrance)
+				if nearest_entrance == Vector2i.ZERO:
+					continue
+				astar.set_point_solid(nearest_entrance,false)
+				
+				if astar.is_point_solid(entrance):
+					print("entrance1 is solid!")
+				if astar.is_point_solid(nearest_entrance):
+					print("entrance2 is solid!")
+				
+				#print("entrance pair: ",[entrance,nearest_entrance])
+				var path = astar.get_point_path(entrance,nearest_entrance)
+				#print("path : ",path)
+				for point in path:
+					tilemap.set_cell(floor_layer,point,tilemap_ID,test_tile_coords)
+					var width = randi_range(corridor_min_width,corridor_max_width)
+					for dx in range(-width/2, width/2):
+						for dy in range(-width/2, width/2):
+							var corridor_point = point + Vector2(dx, dy)
+							astar.set_point_solid(corridor_point,true)
+							tilemap.set_cell(floor_layer, corridor_point, tilemap_ID, floor_tile_coords)
+				taken_entrances.append(nearest_entrance)
+				taken_entrances.append(entrance)
 
 func draw_walls():
 	var used_rect = tilemap.get_used_rect()
@@ -428,7 +425,7 @@ func get_room(_entrance:Vector2i) -> Room:
 				room = _room
 	return room
 
-func get_nearest_entrance(_room:Room,_entrance:Vector2i) -> Vector2i:
+func get_nearest_entrance(_room:Room, _entrance:Vector2i) -> Vector2i:
 	var nearest_entrance = Vector2i.ZERO
 	var closest_distance = INF
 	for room in rooms:
@@ -458,10 +455,11 @@ func get_unconnected_rooms() -> Array:
 func get_player_spawn_point() -> Vector2i:
 	var random_room = rooms[randi_range(0,len(rooms)-1)]
 	var cell = random_room.get_room_center()
-	var pos = cell
+	var pos = cell * tile_size * transform.get_scale().x
 	tilemap.set_cell(decor_layer, cell, tilemap_ID, test_tile_coords)
-	print("player pos: ", tilemap.local_to_map(pos))
 	print("cell at: ", cell)
+	if player:
+		player.global_position = pos
 	return pos
 
 func print_all_debug_info(start_time,end_time):

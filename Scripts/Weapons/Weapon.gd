@@ -9,21 +9,22 @@ var damage: float = 0.0
 var base_z_index = 1
 var charge_bar = null
 
-signal attack
 signal charge
 signal weapon_out
 signal weapon_hide
 
 func _ready() -> void:
-	player = WorldManager.players[0]
+	Signals.connect("player_attack",Callable(self,"_on_player_attack"))
+	player = get_tree().current_scene.get_node("Player")
 	
-	if area:
-		area.connect("body_entered", Callable(self, "_on_area_body_entered"))
-		area.connect("body_exited", Callable(self, "_on_area_body_exited"))
-	else:
-		print("Please set an area as child of the root")
-	
-	initialise_charge_bar()
+	if player:
+		if area:
+			area.connect("body_entered", Callable(self, "_on_area_body_entered"))
+			area.connect("body_exited", Callable(self, "_on_area_body_exited"))
+		else:
+			print("Please set an area as child of the root")
+		
+		initialise_charge_bar()
 
 func _process(_delta) -> void:
 	if Input.is_action_just_pressed("get_weapon_out") and not visible:
@@ -37,7 +38,6 @@ func _process(_delta) -> void:
 		
 	if visible:
 		if Input.is_action_just_pressed("fire"):
-			attack.emit()
 			charge_bar.value = 0
 		if Input.is_action_just_pressed("charge"):
 			charge.emit()

@@ -30,15 +30,16 @@ var player_number : int
 
 signal roll(direction)
 signal hit(damage:int)
-signal dead
 
 func _ready() -> void:
 	InventoryManager.set_player_reference(self)
 	SpellInventoryManager.set_player_reference(self)
+	
 	spell_area = spell_area_scene.instantiate()
+	
 	add_child(spell_area)
 	spell_area.visible = false
-	add_to_group("Player")
+	
 	health_bar.init_health(health)
 	sprint_bar.init_sprint(sprint)
 	
@@ -47,9 +48,16 @@ func _ready() -> void:
 		player_ui.add_child(load("res://Scenes/UI/dev_menu.tscn").instantiate())
 	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
 	weapon.set_spell(load("res://Scenes/Spells/LightningStrike.tscn"))
+	
+	print("player position start = ",global_position)
+	
+	Signals.connect("player_dead", Callable(self, "_on_player_dead"))
 
 func _physics_process(_delta) -> void:
 	if not is_dead:
+		if Input.is_action_just_pressed("fire"):
+			Signals.player_attack.emit()
+		
 		var mouse_pos = get_global_mouse_position()
 		var raw_direction = handle_movement_input()
 		var direction = raw_direction.normalized()
@@ -66,6 +74,9 @@ func _physics_process(_delta) -> void:
 		velocity = ((direction*speed) + external_forces) * _sprint_multiplier
 		move_and_slide()
 		external_forces = external_forces*external_force_decay
+		
+		if health <= 0:
+			Signals.player_dead.emit()
 
 func damage(damage_value:float) -> void:
 	health-=damage_value
@@ -160,10 +171,7 @@ func handle_player_sprite_direction(_mouse_pos) -> void:
 			player_sprite.flip_h = false
 
 func get_weapon_radius() -> float:
-	return weapon.radius
-
-func get_dev_menu() -> Node2D:
-	return 
+	return global_position.distance_to(weapon.global_position)
 
 func _on_toggle_spell_area(_visible:bool) -> void:
 	var spell_area_animation = "Idle_Small"
@@ -179,14 +187,11 @@ func _on_hit(damage_value:float) -> void:
 			can_be_hit = false
 			hit_timer.start()
 			print(health)
-		
-		if health <= 0:
-			dead.emit()
 
 func _on_timer_timeout() -> void:
 	can_be_hit = true
 
-func _on_dead() -> void:
+func _on_player_dead() -> void:
 	print("player died")
 	player_sprite.play("Die")
 	is_dead = true

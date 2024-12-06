@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://drsrvaqy2phkj"]
 
-[ext_resource type="Script" path="res://Scripts/Spell_inventory_manager.gd" id="1_2jxyl"]
+[ext_resource type="Script" path="res://Scripts/Globals/Spell_inventory.gd" id="1_2jxyl"]
 
 [node name="Spell_selection" type="Control"]
 layout_mode = 3

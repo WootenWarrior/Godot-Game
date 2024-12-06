@@ -6,3 +6,6 @@
 
 [node name="Dungeon_Generator" parent="." instance=ExtResource("1_bvmw7")]
 scale = Vector2(2, 2)
+dungeon_size = Vector2i(10, 10)
+number_of_rooms = 1
+tile_size = 32

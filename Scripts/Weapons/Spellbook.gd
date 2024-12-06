@@ -11,11 +11,12 @@ func _ready() -> void:
 	radius = 10
 
 func _process(delta) -> void:
-	super._process(delta)
-	
-	set_weapon_pos()
-	
-	check_z_index()
+	if player:
+		super._process(delta)
+		
+		set_weapon_pos()
+		
+		check_z_index()
 
 func set_weapon_pos() -> void:
 	if visible:

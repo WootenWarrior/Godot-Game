@@ -1,8 +1,6 @@
-res://Scenes/Levels/level_1.tscn
+res://Scenes/Levels/test.tscn
 res://Scripts/Player.gd
 res://Assets/TileSets/test.tres
-res://Scripts/Environment/Dungeon_Generator.gd
-res://Scenes/Levels/test.tscn
 res://Scenes/Player.tscn
 res://Scenes/Weapons/DevSpellbook.tscn
 res://Scenes/Spells/Fireball.tscn
@@ -10,3 +8,15 @@ res://Scenes/Spells/LightningStrike.tscn
 res://Scenes/UI/PlayerUI.tscn
 res://Scenes/UI/dev_menu.tscn
 res://Scenes/Dungeon_Generator.tscn
+res://Scenes/Levels/level_1.tscn
+res://Scripts/Environment/Dungeon_Generator.gd
+res://Scripts/WorldManager.gd
+res://Scripts/Spells/Spell.gd
+res://Scripts/Spells/Area_spell.gd
+res://Scripts/Weapons/Magic_weapon.gd
+res://Scripts/Globals/Signals.gd
+res://Scripts/Globals/Enums.gd
+res://Scripts/Spells/Projectile_spell.gd
+res://Scripts/Weapons/Spellbook.gd
+res://Scripts/Player_movement.gd
+res://Scripts/Weapons/Weapon.gd

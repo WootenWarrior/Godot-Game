@@ -19,8 +19,7 @@ func _ready():
 	populate_paths("res://Scenes/Spells", spell_paths, spell_choice)
 	zoom_scroll_bar.max_value = 10
 	zoom_scroll_bar.min_value = 0.1
-	WorldManager.instantiate_players(1)
-	player = WorldManager.players[0]
+	player =get_tree().current_scene.get_node("Player")
 	
 	if player:
 		zoom_scroll_bar.value = player.camera.zoom.x

@@ -11,15 +11,17 @@ config_version=5
 [application]
 
 config/name="Wizard Game"
-run/main_scene="res://Scenes/Levels/test.tscn"
+run/main_scene="res://Scenes/Levels/level_1.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-InventoryManager="*res://Scripts/Inventory_manager.gd"
-SpellInventoryManager="*res://Scripts/Spell_inventory_manager.gd"
-WorldManager="*res://Scripts/WorldManager.gd"
+InventoryManager="*res://Scripts/Globals/Inventory.gd"
+SpellInventoryManager="*res://Scripts/Globals/Spell_inventory.gd"
+WorldManager="*res://Scripts/Globals/WorldManager.gd"
+Signals="*res://Scripts/Globals/Signals.gd"
+Enums="*res://Scripts/Globals/Enums.gd"
 
 [display]
 

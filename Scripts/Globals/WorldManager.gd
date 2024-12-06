@@ -1,7 +1,9 @@
 extends Node
 
+var player_scene = load("res://Scenes/Player.tscn")
 var current_scene : Node2D
 var num_of_players : int
+var player = null
 var players : Array
 var rooms : Array
 var boss_rooms : Array
@@ -19,41 +21,12 @@ func  _ready():
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
-func spawn_players_in_scene(root_node : Node, spawn_pos : Vector2, tile_size : int):
-	var radius = 100
-	var angle_step = 2*PI / num_of_players
-	
-	if num_of_players > 1:
-		for i in range(num_of_players):
-			var angle = i * angle_step
-			var pos_x = spawn_pos.x + radius * cos(angle)
-			var pos_y = spawn_pos.y + radius * sin(angle)
-			var player_pos = Vector2(pos_x,pos_y)
-			var player = players[i]
-			player.position = player_pos
-			root_node.add_child.call_deferred(player)
-	else:
-		var player = players[0]
-		player.position = spawn_pos
-		root_node.add_child.call_deferred(player)
+func spawn_player_in_scene(root_node : Node, spawn_pos : Vector2):
+	player.position = spawn_pos
+	root_node.add_child.call_deferred(player)
 
-func instantiate_players(_num_of_players:int) -> void:
-	for i in _num_of_players:
-		var player = load("res://Scenes/Player.tscn").instantiate()
-		player.player_number = i
-		add_player(player)
-
-func add_player(_player) -> void:
-	players.append(_player)
-
-func set_player(_player, index : int) -> void:
-	players[index] = _player
-
-func get_players() -> Array:
-	return players
-
-func get_player(index : int) -> Node2D:
-	return players[index]
+func create_player():
+	player = player_scene.instantiate()
 
 func add_room(room : Node2D):
 	rooms.append(room)
