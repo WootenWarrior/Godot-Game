@@ -4,6 +4,6 @@ extends Node
 signal player_dead
 signal player_attack
 
-# Weapon
+# Spells
 signal toggle_spell_area
-signal charge
+signal despawn_all_active_spells

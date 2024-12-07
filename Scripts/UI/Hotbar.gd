@@ -36,7 +36,7 @@ func set_hotbar_slots() -> void:
 		var image = slot.get_child(0)
 		if hotbar_spells.size() > i:
 			var spell = hotbar_spells[i].instantiate()
-			var hotbar_image = spell.hotbar_image
+			var hotbar_image = spell.spell_config.hotbar_image
 			image.texture = hotbar_image
 			slot.spell = hotbar_spells[i]
 			spell.queue_free()

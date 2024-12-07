@@ -3,7 +3,6 @@ extends Spell
 class_name Area_Spell
 
 var has_spell_area = true
-var spell_area_type = "Idle_Small"
 var can_knockback = true
 
 func _ready() -> void:
@@ -32,5 +31,5 @@ func _on_area_2d_body_entered(body) -> void:
 	#print("collision: ",body.name)
 	if body.name == "Player":
 		knockback(body,direction)
-		body.damage(damage)
+		body.damage(spell_config.damage)
 		#print(body.health)

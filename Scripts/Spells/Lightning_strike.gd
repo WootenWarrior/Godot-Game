@@ -6,11 +6,9 @@ func _ready() -> void:
 	super._ready()
 	set_area($Area2D)
 	set_collider($Area2D/Collider)
+	set_animated_sprite($".")
 	connect_to_area_signal()
 	collider.disabled = true
-	damage = 10
-	knockback_strength = 200
-	max_reach = 100
 
 func _on_fire() -> void:
 	super._on_fire()

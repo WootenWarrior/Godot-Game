@@ -199,7 +199,6 @@ collision_mask = 2
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_n4j2u")
 
-[connection signal="attack" from="." to="." method="_on_attack"]
 [connection signal="charged" from="." to="." method="_on_charged"]
 [connection signal="weapon_hide" from="." to="." method="_on_weapon_hide"]
 [connection signal="weapon_out" from="." to="." method="_on_weapon_out"]

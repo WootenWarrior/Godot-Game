@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://bdvdr5madyn58"]
 
-[ext_resource type="Script" path="res://Scripts/Player_movement.gd" id="1_mljdo"]
+[ext_resource type="Script" path="res://Scripts/Player_input.gd" id="1_mljdo"]
 [ext_resource type="Texture2D" uid="uid://b7v4j0xincy63" path="res://Assets/Player/WizardDefault.png" id="2_3la3r"]
 [ext_resource type="PackedScene" uid="uid://k3tki8ixem5h" path="res://Scenes/UI/PlayerUI.tscn" id="4_70g84"]
 
@@ -205,7 +205,6 @@ y_sort_enabled = true
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("1_mljdo")
-speed = 100.0
 
 [node name="PlayerCharacter" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_c0wcu")

@@ -59,6 +59,6 @@ func _on_fire() -> void:
 func _on_area_2d_body_entered(body):
 	if body.name != "TileMap":
 		knockback(body,direction)
-		body.damage(damage)
+		body.damage(spell_config.damage)
 	play("Hit")
 	set_speed(0)

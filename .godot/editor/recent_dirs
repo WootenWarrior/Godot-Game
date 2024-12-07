@@ -1,3 +1,5 @@
+res://Resources
+res://Assets/Spells
 res://Scripts/Globals
 res://Scenes/Levels
 res://Scenes
@@ -8,7 +10,6 @@ res://Scenes/Rooms
 res://Assets/TestTiles
 res://Scripts
 res://Scenes/UI
-res://Assets/Spells
 res://
 res://Scripts/Enemies
 res://Assets/Player

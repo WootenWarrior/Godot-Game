@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-@export var speed: float = 75.0
+@export var move_speed: float = 75.0
+@export var charge_speed: float = 35.0
 @export var sprint_multiplier: float = 2
 @export var sprint_bar_decrease_multiplier = 0.8
 @export var sprint_bar_increase_multiplier = 0.5
@@ -18,6 +19,8 @@ extends CharacterBody2D
 @onready var sprint_bar = $CanvasLayer/PlayerUI/SprintBar
 @onready var spell_reach_radius = $SpellReachRadius/CollisionShape2D
 @onready var camera = $Camera2D
+var speed: float
+var charging = false
 var can_be_hit = true
 var spell_area = null
 var is_facing_up = false
@@ -32,6 +35,8 @@ signal roll(direction)
 signal hit(damage:int)
 
 func _ready() -> void:
+	speed = move_speed
+	
 	InventoryManager.set_player_reference(self)
 	SpellInventoryManager.set_player_reference(self)
 	
@@ -89,7 +94,7 @@ func apply_force(force_direction: Vector2, force_strength: float) -> void:
 func set_weapon(new_weapon:Resource) -> void:
 	weapon = new_weapon.instantiate()
 	add_child(weapon)
-	weapon.connect("toggle_spell_area", Callable(self, "_on_toggle_spell_area"))
+	Signals.connect("toggle_spell_area", Callable(self, "_on_toggle_spell_area"))
 
 func set_weapon_spell(spell) -> void:
 	weapon.set_spell(spell)
@@ -108,11 +113,10 @@ func handle_sprint_input() -> float:
 	return sprint_multiplier_temp
 
 func handle_charge_input() -> void:
-	speed_temp = speed
 	if Input.is_action_pressed("charge") and weapon.visible:
-		speed = speed_temp*speed_reduction_multiplier
-	if Input.is_action_just_released("charge"):
-		speed = speed_temp
+		speed = charge_speed
+	elif Input.is_action_just_released("charge") and weapon.visible:
+		speed = move_speed
 
 func handle_roll_input(direction:Vector2) -> void:
 	if Input.is_action_just_pressed("roll"):
@@ -173,9 +177,10 @@ func handle_player_sprite_direction(_mouse_pos) -> void:
 func get_weapon_radius() -> float:
 	return global_position.distance_to(weapon.global_position)
 
-func _on_toggle_spell_area(_visible:bool) -> void:
+func _on_toggle_spell_area() -> void:
+	var prev_visibility = spell_area.visible
 	var spell_area_animation = "Idle_Small"
-	spell_area.visible = _visible
+	spell_area.visible = !prev_visibility
 	
 	if spell_area.visible:
 		spell_area.play(spell_area_animation)

@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cy1rsnp4uj4ks" path="res://Assets/Spells/SmallLightiningStrike.png" id="1_kcolf"]
 [ext_resource type="Script" path="res://Scripts/Spells/Lightning_strike.gd" id="2_04k3x"]
+[ext_resource type="Resource" uid="uid://beg58iyvht2js" path="res://Resources/Lightning_strike_config.tres" id="3_xnmum"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jtd5d"]
 atlas = ExtResource("1_kcolf")
@@ -102,10 +103,6 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lkffm"]
-atlas = ExtResource("1_kcolf")
-region = Rect2(224, 0, 32, 48)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_8de3j"]
 radius = 14.0
 
@@ -115,7 +112,7 @@ sprite_frames = SubResource("SpriteFrames_q0dpt")
 animation = &"Strike"
 offset = Vector2(0, -17)
 script = ExtResource("2_04k3x")
-hotbar_image = SubResource("AtlasTexture_lkffm")
+spell_config = ExtResource("3_xnmum")
 
 [node name="Area2D" type="Area2D" parent="."]
 z_index = -8
