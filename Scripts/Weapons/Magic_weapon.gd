@@ -28,13 +28,14 @@ func _process(delta) -> void:
 				complete_charge()
 
 func set_spell(new_spell_scene : Resource) -> void:
+	if equipped_spell:
+		equipped_spell.queue_free()
+	
 	if new_spell_scene and player:
 		equipped_spell_scene = new_spell_scene
-		var spell_temp = equipped_spell_scene.instantiate()
-		charge_time = spell_temp.spell_config.charge_time
+		equipped_spell = equipped_spell_scene.instantiate()
+		charge_time = equipped_spell.spell_config.charge_time
 		#print(charge_time)
-		player.set_area_spell_max_reach(spell_temp.max_reach)
-		spell_temp.queue_free()
 
 func instantiate_spell() -> void:
 	equipped_spell = equipped_spell_scene.instantiate()

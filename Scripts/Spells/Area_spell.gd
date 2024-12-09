@@ -1,9 +1,8 @@
 extends Spell
 
-class_name Area_Spell
+class_name AreaSpell
 
-var has_spell_area = true
-var can_knockback = true
+@export var AreaSpellConfig : AreaSpellConfig
 
 func _ready() -> void:
 	super._ready()
@@ -24,7 +23,6 @@ func _on_fire() -> void:
 func _on_animation_finished() -> void:
 	visible = false
 	collider.disabled = true
-	can_knockback = true
 
 func _on_area_2d_body_entered(body) -> void:
 	var direction = body.global_position - global_position
@@ -33,3 +31,7 @@ func _on_area_2d_body_entered(body) -> void:
 		knockback(body,direction)
 		body.damage(spell_config.damage)
 		#print(body.health)
+
+func _on_animated_sprite_2d_animation_finished():
+	visible = false
+	collider.disabled = true

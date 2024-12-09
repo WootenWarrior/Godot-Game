@@ -1,14 +1,17 @@
+res://Scenes/Components
+res://Scripts/Components
+res://Scenes
+res://Scripts
+res://Scripts/Spells
 res://Resources
 res://Assets/Spells
 res://Scripts/Globals
 res://Scenes/Levels
-res://Scenes
 res://Assets/TileSets
 res://Scripts/Environment
 res://Assets/Environment Art
 res://Scenes/Rooms
 res://Assets/TestTiles
-res://Scripts
 res://Scenes/UI
 res://
 res://Scripts/Enemies

@@ -10,15 +10,17 @@ extends CharacterBody2D
 @export var external_force_decay = 0.9   #Bounce damping factor on player (will affect all force sources)
 @export var roll_force = 400
 @export var dev_active = true
-@onready var player_sprite = $PlayerCharacter
+
 @onready var spell_area_scene = preload("res://Scenes/UI/SpellArea.tscn")
 @onready var weapon = null
+
+@onready var player_sprite = $PlayerCharacter
 @onready var hit_timer = $InvulnerabilityTimer
 @onready var player_ui = $CanvasLayer/PlayerUI
 @onready var health_bar = $CanvasLayer/PlayerUI/HealthBar
 @onready var sprint_bar = $CanvasLayer/PlayerUI/SprintBar
-@onready var spell_reach_radius = $SpellReachRadius/CollisionShape2D
 @onready var camera = $Camera2D
+
 var speed: float
 var charging = false
 var can_be_hit = true
@@ -52,7 +54,6 @@ func _ready() -> void:
 	if dev_active:
 		player_ui.add_child(load("res://Scenes/UI/dev_menu.tscn").instantiate())
 	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
-	weapon.set_spell(load("res://Scenes/Spells/LightningStrike.tscn"))
 	
 	print("player position start = ",global_position)
 	
@@ -98,9 +99,6 @@ func set_weapon(new_weapon:Resource) -> void:
 
 func set_weapon_spell(spell) -> void:
 	weapon.set_spell(spell)
-
-func set_area_spell_max_reach(radius:float) -> void:
-	spell_reach_radius.shape.radius = radius
 
 func handle_sprint_input() -> float:
 	var sprint_multiplier_temp = 1

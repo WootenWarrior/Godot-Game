@@ -2,7 +2,7 @@ extends AnimatedSprite2D
 
 class_name Spell
 
-@export var spell_config: SpellConfig
+@export var SpellConfig: SpellConfig
 
 var sprite: AnimatedSprite2D
 var collider = null

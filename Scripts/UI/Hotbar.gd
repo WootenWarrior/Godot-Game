@@ -9,9 +9,6 @@ var current_selected = null
 signal spell_hotbar_updated
 
 func _ready() -> void:
-	add_hotbar_spell(load("res://Scenes/Spells/Fireball.tscn"))
-	add_hotbar_spell(load("res://Scenes/Spells/LightningStrike.tscn"))
-	
 	for i in range(num_of_slots):
 		var _hotbar_slot = hotbar_slot.instantiate()
 		box_container.add_child(_hotbar_slot)
@@ -31,6 +28,7 @@ func clear_hotbar() -> void:
 	set_hotbar_slots()
 
 func set_hotbar_slots() -> void:
+	print(hotbar_spells)
 	var i = 0
 	for slot in box_container.get_children():
 		var image = slot.get_child(0)
