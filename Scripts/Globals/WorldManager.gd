@@ -1,6 +1,6 @@
 extends Node
 
-var player_scene = load("res://Scenes/Player.tscn")
+var player_scene = load("res://Scenes/player.tscn")
 var current_scene : Node2D
 var num_of_players : int
 var player = null

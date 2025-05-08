@@ -2,7 +2,8 @@ extends Node2D
 class_name Health
 
 @export var MAX_HEALTH : float
-var health
+@export var Health_bar : HealthBar
+var health : float
 
 func _ready():
 	health = MAX_HEALTH

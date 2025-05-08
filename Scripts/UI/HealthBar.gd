@@ -1,4 +1,5 @@
 extends ProgressBar
+class_name HealthBar
 
 @onready var damage_bar = $DamageBar
 var health = 0 : set = set_health

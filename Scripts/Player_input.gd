@@ -14,11 +14,10 @@ extends CharacterBody2D
 @onready var spell_area_scene = preload("res://Scenes/UI/SpellArea.tscn")
 @onready var weapon = null
 
-@onready var player_sprite = $PlayerCharacter
+@onready var player_sprite = $AnimatedSprite2D
 @onready var hit_timer = $InvulnerabilityTimer
-@onready var player_ui = $CanvasLayer/PlayerUI
-@onready var health_bar = $CanvasLayer/PlayerUI/HealthBar
-@onready var sprint_bar = $CanvasLayer/PlayerUI/SprintBar
+@onready var health_bar = $CanvasLayer/HealthAndSprint/HealthBar
+@onready var sprint_bar = $CanvasLayer/HealthAndSprint/SprintBar
 @onready var camera = $Camera2D
 
 var speed: float
@@ -30,8 +29,6 @@ var external_forces = Vector2.ZERO
 var is_dead = false
 var speed_temp = 0
 var speed_reduction_multiplier = 0.5
-var area_spell_max_reach = 10
-var player_number : int
 
 signal roll(direction)
 signal hit(damage:int)
@@ -52,7 +49,7 @@ func _ready() -> void:
 	
 	#Debug
 	if dev_active:
-		player_ui.add_child(load("res://Scenes/UI/dev_menu.tscn").instantiate())
+		$CanvasLayer.add_child(load("res://Scenes/UI/dev_menu.tscn").instantiate())
 	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
 	
 	print("player position start = ",global_position)
@@ -73,7 +70,6 @@ func _physics_process(_delta) -> void:
 		velocity = Vector2.ZERO
 		
 		handle_player_sprite_direction(mouse_pos)
-		check_if_idle(raw_direction)
 		handle_charge_input()
 		handle_roll_input(direction)
 		
@@ -120,40 +116,27 @@ func handle_roll_input(direction:Vector2) -> void:
 	if Input.is_action_just_pressed("roll"):
 		roll.emit(direction)
 
-func check_if_idle(direction:Vector2) -> bool:
-	if direction == Vector2.ZERO:
-		if is_facing_up:
-			player_sprite.play("Up_Idle")
-		elif !is_facing_up:
-			player_sprite.play("Down_Idle")
-	return direction == Vector2.ZERO
-
 func handle_movement_input() -> Vector2:
 	var raw_direction = Vector2.ZERO
 	if Input.is_action_pressed("move_up"):
 		raw_direction.y -= 1
-		if is_facing_up:
-			player_sprite.play("Up_Walk")
-		else:
-			player_sprite.play("Down_Walk")
 	if Input.is_action_pressed("move_down"):
 		raw_direction.y += 1
-		if is_facing_up:
-			player_sprite.play("Up_Walk")
-		else:
-			player_sprite.play("Down_Walk")
 	if Input.is_action_pressed("move_left"):
 		raw_direction.x -= 1
-		if is_facing_up:
-			player_sprite.play("Up_Walk")
-		else:
-			player_sprite.play("Down_Walk")
 	if Input.is_action_pressed("move_right"):
 		raw_direction.x += 1
+	
+	if raw_direction == Vector2.ZERO:
 		if is_facing_up:
-			player_sprite.play("Up_Walk")
+			player_sprite.play("idle_up")
+		elif !is_facing_up:
+			player_sprite.play("idle_down")
+	else:
+		if is_facing_up:
+			player_sprite.play("walk_up")
 		else:
-			player_sprite.play("Down_Walk")
+			player_sprite.play("walk_down")
 	
 	return raw_direction
 

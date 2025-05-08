@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt516pl3wpj6y"]
+
+[ext_resource type="Script" path="res://Scripts/UI/selection_wheel.gd" id="1_oruw4"]
+
+[node name="Selection_wheel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oruw4")
+line_color = Color(0.838897, 0.838897, 0.838897, 0.556863)
+background_color = Color(0.197937, 0.197937, 0.197937, 1)
+inner_radius = 75
+outer_radius = 215
+options = [null]

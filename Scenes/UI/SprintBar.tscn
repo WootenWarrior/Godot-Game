@@ -19,6 +19,7 @@ shadow_offset = Vector2(0, 1)
 bg_color = Color(1, 1, 1, 1)
 
 [node name="SprintBar" type="ProgressBar"]
+custom_minimum_size = Vector2(200, 20)
 offset_right = 200.0
 offset_bottom = 27.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_1rhma")
@@ -29,6 +30,7 @@ script = ExtResource("1_aqv02")
 
 [node name="SprintLossBar" type="ProgressBar" parent="."]
 z_index = -1
+custom_minimum_size = Vector2(100, 20)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

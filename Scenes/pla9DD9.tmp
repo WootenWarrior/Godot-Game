@@ -214,7 +214,7 @@ animation = &"die"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HealthAndSprint" type="VBoxContainer" parent="CanvasLayer"]
+[node name="Play" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -222,11 +222,11 @@ offset_top = -44.0
 offset_right = 200.0
 grow_vertical = 0
 
-[node name="HealthBar" parent="CanvasLayer/HealthAndSprint" instance=ExtResource("3_hq7j7")]
+[node name="HealthBar" parent="CanvasLayer/Play" instance=ExtResource("3_hq7j7")]
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="SprintBar" parent="CanvasLayer/HealthAndSprint" instance=ExtResource("4_vd3e4")]
+[node name="SprintBar" parent="CanvasLayer/Play" instance=ExtResource("4_vd3e4")]
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
