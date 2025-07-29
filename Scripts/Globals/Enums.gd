@@ -1,5 +1,4 @@
 extends Node
 
-enum spell_types {AREA,PROJECTILE}
-
-enum spell_areas {SMALL, MEDIUM, LARGE, HUGE}
+#Player Script enums
+enum States {IDLE, WALK, SPRINT, ROLL, DEAD}

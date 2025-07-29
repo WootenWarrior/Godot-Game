@@ -1,22 +1,12 @@
-res://Assets/Environment Art
-res://Scenes/Levels
-res://Scripts/UI
-res://Scenes/UI
-res://Assets/Player
-res://Scenes/Components
 res://Scripts/Components
-res://Scenes
+res://Scenes/Components
+res://Scenes/WorldGeneration
+res://Assets
+res://Scripts/WorldGeneration
+res://Scenes/Test
 res://Scripts
-res://Scripts/Spells
-res://Resources
-res://Assets/Spells
+res://Assets/PlayerSprites
 res://Scripts/Globals
-res://Assets/TileSets
-res://Scripts/Environment
-res://Scenes/Rooms
-res://Assets/TestTiles
-res://
-res://Scripts/Enemies
-res://Assets/Enemies
-res://Assets/UI
-C:/Users/veojo_mm94g2g/OneDrive/Desktop/Godot Games/Wizard Game/Assets/Player
+res://Scenes/UI
+res://Scripts/UI
+res://Scenes

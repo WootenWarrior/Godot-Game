@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://xo1ao8uf54hk"]
+
+[ext_resource type="Script" uid="uid://cdna246h3bp6u" path="res://Scripts/UI/progress_bar.gd" id="1_e6f6v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e6f6v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b37mg"]
+bg_color = Color(0.167142, 0.722161, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14ovd"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="SprintBar" type="ProgressBar"]
+custom_minimum_size = Vector2(200, 20)
+offset_right = 193.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_e6f6v")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b37mg")
+value = 60.0
+show_percentage = false
+script = ExtResource("1_e6f6v")
+
+[node name="SprintLossBar" type="ProgressBar" parent="."]
+z_index = -1
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 0
+offset_right = 194.0
+offset_bottom = 27.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_14ovd")
+value = 70.0
+show_percentage = false

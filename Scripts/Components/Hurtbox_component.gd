@@ -1,16 +1,8 @@
 extends Area2D
-class_name Hurtbox
 
-@export var attack : Attack
+@export var health_component: Node2D = null
 
-func set_inactive():
-	monitorable = false
-	monitoring = false
-
-func set_active():
-	monitorable = true
-	monitoring = true
-
-func _on_body_entered(body):
-	if body is Hitbox:
-		body.damage(attack)
+func _on_body_entered(body: Node2D) -> void:
+	if (body.damage and health_component):
+		health_component.damage(body.damage)
+	pass
