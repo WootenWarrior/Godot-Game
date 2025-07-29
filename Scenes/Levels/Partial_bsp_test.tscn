@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://csq1kkph6v0gw"]
 
-[ext_resource type="Script" path="res://Scripts/Environment/Partial_bsp_generation.gd" id="1_4bf74"]
+[ext_resource type="Script" path="res://Scripts/Legacy/Partial_bsp_generation.gd" id="1_4bf74"]
 [ext_resource type="Texture2D" uid="uid://caxyuo81g7ov5" path="res://Assets/Environment Art/DungeonTiles1.png" id="1_8ejwf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_klef5"]

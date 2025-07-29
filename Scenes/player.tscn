@@ -231,6 +231,7 @@ layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
 
 [node name="Health_component" parent="." instance=ExtResource("3_fj747")]
 MAX_HEALTH = 100.0

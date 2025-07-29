@@ -1,12 +1,7 @@
-res://Scenes/player.tscn
+res://Scenes/Levels/Playground.tscn
 res://Scripts/Player_input.gd
+res://Scenes/player.tscn
 res://Scenes/Components/health_component.tscn
 res://Scenes/Components/attack_component.tscn
 res://Scenes/Components/hitbox_component.tscn
 res://Scenes/Components/hurtbox_component.tscn
-res://Scenes/UI/HealthBar.tscn
-res://Scripts/UI/HealthBar.gd
-res://Scripts/Components/Health_component.gd
-res://Scenes/UI/SprintBar.tscn
-res://Scenes/UI/selection_wheel.tscn
-res://Scripts/UI/selection_wheel.gd

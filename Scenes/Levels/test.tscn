@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://dg26xi6r0s5td"]
 
-[ext_resource type="PackedScene" uid="uid://bdvdr5madyn58" path="res://Scenes/Player.tscn" id="1_ju5oc"]
-[ext_resource type="Texture2D" uid="uid://u80ylbxodscw" path="res://Assets/TestTiles/TestTiles.png" id="2_pae2j"]
-[ext_resource type="Texture2D" uid="uid://caxyuo81g7ov5" path="res://Assets/Environment Art/DungeonTiles1.png" id="3_7ov40"]
-[ext_resource type="PackedScene" uid="uid://cf413fguqv5ck" path="res://Scenes/Enemies/EnemySpawner.tscn" id="6_dgf48"]
-[ext_resource type="PackedScene" uid="uid://c5g4oah33llvk" path="res://Scenes/Enemies/Slime.tscn" id="6_xcgld"]
+[ext_resource type="Texture2D" uid="uid://u80ylbxodscw" path="res://Assets/TestTiles/TestTiles.png" id="1_8w0o4"]
+[ext_resource type="Texture2D" uid="uid://caxyuo81g7ov5" path="res://Assets/Environment Art/DungeonTiles1.png" id="2_3gifn"]
+[ext_resource type="PackedScene" uid="uid://cf413fguqv5ck" path="res://Scenes/Enemies/EnemySpawner.tscn" id="3_adlan"]
+[ext_resource type="PackedScene" uid="uid://c5g4oah33llvk" path="res://Scenes/Enemies/Slime.tscn" id="4_kpac5"]
+[ext_resource type="PackedScene" uid="uid://cllhpbc3u7edl" path="res://Scenes/player.tscn" id="5_jx7xn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ygvsh"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -14,7 +14,7 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bwn0x"]
-texture = ExtResource("2_pae2j")
+texture = ExtResource("1_8w0o4")
 0:0/0 = 0
 0:0/0/y_sort_origin = -3
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -99,7 +99,7 @@ texture = ExtResource("2_pae2j")
 0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -8, 8, 0, 8, 0, -8, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l6gqo"]
-texture = ExtResource("3_7ov40")
+texture = ExtResource("2_3gifn")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -224,7 +224,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-633, -365, 600, -374, 
 source_geometry_mode = 1
 source_geometry_group_name = &"navigation"
 
-[node name="Test" type="Node2D"]
+[node name="test" type="Node2D"]
 y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="." groups=["navigation"]]
@@ -243,9 +243,9 @@ layer_1/tile_data = PackedInt32Array(-589840, 262147, 0, -524304, 262147, 0, -45
 position = Vector2(0, 13)
 navigation_polygon = SubResource("NavigationPolygon_lb0d1")
 
-[node name="Enemy_spawner" parent="." instance=ExtResource("6_dgf48")]
-enemy_node = ExtResource("6_xcgld")
+[node name="Enemy_spawner" parent="." instance=ExtResource("3_adlan")]
+enemy_node = ExtResource("4_kpac5")
 spawn_timer_seconds = 5
 
-[node name="Player" parent="." instance=ExtResource("1_ju5oc")]
+[node name="Player" parent="." instance=ExtResource("5_jx7xn")]
 scale = Vector2(2, 2)

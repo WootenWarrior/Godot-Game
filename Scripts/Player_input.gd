@@ -11,7 +11,6 @@ extends CharacterBody2D
 @export var roll_force = 400
 @export var dev_active = true
 
-@onready var spell_area_scene = preload("res://Scenes/UI/SpellArea.tscn")
 @onready var weapon = null
 
 @onready var player_sprite = $AnimatedSprite2D
@@ -21,9 +20,7 @@ extends CharacterBody2D
 @onready var camera = $Camera2D
 
 var speed: float
-var charging = false
 var can_be_hit = true
-var spell_area = null
 var is_facing_up = false
 var external_forces = Vector2.ZERO
 var is_dead = false
@@ -36,21 +33,12 @@ signal hit(damage:int)
 func _ready() -> void:
 	speed = move_speed
 	
-	InventoryManager.set_player_reference(self)
-	SpellInventoryManager.set_player_reference(self)
-	
-	spell_area = spell_area_scene.instantiate()
-	
-	add_child(spell_area)
-	spell_area.visible = false
-	
 	health_bar.init_health(health)
 	sprint_bar.init_sprint(sprint)
 	
 	#Debug
 	if dev_active:
 		$CanvasLayer.add_child(load("res://Scenes/UI/dev_menu.tscn").instantiate())
-	set_weapon(load("res://Scenes/Weapons/DevSpellbook.tscn"))
 	
 	print("player position start = ",global_position)
 	
@@ -66,7 +54,6 @@ func _physics_process(_delta) -> void:
 		var direction = raw_direction.normalized()
 		var _sprint_multiplier = handle_sprint_input()
 		
-		spell_area.global_position = mouse_pos
 		velocity = Vector2.ZERO
 		
 		handle_player_sprite_direction(mouse_pos)
@@ -87,14 +74,6 @@ func damage(damage_value:float) -> void:
 func apply_force(force_direction: Vector2, force_strength: float) -> void:
 	external_forces = force_direction.normalized() * force_strength
 	#print("force applied: ", external_forces)
-
-func set_weapon(new_weapon:Resource) -> void:
-	weapon = new_weapon.instantiate()
-	add_child(weapon)
-	Signals.connect("toggle_spell_area", Callable(self, "_on_toggle_spell_area"))
-
-func set_weapon_spell(spell) -> void:
-	weapon.set_spell(spell)
 
 func handle_sprint_input() -> float:
 	var sprint_multiplier_temp = 1
@@ -158,14 +137,6 @@ func handle_player_sprite_direction(_mouse_pos) -> void:
 func get_weapon_radius() -> float:
 	return global_position.distance_to(weapon.global_position)
 
-func _on_toggle_spell_area() -> void:
-	var prev_visibility = spell_area.visible
-	var spell_area_animation = "Idle_Small"
-	spell_area.visible = !prev_visibility
-	
-	if spell_area.visible:
-		spell_area.play(spell_area_animation)
-
 func _on_hit(damage_value:float) -> void:
 	if not is_dead:
 		if can_be_hit:
@@ -181,7 +152,6 @@ func _on_player_dead() -> void:
 	print("player died")
 	player_sprite.play("Die")
 	is_dead = true
-	spell_area.visible = false
 	weapon.visible = false
 
 func _on_roll(direction) -> void:

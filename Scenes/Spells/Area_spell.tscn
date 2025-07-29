@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://baa1yn1encv2b"]
 
-[ext_resource type="Script" path="res://Scripts/Spells/Area_spell.gd" id="1_gdr38"]
+[ext_resource type="Script" path="res://Scripts/Legacy/Area_spell.gd" id="1_gdr38"]
 
 [node name="AreaSpell" type="Area2D"]
 script = ExtResource("1_gdr38")

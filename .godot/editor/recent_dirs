@@ -1,3 +1,5 @@
+res://Assets/Environment Art
+res://Scenes/Levels
 res://Scripts/UI
 res://Scenes/UI
 res://Assets/Player
@@ -9,10 +11,8 @@ res://Scripts/Spells
 res://Resources
 res://Assets/Spells
 res://Scripts/Globals
-res://Scenes/Levels
 res://Assets/TileSets
 res://Scripts/Environment
-res://Assets/Environment Art
 res://Scenes/Rooms
 res://Assets/TestTiles
 res://

@@ -6,7 +6,6 @@ extends TileMap
 var grid : Array
 
 func _ready():
-	WorldManager.instantiate_players(1)
 	WorldManager.spawn_players_in_scene(tilemap,spawn)
 	init_grid()
 	place_spawn_room()

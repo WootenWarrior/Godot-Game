@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://bkqwaphy7gjei"]
 
 [ext_resource type="Texture2D" uid="uid://bp6h2qmoconbj" path="res://Assets/Player/Spellbook.png" id="1_ahde2"]
-[ext_resource type="Script" path="res://Scripts/Weapons/Spellbook.gd" id="2_dim84"]
+[ext_resource type="Script" path="res://Scripts/Legacy/Spellbook.gd" id="2_dim84"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8m876"]
 atlas = ExtResource("1_ahde2")
