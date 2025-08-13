@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3jue3alxgyqt"]
+
+[ext_resource type="PackedScene" uid="uid://bpy28fni1ehkr" path="res://Scenes/scene_loader.tscn" id="1_52fb6"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="SceneLoader" parent="." node_paths=PackedStringArray("root") instance=ExtResource("1_52fb6")]
+root = NodePath("..")
+
+[node name="Menus" type="CanvasLayer" parent="."]

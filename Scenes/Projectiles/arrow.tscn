@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c22irltvcumms"]
+
+[ext_resource type="PackedScene" uid="uid://bfydb3642ja2l" path="res://Scenes/Components/attack_component.tscn" id="2_1fs1j"]
+[ext_resource type="Script" uid="uid://bib7kf0agtl4x" path="res://Scripts/Components/hitbox_component.gd" id="2_fpagu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1fs1j"]
+
+[node name="Arrow" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="AttackComponent" parent="." instance=ExtResource("2_1fs1j")]
+
+[node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource("2_fpagu")
+metadata/_custom_type_script = "uid://bib7kf0agtl4x"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_1fs1j")

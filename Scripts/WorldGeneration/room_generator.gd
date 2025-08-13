@@ -33,6 +33,10 @@ extends Node2D
 @export var barrel = Vector2(5,10)
 @export var door = Vector2(2,15)
 
+@export_category("Misc")
+@export var step_timer_enabled = false
+@export var wait_time = 0.5
+
 var size_limit = 1000
 var floor_tile_coords = Vector2.ZERO
 var floor_layer = 0
@@ -42,58 +46,50 @@ var edge_cells = []
 func generate():
 	clear()
 	var undo_redo = EditorInterface.get_editor_undo_redo()
+	if wait_time > 0:
+		step_timer.wait_time = wait_time
 	
-	step_timer.start()
-	generate_floors()
-	await step_timer.timeout
-	
-	step_timer.start()
-	generate_walls()
-	await step_timer.timeout
-	
-	step_timer.start()
-	generate_decor()
-	await step_timer.timeout
-	
-	step_timer.start()
-	#generate_entrances()
-	await step_timer.timeout
-	
-	step_timer.start()
-	spawn_enemies()
-	await step_timer.timeout
+	await step_or_skip(func (): generate_floors())
+	await step_or_skip(func (): generate_walls())
+	await step_or_skip(func (): generate_decor())
+	#await step_or_skip(func (): generate_entrances())
+	await step_or_skip(func (): spawn_enemies())
 	
 	# TEMP
-	step_timer.start()
-	#set_static_cam(walls_tilemap.get_used_rect())
-	$Player.global_position = get_spawn_pos()
-	await step_timer.timeout
+	await step_or_skip(func (): 
+		#set_static_cam(walls_tilemap.get_used_rect())
+		$Player.global_position = get_spawn_pos()
+	)
 	
 	pass
 
+func step_or_skip(function: Callable):
+	if step_timer_enabled:
+		step_timer.start()
+		function.call()
+		await step_timer.timeout
+	else:
+		function.call()
+
 func generate_floors():
-	if (!keep_prev_layout):
-		var max_width = min(width,1000)
-		var max_height = min(height,1000)
-		
-		if lock_aspect:
-			max_width = max(width,height)
-			max_height = max(width,height)
-		
-		# Generating small squares randomly
-		for i in range(number_of_points):
-			var point = Rect2i(randi_range(square_size.x,max_width-square_size.x), 
-				randi_range(square_size.x,max_height-square_size.y), square_size.x, square_size.y)
-			
-			for x in range(point.position.x, point.position.x + point.size.x):
-				for y in range(point.position.y, point.position.y + point.size.y):
-					var cell = Vector2(x,y)
-					floor_tilemap.set_cell(cell,0,Vector2(5,0),0)
-			
-			points.append(point)
+	var max_width = min(width,1000)
+	var max_height = min(height,1000)
 	
-	# TODO Ensuring room is fully connected
-	# Place boxes at intervals along unconnected route
+	# Keeps as squares
+	if lock_aspect:
+		max_width = max(width,height)
+		max_height = max(width,height)
+	
+	# Generating small squares randomly from points
+	for i in range(number_of_points):
+		var point = Rect2i(randi_range(square_size.x,max_width-square_size.x), 
+			randi_range(square_size.x,max_height-square_size.y), square_size.x, square_size.y)
+		for x in range(point.position.x, point.position.x + point.size.x):
+			for y in range(point.position.y, point.position.y + point.size.y):
+				var cell = Vector2(x,y)
+				floor_tilemap.set_cell(cell,0,Vector2(5,0),0)
+		points.append(point)
+	# Astar object for traversal within boundaries (i.e. where player can move)
 	var astar = AStarGrid2D.new()
 	var used_rect = floor_tilemap.get_used_rect()
 	astar.region = Rect2i(used_rect.position.x - 1, used_rect.position.y - 1, 
@@ -101,6 +97,7 @@ func generate_floors():
 	astar.cell_size = Vector2(1, 1)
 	astar.update()
 	
+	# Log edge cells for wall placements
 	edge_cells = []
 	for point in points:
 		for x in range(point.position.x - 1, point.position.x + point.size.x + 1):
@@ -120,12 +117,13 @@ func generate_floors():
 			if (floor_tilemap.get_cell_source_id(right) == -1):
 				edge_cells.append(right)
 	
+	# Set edge cells as boundary for astar
 	for cell in edge_cells:
 		astar.set_point_solid(cell)
 	
+	# Generate graph of points and their neighbours and determine if room is connected
 	var connected = true
 	var graph = {}
-
 	for i in range(points.size()):
 		var point1 = points[i]
 		var start1 = Vector2i(point1.position.x, point1.position.y)
@@ -133,8 +131,12 @@ func generate_floors():
 		if !graph.has(start1):
 			graph[start1] = []
 		
-		for j in range(i + 1, points.size() - 1):
+		for j in range(points.size() - 1):
 			var point2 = points[j]
+			
+			if point2 == point1:
+				continue
+			
 			var start2 = Vector2i(point2.position.x, point2.position.y)
 			
 			if !graph.has(start2):
@@ -142,23 +144,124 @@ func generate_floors():
 			
 			if astar.get_point_path(start1, start2, false):
 				# Add bidirectional edge
-				graph[start1].append(start2)
-				graph[start2].append(start1)
+				if !graph[start1].has(start2):
+					graph[start1].append(start2)
+				if !graph[start2].has(start1):
+					graph[start2].append(start1)
 			else:
 				connected = false
 	
-	print("Is all connected? : ", connected)
-	#print(graph)
-	for i in range(graph.size() - 1):
-		var nearest_connection = Vector2i.ZERO
-		for j in range(i + 1, graph.size() - 1):
-			pass
-	
-	pass
+	print(connected)
+	if (!connected):
+		# Depth first search to find subgraphs
+		var visited = {}
+		var subgraphs = []
+		for point in points:
+			var pos: Vector2i = point.position
+			if pos not in visited:
+				var subgraph = []
+				dfs(visited, graph, pos, subgraph)
+				subgraphs.append(subgraph)
+		
+		#print("graph: ", graph)
+		#print("subgraphs: ", subgraphs)
+		#print("visited points: ", visited)
+		
+		# Randomly select a point in each subgraph
+		var points_to_connect = []
+		for subgraph in subgraphs:
+			var point = subgraph[randi_range(0, (subgraph.size() - 1))]
+			points_to_connect.append(point)
+		
+		# Setup Astar object that ignores boundaries
+		var astar_connect = AStarGrid2D.new()
+		astar_connect.cell_size = Vector2(1, 1)
+		astar_connect.region = floor_tilemap.get_used_rect()
+		astar_connect.update()
+		
+		# Move from point to point generating new points at set intervals to create
+		# a fully connected room
+		var min_distance = floor(min(square_size.x /2,square_size.y /2))
+		for i in range(points_to_connect.size() - 1):
+			var counter = 0
+			var point1 = points_to_connect[i]
+			var point2 = points_to_connect[i + 1]
+			var path = astar_connect.get_point_path(point1, point2, false)
+			#print(path)
+			#print("point1: ", point1)
+			#print("point2: ", point2)
+			for j in range(path.size()):
+				counter += 1
+				var new_point = path[j]
+				if counter > min_distance:
+					#var new_point_rect = Rect2i(
+						#new_point.x - floor(square_size.x / 2),
+						#new_point.y - floor(square_size.y / 2),
+						#square_size.x,
+						#square_size.y
+						#)
+					var new_point_rect = Rect2i(
+						new_point.x,
+						new_point.y,
+						square_size.x,
+						square_size.y
+						)
+					points.append(new_point_rect)
+					counter = 0
+		
+		print("all_points: ", points)
+		for point in points:
+			for x in range(point.position.x, point.position.x + point.size.x):
+				for y in range(point.position.y, point.position.y + point.size.y):
+					var cell = Vector2(x,y)
+					if floor_tilemap.get_cell_source_id(cell) == -1:
+						floor_tilemap.set_cell(cell,0,Vector2(5,0),0)
+		
+		# Recalculate edge cells
+		var new_used_rect = floor_tilemap.get_used_rect()
+		astar.region = Rect2i(new_used_rect.position.x - 1, new_used_rect.position.y - 1, 
+			new_used_rect.size.x + 2, new_used_rect.size.y + 2)
+		astar.update()
+		
+		for cell in edge_cells:
+			astar.set_point_solid(cell, false)
+		
+		edge_cells = []
+		for point in points:
+			for x in range(point.position.x - 1, point.position.x + point.size.x + 1):
+				var top = Vector2(x,point.position.y - 1)
+				var bottom = Vector2(x,point.position.y + point.size.y)
+				
+				if (floor_tilemap.get_cell_source_id(top) == -1):
+					edge_cells.append(top)
+				if (floor_tilemap.get_cell_source_id(bottom) == -1):
+					edge_cells.append(bottom)
+			for y in range(point.position.y - 1, point.position.y + point.size.y + 1):
+				var left = Vector2(point.position.x - 1, y)
+				var right = Vector2(point.position.x + point.size.x, y)
+				
+				if (floor_tilemap.get_cell_source_id(left) == -1):
+					edge_cells.append(left)
+				if (floor_tilemap.get_cell_source_id(right) == -1):
+					edge_cells.append(right)
+		
+		# Set edge cells as boundary for astar
+		for cell in edge_cells:
+			astar.set_point_solid(cell)
+
+func dfs(visited, graph, node, subgraph):
+	if !visited.has(node):
+		visited[node] = 1
+		subgraph.append(node)
+	for neighbour in graph[node]:
+		if !visited.has(neighbour):
+			dfs(visited, graph, neighbour, subgraph)
 
 func generate_walls():
+	# Connect all the top wall tiles around the boundary
 	walls_tilemap.set_cells_terrain_connect(edge_cells,0,1,false)
 	
+	# Set all the front facing wall tiles to the correct terrain
 	var front_walls = []
 	var wall_decor = []
 	for cell in edge_cells:

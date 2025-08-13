@@ -1,4 +1,4 @@
-extends Node2D
+class_name Player extends Node2D
 
 @export var state = Enums.States.IDLE
 

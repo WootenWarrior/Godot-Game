@@ -21,6 +21,11 @@ boot_splash/minimum_display_time=10
 Signals="*res://Scripts/Globals/Signals.gd"
 Enums="*res://Scripts/Globals/Enums.gd"
 
+[display]
+
+window/size/viewport_width=1180
+window/size/viewport_height=720
+
 [input]
 
 fire={

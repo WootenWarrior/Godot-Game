@@ -1,10 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://2jq88xsqcj8h"]
+[gd_scene load_steps=17 format=3 uid="uid://2jq88xsqcj8h"]
 
 [ext_resource type="Script" uid="uid://dww1mg2eax61q" path="res://Scripts/player_movement.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://bda16x6gprl88" path="res://Scripts/player.gd" id="1_fkybt"]
 [ext_resource type="Texture2D" uid="uid://cx38yutvriyff" path="res://Assets/PlayerSprites/WizardDefaultSprite.png" id="2_cvnsp"]
 [ext_resource type="PackedScene" uid="uid://xo1ao8uf54hk" path="res://Scenes/UI/sprint_bar.tscn" id="3_vgqql"]
 [ext_resource type="PackedScene" uid="uid://c8mnsdowbrlk8" path="res://Scenes/UI/health_bar.tscn" id="4_fkybt"]
+[ext_resource type="PackedScene" uid="uid://cwhm3icxk1ug8" path="res://Scenes/Components/health_component.tscn" id="6_3smsa"]
+[ext_resource type="Script" uid="uid://derxabyoayvmp" path="res://Scripts/UI/charge_bar.gd" id="6_f1ek2"]
+[ext_resource type="Script" uid="uid://dn4r5xhpbovk0" path="res://Scripts/Components/hurtbox_component.gd" id="7_3smsa"]
+[ext_resource type="Script" uid="uid://1u5nijrdgqum" path="res://Scripts/Components/spell_component.gd" id="8_8erm5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v0iea"]
 radius = 7.0
@@ -71,6 +75,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8erm5"]
+radius = 7.0
+height = 22.0
+
 [node name="Player" type="Node2D"]
 script = ExtResource("1_fkybt")
 
@@ -96,5 +104,32 @@ offset_top = 28.0
 offset_right = 200.0
 offset_bottom = 55.0
 
+[node name="ChargeBar" type="ProgressBar" parent="PlayerPhysicsBody"]
+custom_minimum_size = Vector2(100, 2)
+offset_left = -15.0
+offset_top = 15.0
+offset_right = 85.0
+offset_bottom = 42.0
+scale = Vector2(0.3, 0.3)
+size_flags_horizontal = 4
+script = ExtResource("6_f1ek2")
+metadata/_custom_type_script = "uid://derxabyoayvmp"
+
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("6_3smsa")]
+health_bar = NodePath("../PlayerPhysicsBody/UI/HealthBar")
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+script = ExtResource("7_3smsa")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://dn4r5xhpbovk0"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_8erm5")
+
+[node name="Spell" type="Node2D" parent="." node_paths=PackedStringArray("charge_bar")]
+script = ExtResource("8_8erm5")
+charge_bar = NodePath("../PlayerPhysicsBody/ChargeBar")
+metadata/_custom_type_script = "uid://1u5nijrdgqum"

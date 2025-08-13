@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://3wrxy2psiebv"]
+
+[ext_resource type="Script" uid="uid://derxabyoayvmp" path="res://Scripts/UI/charge_bar.gd" id="1_a5hhm"]
+
+[node name="ChargeBar" type="ProgressBar"]
+custom_minimum_size = Vector2(100, 3)
+offset_left = -15.0
+offset_right = 85.0
+offset_bottom = 27.0
+scale = Vector2(0.4, 0.4)
+script = ExtResource("1_a5hhm")

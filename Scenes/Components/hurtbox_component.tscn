@@ -1,10 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkks4dy14gpt"]
+[gd_scene load_steps=2 format=3 uid="uid://dfdwit6lhb1vc"]
 
 [ext_resource type="Script" uid="uid://dn4r5xhpbovk0" path="res://Scripts/Components/hurtbox_component.gd" id="1_leg2g"]
 
 [node name="HurtboxComponent" type="Area2D"]
 script = ExtResource("1_leg2g")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
