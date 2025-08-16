@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://2jq88xsqcj8h"]
+[gd_scene load_steps=18 format=3 uid="uid://2jq88xsqcj8h"]
 
 [ext_resource type="Script" uid="uid://dww1mg2eax61q" path="res://Scripts/player_movement.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://bda16x6gprl88" path="res://Scripts/player.gd" id="1_fkybt"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://derxabyoayvmp" path="res://Scripts/UI/charge_bar.gd" id="6_f1ek2"]
 [ext_resource type="Script" uid="uid://dn4r5xhpbovk0" path="res://Scripts/Components/hurtbox_component.gd" id="7_3smsa"]
 [ext_resource type="Script" uid="uid://1u5nijrdgqum" path="res://Scripts/Components/spell_component.gd" id="8_8erm5"]
+[ext_resource type="Script" uid="uid://bwjvmcyifyodr" path="res://Scripts/Components/forces_component.gd" id="8_tx1dd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v0iea"]
 radius = 7.0
@@ -82,8 +83,12 @@ height = 22.0
 [node name="Player" type="Node2D"]
 script = ExtResource("1_fkybt")
 
-[node name="PlayerPhysicsBody" type="CharacterBody2D" parent="."]
+[node name="PlayerPhysicsBody" type="CharacterBody2D" parent="." node_paths=PackedStringArray("parent", "forces_component")]
+collision_layer = 9
+collision_mask = 9
 script = ExtResource("1_cvnsp")
+parent = NodePath("..")
+forces_component = NodePath("ForcesComponent")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerPhysicsBody"]
 zoom = Vector2(2, 2)
@@ -113,7 +118,21 @@ offset_bottom = 42.0
 scale = Vector2(0.3, 0.3)
 size_flags_horizontal = 4
 script = ExtResource("6_f1ek2")
+charge_rate = 500
 metadata/_custom_type_script = "uid://derxabyoayvmp"
+
+[node name="Hurtbox" type="Area2D" parent="PlayerPhysicsBody" node_paths=PackedStringArray("health_component")]
+script = ExtResource("7_3smsa")
+health_component = NodePath("../../HealthComponent")
+metadata/_custom_type_script = "uid://dn4r5xhpbovk0"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPhysicsBody/Hurtbox"]
+shape = SubResource("CapsuleShape2D_8erm5")
+
+[node name="ForcesComponent" type="Node2D" parent="PlayerPhysicsBody" node_paths=PackedStringArray("body")]
+script = ExtResource("8_tx1dd")
+body = NodePath("..")
+metadata/_custom_type_script = "uid://bwjvmcyifyodr"
 
 [node name="InvulnerabilityTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -121,15 +140,10 @@ wait_time = 0.5
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("health_bar") instance=ExtResource("6_3smsa")]
 health_bar = NodePath("../PlayerPhysicsBody/UI/HealthBar")
 
-[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
-script = ExtResource("7_3smsa")
-health_component = NodePath("../HealthComponent")
-metadata/_custom_type_script = "uid://dn4r5xhpbovk0"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-shape = SubResource("CapsuleShape2D_8erm5")
-
-[node name="Spell" type="Node2D" parent="." node_paths=PackedStringArray("charge_bar")]
+[node name="Spell" type="Node2D" parent="." node_paths=PackedStringArray("body", "charge_bar")]
 script = ExtResource("8_8erm5")
+body = NodePath("../PlayerPhysicsBody")
 charge_bar = NodePath("../PlayerPhysicsBody/ChargeBar")
 metadata/_custom_type_script = "uid://1u5nijrdgqum"
+
+[connection signal="roll" from="PlayerPhysicsBody" to="PlayerPhysicsBody" method="_on_roll"]

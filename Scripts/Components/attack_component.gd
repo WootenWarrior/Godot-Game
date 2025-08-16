@@ -1,3 +1,3 @@
-class_name Attack extends Node2D
+class_name AttackComponent extends Node2D
 
-@export var attack_damage = 0
+@export var attack_damage = 10

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://l0okk36120yj"]
+
+[ext_resource type="Script" uid="uid://bgcmh8yekahhe" path="res://Scripts/Components/patrol_region.gd" id="1_rmqoy"]
+
+[node name="PatrolRegion" type="Marker2D"]
+script = ExtResource("1_rmqoy")
+
+[node name="Timer" type="Timer" parent="."]

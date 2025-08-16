@@ -2,5 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpcuwram0qc3b" path="res://Scripts/Spells/projectile.gd" id="1_2re41"]
 
-[node name="ProjectileComponent" type="Node2D"]
+[node name="ProjectileComponent" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_2re41")

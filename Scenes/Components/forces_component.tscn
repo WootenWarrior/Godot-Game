@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3c4qvv62xrq1"]
+
+[ext_resource type="Script" uid="uid://bwjvmcyifyodr" path="res://Scripts/Components/forces_component.gd" id="1_82bji"]
+
+[node name="ForcesComponent" type="Node2D"]
+script = ExtResource("1_82bji")

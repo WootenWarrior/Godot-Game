@@ -20,6 +20,8 @@ boot_splash/minimum_display_time=10
 
 Signals="*res://Scripts/Globals/Signals.gd"
 Enums="*res://Scripts/Globals/Enums.gd"
+EffectManager="*res://Scripts/Globals/EffectManager.gd"
+Refs="*res://Scripts/Globals/Refs.gd"
 
 [display]
 

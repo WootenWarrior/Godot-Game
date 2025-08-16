@@ -53,6 +53,7 @@ func generate():
 	await step_or_skip(func (): generate_walls())
 	await step_or_skip(func (): generate_decor())
 	#await step_or_skip(func (): generate_entrances())
+	await step_or_skip(func (): generate_navigation_region())
 	await step_or_skip(func (): spawn_enemies())
 	
 	# TEMP
@@ -384,6 +385,9 @@ func generate_entrances():
 			for pos in positions_to_clear:
 				tilemap.set_cell(pos, -1, Vector2i.ZERO, 0)
 	
+	pass
+
+func generate_navigation_region():
 	pass
 
 func spawn_enemies():

@@ -1,31 +1,75 @@
-[gd_scene load_steps=5 format=3 uid="uid://c00wecx5n8gm5"]
+[gd_scene load_steps=10 format=3 uid="uid://c00wecx5n8gm5"]
 
 [ext_resource type="Script" uid="uid://bib7kf0agtl4x" path="res://Scripts/Components/hitbox_component.gd" id="1_gtvur"]
 [ext_resource type="Script" uid="uid://dpcuwram0qc3b" path="res://Scripts/Spells/projectile.gd" id="1_ru21j"]
-[ext_resource type="Script" uid="uid://ddf17wktylpnf" path="res://Scripts/Components/attack_component.gd" id="2_ud0c1"]
+[ext_resource type="Texture2D" uid="uid://0hqaejin5wmx" path="res://Assets/AtlasLibrary/Player_and_monsters.png" id="3_pgt2i"]
+[ext_resource type="Script" uid="uid://ck5jod3f2ahig" path="res://Scripts/Components/attack_component.gd" id="4_pgt2i"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ud0c1"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_pgt2i"]
+radius = 3.0
 
-[node name="Fireball" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_fy26u"]
+radius = 3.53553
 
-[node name="Projectile" type="Node2D" parent="." node_paths=PackedStringArray("hitbox")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgt2i"]
+atlas = ExtResource("3_pgt2i")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fy26u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgt2i")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_pgt2i"]
+colors = PackedColorArray(1, 0, 0, 1, 0.840696, 0.380831, 0.0193343, 1)
+
+[node name="Fireball" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "particles")]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_ru21j")
-hitbox = NodePath("../Hitbox")
+hitbox = NodePath("Hitbox")
+particles = NodePath("CPUParticles2D")
+particle_gravity_scale = 600
+move_speed = 200
 metadata/_custom_type_script = "uid://dpcuwram0qc3b"
 
-[node name="Attack" type="Node2D" parent="."]
-script = ExtResource("2_ud0c1")
-attack_damage = 10
-metadata/_custom_type_script = "uid://ddf17wktylpnf"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("CircleShape2D_pgt2i")
+disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("attack_component")]
+collision_layer = 20
+collision_mask = 20
 script = ExtResource("1_gtvur")
-attack_component = NodePath("../Attack")
+attack_component = NodePath("../AttackComponent")
 metadata/_custom_type_script = "uid://bib7kf0agtl4x"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0.5, -0.5)
+shape = SubResource("CircleShape2D_fy26u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_ud0c1")
+sprite_frames = SubResource("SpriteFrames_fy26u")
+animation = &"idle"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AttackComponent" type="Node2D" parent="."]
+script = ExtResource("4_pgt2i")
+metadata/_custom_type_script = "uid://ck5jod3f2ahig"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0.5, 0)
+amount = 500
+lifetime = 0.3
+emission_shape = 1
+emission_sphere_radius = 5.0
+gravity = Vector2(0, -600)
+radial_accel_min = -50.0
+radial_accel_max = -40.0
+color_ramp = SubResource("Gradient_pgt2i")

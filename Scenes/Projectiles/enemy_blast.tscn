@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgpoj3nqa416m"]
+
+[ext_resource type="Script" uid="uid://dpcuwram0qc3b" path="res://Scripts/Spells/projectile.gd" id="1_ge2ns"]
+[ext_resource type="Script" uid="uid://bib7kf0agtl4x" path="res://Scripts/Components/hitbox_component.gd" id="2_e1inh"]
+[ext_resource type="Script" uid="uid://ck5jod3f2ahig" path="res://Scripts/Components/attack_component.gd" id="3_e1inh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ge2ns"]
+radius = 5.09902
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e1inh"]
+radius = 5.0
+
+[sub_resource type="Curve" id="Curve_ge2ns"]
+_data = [Vector2(0.00319489, 1), 0.0, 0.0, 0, 0, Vector2(0.98722, 0.632391), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ge2ns"]
+offsets = PackedFloat32Array(0.45993, 1)
+colors = PackedColorArray(0.85098, 0.372549, 0, 1, 1, 0, 0, 1)
+
+[node name="EnemyBlast" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "particles")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_ge2ns")
+hitbox = NodePath("Hitbox")
+particles = NodePath("CPUParticles2D")
+move_speed = 200
+metadata/_custom_type_script = "uid://dpcuwram0qc3b"
+
+[node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("attack_component")]
+collision_layer = 4
+collision_mask = 12
+script = ExtResource("2_e1inh")
+attack_component = NodePath("../AttackComponent")
+metadata/_custom_type_script = "uid://bib7kf0agtl4x"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_ge2ns")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e1inh")
+disabled = true
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.85056, 0.370814, 5.77569e-07, 1)
+polygon = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 1000
+lifetime = 0.4
+emission_shape = 1
+emission_sphere_radius = 7.0
+gravity = Vector2(0, -600)
+angular_velocity_min = -50.0
+angular_velocity_max = 40.0
+radial_accel_min = -50.0
+radial_accel_max = -40.0
+scale_amount_curve = SubResource("Curve_ge2ns")
+color_ramp = SubResource("Gradient_ge2ns")
+
+[node name="AttackComponent" type="Node2D" parent="."]
+script = ExtResource("3_e1inh")
+metadata/_custom_type_script = "uid://ck5jod3f2ahig"

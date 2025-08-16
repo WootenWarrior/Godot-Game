@@ -8,6 +8,10 @@ extends CharacterBody2D
 @export var sprint = 100
 @export var external_force_decay = 0.9   #Bounce damping factor on player (will affect all force sources)
 @export var roll_force = 400
+@export var roll_sprint_cost = 40
+
+@export var parent: Node2D = null
+@export var forces_component: ForcesComponent = null
 
 @onready var player_sprite = $AnimatedSprite2D
 @onready var sprint_bar = $UI/SprintBar
@@ -21,8 +25,7 @@ var is_dead = false
 var speed_temp = 0
 var speed_reduction_multiplier = 0.5
 
-signal roll(direction)
-signal hit(damage:int)
+signal roll(direction: Vector2)
 signal attack
 
 func _ready() -> void:
@@ -46,9 +49,8 @@ func _physics_process(_delta) -> void:
 		handle_charge_input()
 		handle_roll_input(direction)
 		
-		velocity = ((direction*speed) + external_forces) * _sprint_multiplier
+		velocity = ((direction*speed) + forces_component.external_forces) * _sprint_multiplier
 		move_and_slide()
-		external_forces = external_forces*external_force_decay
 
 func handle_movement_input() -> Vector2:
 	var raw_direction = Vector2.ZERO
@@ -93,8 +95,7 @@ func handle_sprint_input() -> float:
 		sprint_bar.set_sprint(sprint_bar.value+sprint_bar_increase_multiplier)
 	return sprint_multiplier_temp
 
-func handle_player_sprite_direction(_mouse_pos) -> void:
-	var mouse_pos = _mouse_pos
+func handle_player_sprite_direction(mouse_pos) -> void:
 	if mouse_pos.y > global_position.y:
 		is_facing_up = true
 		if mouse_pos.x > global_position.x:
@@ -114,6 +115,11 @@ func handle_charge_input() -> void:
 	elif Input.is_action_just_released("charge"):
 		speed = move_speed
 
-func handle_roll_input(direction:Vector2) -> void:
+func handle_roll_input(direction: Vector2) -> void:
 	if Input.is_action_just_pressed("roll"):
 		roll.emit(direction)
+
+func _on_roll(direction: Vector2) -> void:
+	if (sprint_bar.value > roll_sprint_cost):
+		forces_component.apply_force(direction, roll_force)
+		sprint_bar.value -= roll_sprint_cost

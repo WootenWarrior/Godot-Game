@@ -1,14 +1,19 @@
-res://Scripts/Spells
-res://Scenes/Projectiles
-res://Scripts/UI
-res://Scenes/UI
 res://Scripts/Components
 res://Scenes/Components
+res://Scenes/Projectiles
+res://Scripts/Enemies
+res://Scenes/Enemies
+res://Assets/AtlasLibrary
+res://Scripts/Globals
+res://Scripts/Visual effects
 res://Scripts
+res://Scenes/Effects and Shaders
+res://Scripts/Spells
+res://Scripts/UI
+res://Scenes/UI
 res://Scenes
 res://Scenes/WorldGeneration
 res://Assets
 res://Scripts/WorldGeneration
 res://Scenes/Test
 res://Assets/PlayerSprites
-res://Scripts/Globals
